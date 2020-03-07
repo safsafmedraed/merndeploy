@@ -1,24 +1,59 @@
 const express = require('express');
 const cors = require('cors');
-const mongoose= require('mongoose');
+const cookieParser = require('cookie-parser');
+const mongoose = require('mongoose');
+const flash = require('connect-flash');
+const session = require('express-session');
+const passport = require('passport');
 const usersRouter = require('./routes/users');
+const app = express();
+//passport config
+require('./passport')(passport);
 
 require('dotenv').config();
-const app= express();
+app.use(cookieParser());
+app.use(
+  cors({
+    origin: "http://localhost:5000",
+    credentials: true
+  })
+);
+
 const port = process.env.port || 5000;
-
-app.use(cors());
-app.use(express.json());
-
 const uri = process.env.ATLAS_URI;
-mongoose.connect(uri,{useNewUrlParser:true,useCreateIndex:true,useUnifiedTopology: true});
-const connection=mongoose.connection;
-connection.once('open',()=>{
-    console.log('***database works!!***');
+mongoose.connect(uri, { useNewUrlParser: true, useCreateIndex: true, useUnifiedTopology: true });
+const connection = mongoose.connection;
+connection.once('open', () => {
+  console.log('***database works!!***');
 })
 
-app.use('/users',usersRouter);
+app.use(cors());
+//body-parser
+app.use(express.json());
+//express session
+app.use(session({
+  secret: 'secret',
+  resave: true,
+  saveUninitialized: true,
+  cookie: { secure: true }
+}));
+//passport middleware
+app.use(passport.initialize());
+app.use(passport.session());
+//connect flash
+app.use(flash());
+//global vars 
+app.use((req, res, next) => {
+  res.locals.success_msg = req.flash('succes_msg');
+  res.locals.error_msg = req.flash('error_msg');
+  next();
+})
 
-app.listen(port,()=> {
-    console.log(`Server is running at port : ${port}`);
+
+
+
+app.use('/users', usersRouter);
+
+app.listen(port, () => {
+  console.log(`Server is running at port : ${port}`);
 })
