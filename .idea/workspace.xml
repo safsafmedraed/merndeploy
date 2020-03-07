@@ -45,6 +45,7 @@
       <updated>1583435601663</updated>
       <workItem from="1583435619382" duration="361000" />
       <workItem from="1583437283449" duration="1181000" />
+      <workItem from="1583586298461" duration="145000" />
     </task>
     <task id="LOCAL-00001" summary="first commit backend Ready!">
       <created>1583435846979</created>
@@ -60,7 +61,14 @@
       <option name="project" value="LOCAL" />
       <updated>1583438415820</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="user login logout register version 0.1">
+      <created>1583586398706</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1583586398706</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -82,6 +90,7 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="first commit backend Ready!" />
     <MESSAGE value="react template" />
-    <option name="LAST_COMMIT_MESSAGE" value="react template" />
+    <MESSAGE value="user login logout register version 0.1" />
+    <option name="LAST_COMMIT_MESSAGE" value="user login logout register version 0.1" />
   </component>
 </project>

@@ -1,36 +1,46 @@
 const LocalStrategy = require('passport-local').Strategy;
-const mongoose = require('mongoose');
 const bcrypt = require('bcryptjs');
 const JwtStrategy = require('passport-jwt').Strategy;
-const { ExtractJwt } = require('passport-jwt');
+const BearerStrategy = require('passport-http-bearer').Strategy;
+const ExtractJWT = require('passport-jwt').ExtractJwt;
 //load user model
 const User = require('./models/user.model');
 const config = require('./config');
 
 
 module.exports = function (passport) {
-    passport.use(
-        new LocalStrategy({ usernameField: 'email' }, (email, password, done) => {
-            //Match User 
-            User.findOne({ email: email })
+    passport.use(new LocalStrategy({
+        usernameField: 'email',
+        passwordField: 'password'
+    },
+        function (email, password, cb) {
+
+
+
+            //Assume there is a DB module pproviding a global UserModel
+            return User.findOne({ email })
                 .then(user => {
+
                     if (!user) {
-                        return done(null, false, { message: 'that email is not registred ' });
+                        return cb(null, false, { message: 'Incorrect email or password.' });
                     }
-                    //Match password 
                     bcrypt.compare(password, user.password, (err, isMatch) => {
                         if (err) throw err;
                         if (isMatch) {
-                            return done(null, user);
-                        }
-                        else {
-                            return done(null, false, { message: 'password incorrect  ' });
+                            return cb(null, user, {
+                                message: 'Logged In Successfully'
+                            });
                         }
                     })
+
+
                 })
-                .catch(err => console.log(err));
-        })
-    )
+                .catch(err => {
+                    return cb(err);
+                });
+        }
+    ));
+
     passport.serializeUser((user, done) => {
         done(null, user.id);
     });
@@ -50,27 +60,30 @@ module.exports = function (passport) {
 
     // JSON WEB TOKENS STRATEGY
     passport.use(new JwtStrategy({
-        jwtFromRequest: cookieExtractor,
-        secretOrKey: config.JWT_SECRET,
-        passReqToCallback: true
-    }, async (req, payload, done) => {
-        try {
-            // Find the user specified in token
-            const user = await User.findById(payload.sub);
+        jwtFromRequest: ExtractJWT.fromAuthHeaderAsBearerToken(),
+        secretOrKey: config.JWT_SECRET
+    },
+        function (jwtPayload, cb) {
 
-            // If user doesn't exists, handle it
-            if (!user) {
-                console.log(user);
-                return done(null, false);
-            }
-
-            // Otherwise, return the user
-            req.user = user;
-            console.log(user);
-            done(null, user);
-        } catch (error) {
-            done(error, false);
+            //find the user in db if needed
+            return User.findOne(jwtPayload.id)
+                .then(user => {
+                    return cb(null, user);
+                })
+                .catch(err => {
+                    return cb(err);
+                });
         }
-    }));
+    ));
+    /************ */
+    passport.use(new BearerStrategy(
+        function (token, done) {
+            User.findOne({ token: token }, function (err, user) {
+                if (err) { return done(err); }
+                if (!user) { return done(null, false); }
+                return done(null, user, { scope: 'all' });
+            });
+        }
+    ));
 
 }

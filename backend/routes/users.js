@@ -3,9 +3,7 @@ let User = require('../models/user.model');
 const bycrpt = require('bcryptjs');
 const passport = require('passport');
 const JWT = require('jsonwebtoken');
-const { JWT_SECRET } = require('../config');
-
-
+const JWT_SECRET = require('../config').JWT_SECRET;
 
 
 const signToken = user => {
@@ -17,10 +15,12 @@ const signToken = user => {
     }, JWT_SECRET);
 }
 
+
 /**************GET USERS*************/
 router.route('/').get(passport.authenticate('jwt', { session: false }), (req, res) => {
 
-    User.find().then(users => res.json(User)).catch(err => res.status(400).json('Error:' + err))
+    User.find().then(users => res.json(users)).catch(err => res.status(400).json('Error:' + err))
+
 })
 
 
@@ -61,22 +61,31 @@ router.route('/register').post((req, res) => {
 
 })
 //Login handle 
-router.route('/login').post((req, res, next) => {
+router.route('/login').post(function (req, res, next) {
 
+    passport.authenticate('local', { session: false }, (err, user, info) => {
+        console.log(err);
+        if (err || !user) {
+            return res.status(400).json({
+                message: info ? info.message : 'Login failed',
+                user: user
+            });
+        }
 
-    if (passport.authenticate) {
-        const token = signToken(User);
-        console.log(req.body.username);
-        res.cookie('access_token', token, { expires: new Date(Date.now() + 900000), httpOnly: true });
-        passport.authenticate('local', {
-            successRedirect: '/users/',
-            failureMessage: '/',
-            failureFlash: true,
+        req.login(user, { session: false }, (err) => {
+            if (err) {
+                res.send(err);
+            }
+
+            const token = JWT.sign(user.toJSON(), JWT_SECRET);
+
+            return res.json({ user, token });
         });
-        console.log("works");
-        res.json('connected');
-    }
+    })
+        (req, res);
+
 });
+
 //Logout 
 router.route('/logout').get((req, res) => {
     res.clearCookie('access_token');
