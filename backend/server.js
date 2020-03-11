@@ -54,7 +54,7 @@ app.use((req, res, next) => {
 
 
 
-app.use('/users', usersRouter);
+app.use('/users', cors(), usersRouter);
 app.use('/forgot', forgotpassword);
 app.use('/reset', resetpassword);
 
