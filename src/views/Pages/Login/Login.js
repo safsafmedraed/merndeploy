@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Link, Redirect } from 'react-router-dom';
-import { Button, Card, CardBody, CardGroup, Col, Container, Form, Input, InputGroup, InputGroupAddon, InputGroupText, Row } from 'reactstrap';
+import { Button, Card, CardBody, CardGroup, Col, Container, Form, Input, InputGroup, InputGroupAddon, InputGroupText, Row, Alert, Fade } from 'reactstrap';
 import axios from 'axios';
 
 class Login extends Component {
@@ -10,11 +10,13 @@ class Login extends Component {
     this.Onchangepwd = this.Onchangepwd.bind(this);
     this.onChangeUsername = this.onChangeUsername.bind(this);
     this.Onsubmit = this.Onsubmit.bind(this);
-
+    this.toggleFade = this.toggleFade.bind(this);
     this.state = {
       email: '',
       password: '',
-      isSignedUp: false
+      isSignedUp: false,
+      hide: true,
+      fadeIn: true,
     };
   }
   onChangeUsername(e) {
@@ -27,6 +29,9 @@ class Login extends Component {
       password: e.target.value
     })
   }
+  toggleFade() {
+    this.setState((prevState) => { return { fadeIn: !prevState } });
+  }
   Onsubmit(e) {
     e.preventDefault();
     const user = {
@@ -38,14 +43,7 @@ class Login extends Component {
         if (res.status === 200) {
           this.setState({ isSignedUp: true })
         }
-
-
-
-
-
-
-
-      });
+      }).catch(this.setState({ hide: false }));;
 
 
 
@@ -60,8 +58,10 @@ class Login extends Component {
       return <Redirect to={{ pathname: "/dashboard" }} />;
     }
     return (
+
       <div className="app flex-row align-items-center">
         <Container>
+
           <Row className="justify-content-center">
             <Col md="8">
               <CardGroup>
@@ -76,7 +76,7 @@ class Login extends Component {
                             <i className="icon-user"></i>
                           </InputGroupText>
                         </InputGroupAddon>
-                        <Input type="text" placeholder="email" autoComplete="email" value={this.state.email} onChange={this.onChangeUsername} />
+                        <Input type="text" placeholder="email" autoComplete="email" value={this.state.email} onChange={this.onChangeUsername} required />
                       </InputGroup>
                       <InputGroup className="mb-4">
                         <InputGroupAddon addonType="prepend">
@@ -84,7 +84,7 @@ class Login extends Component {
                             <i className="icon-lock"></i>
                           </InputGroupText>
                         </InputGroupAddon>
-                        <Input type="password" placeholder="Password" value={this.state.password} onChange={this.Onchangepwd} />
+                        <Input type="password" placeholder="Password" value={this.state.password} onChange={this.Onchangepwd} required minLength="8" />
                       </InputGroup>
                       <Row>
                         <Col xs="6">
@@ -93,6 +93,13 @@ class Login extends Component {
                         <Col xs="6" className="text-right">
                           <Button color="link" className="px-0">Forgot password?</Button>
                         </Col>
+                        <Fade timeout={this.state.timeout} in={this.state.fadeIn}>
+                          <CardBody hidden={this.state.hide}>
+                            <Button color="link" className="card-header-action btn-close" onClick={this.toggleFade}><i className="icon-close"></i></Button>
+                            <Alert color="warning">
+                              Please Check your email or Password !
+                             </Alert>
+                          </CardBody></Fade>
                       </Row>
                     </Form>
                   </CardBody>

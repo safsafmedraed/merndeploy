@@ -32,7 +32,8 @@ class AddPost extends Component {
             title: '',
             description: '',
             extra: '',
-            User: '', collapse: true,
+            User: '',
+            collapse: true,
             fadeIn: true,
             timeout: 300
         }

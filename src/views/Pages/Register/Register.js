@@ -3,20 +3,27 @@ import { Button, Card, CardBody, CardFooter, Col, Container, Form, Input, InputG
 import axios from 'axios';
 import "react-datepicker/dist/react-datepicker.css";
 import { Redirect } from 'react-router-dom';
-
+import SimpleReactValidator from 'simple-react-validator';
 
 
 
 class Register extends Component {
   constructor(props) {
     super(props);
+    this.validator = new SimpleReactValidator(
+      {
+        element: message =>
+          <div className="alert text-danger bg-danger-0_1 px-4 py-3" role="alert">
+            {message}
+          </div>
+      }
+    );
     this.onChangeEmail = this.onChangeEmail.bind(this);
     this.onChangelast = this.onChangelast.bind(this);
     this.onChangeUsername = this.onChangeUsername.bind(this);
     this.onChangeDate = this.onChangeDate.bind(this);
     this.Onchangepassword = this.Onchangepassword.bind(this);
     this.onChangephone = this.onChangephone.bind(this);
-    this.onChangecng = this.onChangecng.bind(this);
     this.onChangefirstname = this.onChangefirstname.bind(this);
     this.Onsubmit = this.Onsubmit.bind(this);
     this.onChangeRole = this.onChangeRole.bind(this)
@@ -29,7 +36,6 @@ class Register extends Component {
       firstname: '',
       lastname: '',
       borndate: '',
-      confpwd: '',
       role: '',
       isSignedUp: false
     };
@@ -64,11 +70,6 @@ class Register extends Component {
       lastname: e.target.value
     });
   }
-  onChangecng(e) {
-    this.setState({
-      confpwd: e.target.value
-    });
-  }
   onChangeDate(e) {
     this.setState({
       borndate: e.target.value
@@ -99,16 +100,16 @@ class Register extends Component {
     };
     axios.post('http://localhost:5000/users/register', user)
       .then(res => {
-
-        if (res.status === 200) {
+        if (res.status === 200 && this.validator.allValid()) {
           this.setState({ isSignedUp: true })
         }
 
-      });
+      }).catch(this.validator.showMessages(), this.forceUpdate());
 
     console.log(user);
   }
   render() {
+
 
     if (this.state.isSignedUp) {
       // redirect to dashbord if signed up
@@ -134,7 +135,9 @@ class Register extends Component {
                         </InputGroupText>
                       </InputGroupAddon>
                       <Input type="text" placeholder="FirstName" autoComplete="Firstname" value={this.state.firstname} onChange={this.onChangefirstname} />
+
                     </InputGroup>
+                    {this.validator.message('First name ', this.state.firstname, 'required')}
                     <InputGroup className="mb-3">
                       <InputGroupAddon addonType="prepend">
                         <InputGroupText>
@@ -143,6 +146,7 @@ class Register extends Component {
                       </InputGroupAddon>
                       <Input type="text" placeholder="LastName" autoComplete="lastname" value={this.state.lastname} onChange={this.onChangelast} />
                     </InputGroup>
+                    {this.validator.message('Last name ', this.state.lastname, 'required')}
                     <InputGroup className="mb-3">
                       <InputGroupAddon addonType="prepend">
                         <InputGroupText>
@@ -151,6 +155,7 @@ class Register extends Component {
                       </InputGroupAddon>
                       <Input type="text" placeholder="Username" autoComplete="username" value={this.state.username} onChange={this.onChangeUsername} />
                     </InputGroup>
+                    {this.validator.message('username ', this.state.username, 'required|max:10')}
                     <InputGroup className="mb-3">
                       <InputGroupAddon addonType="prepend">
                         <InputGroupText>
@@ -159,12 +164,14 @@ class Register extends Component {
                       </InputGroupAddon>
                       <Input type="text" placeholder="Phone (+216)" autoComplete="phonenumber" value={this.state.phonenumber} onChange={this.onChangephone} />
                     </InputGroup>
+                    {this.validator.message('phone number ', this.state.phonenumber, 'required|numeric|min:0,num')}
                     <InputGroup className="mb-3">
                       <InputGroupAddon addonType="prepend">
                         <InputGroupText>@</InputGroupText>
                       </InputGroupAddon>
                       <Input type="text" placeholder="Email" autoComplete="email" value={this.state.email} onChange={this.onChangeEmail} />
                     </InputGroup>
+                    {this.validator.message('email', this.state.email, 'required|email')}
                     <InputGroup className="mb-3">
                       <InputGroupAddon addonType="prepend">
                         <InputGroupText>
@@ -176,6 +183,7 @@ class Register extends Component {
                           onChange={this.onChangeDate} />
                       </Col>
                     </InputGroup>
+
                     <InputGroup className="mb-3">
                       <InputGroupAddon addonType="prepend">
                         <InputGroupText>
@@ -184,14 +192,7 @@ class Register extends Component {
                       </InputGroupAddon>
                       <Input type="password" placeholder="Password" autoComplete="new-password" value={this.state.password} onChange={this.Onchangepassword} />
                     </InputGroup>
-                    <InputGroup className="mb-4">
-                      <InputGroupAddon addonType="prepend">
-                        <InputGroupText>
-                          <i className="icon-lock"></i>
-                        </InputGroupText>
-                      </InputGroupAddon>
-                      <Input type="password" placeholder="Repeat password" autoComplete="new-password" value={this.state.confpwd} onChange={this.onChangecng} />
-                    </InputGroup>
+                    {this.validator.message('Password', this.state.password, 'required|min:8|max:16')}
 
                     <InputGroup className="mb-4">
                       <InputGroupAddon addonType="prepend">
