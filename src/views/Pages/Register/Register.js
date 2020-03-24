@@ -1,8 +1,12 @@
 import React, { Component } from 'react';
 import { Button, Card, CardBody, CardFooter, Col, Container, Form, Input, InputGroup, InputGroupAddon, InputGroupText, Row, Label } from 'reactstrap';
 import axios from 'axios';
-
 import "react-datepicker/dist/react-datepicker.css";
+import { Redirect } from 'react-router-dom';
+
+
+
+
 class Register extends Component {
   constructor(props) {
     super(props);
@@ -15,6 +19,8 @@ class Register extends Component {
     this.onChangecng = this.onChangecng.bind(this);
     this.onChangefirstname = this.onChangefirstname.bind(this);
     this.Onsubmit = this.Onsubmit.bind(this);
+    this.onChangeRole = this.onChangeRole.bind(this)
+    this.onChangeRole1 = this.onChangeRole1.bind(this)
     this.state = {
       username: '',
       email: '',
@@ -25,7 +31,7 @@ class Register extends Component {
       borndate: '',
       confpwd: '',
       role: '',
-
+      isSignedUp: false
     };
   }
   onChangeEmail(e) {
@@ -70,7 +76,12 @@ class Register extends Component {
   }
   onChangeRole(e) {
     this.setState({
-      role: e.target.value
+      role: e.target.value = "Teacher"
+    })
+  }
+  onChangeRole1(e) {
+    this.setState({
+      role: e.target.value = "Student"
     })
   }
   Onsubmit(e) {
@@ -83,14 +94,29 @@ class Register extends Component {
       phonenumber: this.state.phonenumber,
       username: this.state.username,
       borndate: this.state.borndate,
-      role: this.state.teacher
+      role: this.state.role,
+
     };
     axios.post('http://localhost:5000/users/register', user)
-      .then(res => console.log(res.data));
+      .then(res => {
+
+        if (res.status === 200) {
+          this.setState({ isSignedUp: true })
+        }
+
+      });
 
     console.log(user);
   }
   render() {
+
+    if (this.state.isSignedUp) {
+      // redirect to dashbord if signed up
+      return <Redirect to={{ pathname: "/dashboard" }} />;
+    }
+
+
+
     return (
       <div className="app flex-row align-items-center">
         <Container>
@@ -173,7 +199,7 @@ class Register extends Component {
                           <i className="icon-user"></i>
                         </InputGroupText>
                       </InputGroupAddon>
-                      <Input className="form-check-input" type="radio" id="inline-radio1" name="inline-radios" value="Teacher" />
+                      <Input className="form-check-input" type="radio" id="inline-radio1" name="inline-radios" value="Teacher" onChange={this.onChangeRole} />
                       <Label className="form-check-label" check htmlFor="inline-radio1">Teacher</Label>
 
                     </InputGroup>
@@ -184,7 +210,7 @@ class Register extends Component {
                           <i className="icon-user"></i>
                         </InputGroupText>
                       </InputGroupAddon>
-                      <Input className="form-check-input" type="radio" id="inline-radio2" name="inline-radios" value="Student" />
+                      <Input className="form-check-input" type="radio" id="inline-radio2" name="inline-radios" value="Student" onChange={this.onChangeRole1} />
                       <Label className="form-check-label" check htmlFor="inline-radio2">Student</Label>
 
                     </InputGroup>
