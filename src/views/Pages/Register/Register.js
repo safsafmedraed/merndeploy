@@ -28,6 +28,7 @@ class Register extends Component {
     this.Onsubmit = this.Onsubmit.bind(this);
     this.onChangeRole = this.onChangeRole.bind(this)
     this.onChangeRole1 = this.onChangeRole1.bind(this)
+    this.onchangeBornplace = this.onchangeBornplace.bind(this)
     this.state = {
       username: '',
       email: '',
@@ -36,6 +37,7 @@ class Register extends Component {
       firstname: '',
       lastname: '',
       borndate: '',
+      bornplace: '',
       role: '',
       isSignedUp: false
     };
@@ -85,6 +87,11 @@ class Register extends Component {
       role: e.target.value = "Student"
     })
   }
+  onchangeBornplace(e) {
+    this.setState({
+      bornplace: e.target.value
+    })
+  }
   Onsubmit(e) {
     e.preventDefault();
     const user = {
@@ -96,6 +103,7 @@ class Register extends Component {
       username: this.state.username,
       borndate: this.state.borndate,
       role: this.state.role,
+      bornplace: this.state.bornplace
 
     };
     axios.post('http://localhost:5000/users/register', user)
@@ -179,10 +187,20 @@ class Register extends Component {
                         </InputGroupText>
                       </InputGroupAddon>
                       <Col xs="12" md="10">
-                        <Input type="date" id="date-input" name="date-input" placeholder="date" value={this.state.borndate}
+                        <Input type="date" id="date-input" name="date-input" placeholder="Born Date" value={this.state.borndate}
                           onChange={this.onChangeDate} />
                       </Col>
                     </InputGroup>
+
+                    <InputGroup className="mb-3">
+                      <InputGroupAddon addonType="prepend">
+                        <InputGroupText>
+                          <i className="icon-lock"></i>
+                        </InputGroupText>
+                      </InputGroupAddon>
+                      <Input type="Text" placeholder="Born Place" autoComplete="Born Place" value={this.state.bornplace} onChange={this.onchangeBornplace} />
+                    </InputGroup>
+                    {this.validator.message('Born Place', this.state.bornplace, 'required|min:4|max:16')}
 
                     <InputGroup className="mb-3">
                       <InputGroupAddon addonType="prepend">

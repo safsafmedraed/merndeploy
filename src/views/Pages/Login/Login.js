@@ -2,7 +2,9 @@ import React, { Component } from 'react';
 import { Link, Redirect } from 'react-router-dom';
 import { Button, Card, CardBody, CardGroup, Col, Container, Form, Input, InputGroup, InputGroupAddon, InputGroupText, Row, Alert, Fade } from 'reactstrap';
 import axios from 'axios';
-
+import { connect } from 'react-redux';
+import { setAlert } from '../../../actions/alert';
+import propTypes from 'prop-types';
 class Login extends Component {
   constructor(props) {
 
@@ -43,7 +45,10 @@ class Login extends Component {
         if (res.status === 200) {
           this.setState({ isSignedUp: true })
         }
-      }).catch(this.setState({ hide: false }));;
+      }).catch(
+        this.setState({ hide: false })
+        , this.props.setAlert('cant connect', 'warning', 'id')
+      );;
 
 
 
@@ -76,7 +81,7 @@ class Login extends Component {
                             <i className="icon-user"></i>
                           </InputGroupText>
                         </InputGroupAddon>
-                        <Input type="text" placeholder="email" autoComplete="email" value={this.state.email} onChange={this.onChangeUsername} required />
+                        <Input type="text" placeholder="email" autoComplete="email" value={this.state.email} onChange={this.onChangeUsername} />
                       </InputGroup>
                       <InputGroup className="mb-4">
                         <InputGroupAddon addonType="prepend">
@@ -84,7 +89,7 @@ class Login extends Component {
                             <i className="icon-lock"></i>
                           </InputGroupText>
                         </InputGroupAddon>
-                        <Input type="password" placeholder="Password" value={this.state.password} onChange={this.Onchangepwd} required minLength="8" />
+                        <Input type="password" placeholder="Password" value={this.state.password} onChange={this.Onchangepwd} />
                       </InputGroup>
                       <Row>
                         <Col xs="6">
@@ -123,5 +128,7 @@ class Login extends Component {
     );
   }
 }
-
-export default Login;
+Login.propTypes = {
+  setAlert: propTypes.func.isRequired
+}
+export default connect(null, { setAlert })(Login);
