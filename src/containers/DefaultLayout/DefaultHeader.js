@@ -10,7 +10,7 @@ import { connect } from 'react-redux';
 import { logout } from '../../actions/auth';
 
 
-const defaultProps = {};
+
 
 const DefaultHeader = ({ auth: { isAuthenticated, loading }, logout }) => {
 

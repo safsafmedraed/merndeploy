@@ -5,18 +5,18 @@ const passport = require('passport');
 const JWT = require('jsonwebtoken');
 const JWT_SECRET = require('../config').JWT_SECRET;
 const config = require('config');
-
+const auth = require('../middleware/auth');
 
 
 /**************GET USERS*************/
-router.route('/').get(passport.authenticate('jwt', { session: false }), (req, res) => {
+router.route('/').get(auth, (req, res) => {
 
     User.find().then(users => res.json(users)).catch(err => res.status(400).json('Error:' + err))
 
 })
 
 
-/*******Register*********/
+/*******Register*********//*********Token expire in 1 hour******** */
 router.route('/register').post((req, res) => {
     const username = req.body.username;
     const email = req.body.email;
@@ -52,7 +52,9 @@ router.route('/register').post((req, res) => {
                             id: user.id
                         }
                     }
-                    const token = JWT.sign(payload, config.get('jwtSecret'));
+                    const token = JWT.sign(payload, config.get('jwtSecret'), {
+                        expiresIn: 3600
+                    });
                     // res.cookie('access_token', token, { expires: new Date(Date.now() + 900000), httpOnly: true });
                     user.save().then(() => res.json({ user, token })).catch(err => res.status(400).json(err));
                 }));
@@ -62,7 +64,7 @@ router.route('/register').post((req, res) => {
     })
 
 })
-//Login handle 
+//Login handle  /*********Token expire in 1 hour******** */
 router.route('/login').post(function (req, res, next) {
 
     passport.authenticate('local', { session: false }, (err, user, info) => {
@@ -84,7 +86,9 @@ router.route('/login').post(function (req, res, next) {
                 }
             }
 
-            const token = JWT.sign(payload, config.get('jwtSecret'));
+            const token = JWT.sign(payload, config.get('jwtSecret'), {
+                expiresIn: 3600
+            });
             // res.cookie('access_token', token, { expires: new Date(Date.now() + 900000), httpOnly: true });
             return res.json({ user, token });
         });

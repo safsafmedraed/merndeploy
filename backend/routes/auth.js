@@ -86,7 +86,7 @@ router.post('/client', [
         jwt.sign(
             payload,
             config.get('jwtToken'), {
-            expiresIn: 360000
+            expiresIn: 3600
         },
             (err, token) => {
                 if (err) {
@@ -170,7 +170,7 @@ router.post('/admin', [
         jwt.sign(
             payload,
             config.get('jwtToken'), {
-            expiresIn: 360000
+            expiresIn: 3600
         },
             (err, token) => {
                 if (err) {
