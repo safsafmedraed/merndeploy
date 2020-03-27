@@ -57,6 +57,7 @@ app.use('/subjects', subjectRouter);
 app.use('/users', usersRouter);
 app.use('/forgot', forgotpassword);
 app.use('/api/auth', require('./routes/auth'));
+app.use('/profile', require('./routes/profile'));
 
 app.listen(port, () => {
   console.log(`Server is running at port : ${port}`);
