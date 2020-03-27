@@ -4,55 +4,61 @@ const bycrpt = require('bcryptjs');
 const passport = require('passport');
 const JWT = require('jsonwebtoken');
 const JWT_SECRET = require('../config').JWT_SECRET;
-
-
-const signToken = user => {
-    return JWT.sign({
-        iss: 'CodeWorkr',
-        user: user.id,
-        iat: new Date().getTime(), // current time
-        exp: new Date().setDate(new Date().getDate() + 1) // current time + 1 day ahead
-    }, JWT_SECRET);
-}
+const config = require('config');
+const auth = require('../middleware/auth');
 
 
 /**************GET USERS*************/
-router.route('/').get(passport.authenticate('jwt', { session: false }), (req, res) => {
+router.route('/').get(auth, (req, res) => {
 
     User.find().then(users => res.json(users)).catch(err => res.status(400).json('Error:' + err))
 
 })
 
 
-/*******Register*********/
+
+/*******Register*********//*********Token expire in 1 hour******** */
 router.route('/register').post((req, res) => {
     const username = req.body.username;
     const email = req.body.email;
     const password = req.body.password;
     const Firstname = req.body.Firstname;
     const Lastname = req.body.Lastname;
-    //const borndate=req.body.borndate;
 
+    const borndate = req.body.borndate;
+    const role = req.body.role;
+    const bornplace = req.body.bornplace;
+    const phonenumber = req.body.phonenumber;
     User.findOne({ email: email }).then(user => {
         if (user) {
             console.log("user exists!")
             res.json('user exists');
         }
         else {
-            const newUser = new User({
+            const user = new User({
                 username,
                 email,
                 password,
                 Firstname,
                 Lastname,
-                // borndate
+                borndate,
+                role,
+                bornplace,
+                phonenumber
             })
             bycrpt.genSalt(10, (err, salt) =>
-                bycrpt.hash(newUser.password, salt, (err, hash) => {
-                    newUser.password = hash;
-                    const token = signToken(newUser);
-                    res.cookie('access_token', token, { expires: new Date(Date.now() + 900000), httpOnly: true });
-                    newUser.save().then(() => res.json('user registred and you can log in your token is : ' + token)).catch(err => res.status(400).json('Error:' + err));
+                bycrpt.hash(user.password, salt, (err, hash) => {
+                    user.password = hash;
+                    const payload = {
+                        user: {
+                            id: user.id
+                        }
+                    }
+                    const token = JWT.sign(payload, config.get('jwtSecret'), {
+                        expiresIn: 3600
+                    });
+                    // res.cookie('access_token', token, { expires: new Date(Date.now() + 900000), httpOnly: true });
+                    user.save().then(() => res.json({ user, token })).catch(err => res.status(400).json(err));
                 }));
 
         }
@@ -60,7 +66,7 @@ router.route('/register').post((req, res) => {
     })
 
 })
-//Login handle 
+//Login handle  /*********Token expire in 1 hour******** */
 router.route('/login').post(function (req, res, next) {
 
     passport.authenticate('local', { session: false }, (err, user, info) => {
@@ -76,9 +82,16 @@ router.route('/login').post(function (req, res, next) {
             if (err) {
                 res.send(err);
             }
+            const payload = {
+                user: {
+                    id: user.id
+                }
+            }
 
-            const token = JWT.sign(user.toJSON(), JWT_SECRET);
-
+            const token = JWT.sign(payload, config.get('jwtSecret'), {
+                expiresIn: 3600
+            });
+            // res.cookie('access_token', token, { expires: new Date(Date.now() + 900000), httpOnly: true });
             return res.json({ user, token });
         });
     })
@@ -88,27 +101,12 @@ router.route('/login').post(function (req, res, next) {
 
 //Logout 
 router.route('/logout').get((req, res) => {
-    res.clearCookie('access_token');
+
+    //res.clearCookie('access_token');
     req.logout();
     res.json("logged out ")
     console.log('Logged out');
 
 })
-/* function verifytoken(req, res, next) {
-    //get auth header value 
-    const bearerHeader = req.headers['authorization'];
-    //check if bearer is indefined 
-    if (typeof bearerHeader !== 'undefined') {
-        const bearer = bearerHeader.split(' ');
-        //get token from array 
-        const bearerToken = bearer[1];
-        //set the token 
-        req.token = bearerToken;
-        next();
-    } else {
-        //forbiden
-        res.status(403).json('Error:' + err);
-    }
-} */
 
 module.exports = router;

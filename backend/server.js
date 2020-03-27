@@ -6,9 +6,10 @@ const flash = require('connect-flash');
 const session = require('express-session');
 const passport = require('passport');
 const usersRouter = require('./routes/users');
+const subjectRouter = require('./routes/Subjects');
 const forgotpassword = require('./configuration/forgotpassword');
-const resetpassword = require('./configuration/resetpassword');
 const app = express();
+
 //passport config
 require('./passport')(passport);
 
@@ -29,9 +30,7 @@ connection.once('open', () => {
   console.log('***database works!!***');
 })
 
-app.use(cors());
-//body-parser
-app.use(express.json());
+app.use(express.json({ extended: false }));
 //express session
 app.use(session({
   secret: 'secret',
@@ -53,12 +52,10 @@ app.use((req, res, next) => {
 
 
 
-
-
-app.use('/users', cors(), usersRouter);
+app.use('/subjects', subjectRouter);
+app.use('/users', usersRouter);
 app.use('/forgot', forgotpassword);
-app.use('/reset', resetpassword);
-app.use('/claims', require('./routes/claims'));
+app.use('/api/auth', require('./routes/auth'));
 
 app.listen(port, () => {
   console.log(`Server is running at port : ${port}`);

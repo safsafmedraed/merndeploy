@@ -234,20 +234,37 @@ export default {
           url: '/500',
           icon: 'icon-star',
         },
+        {
+          name: 'Register',
+          url: '/Register1',
+          icon: 'icon-star',
+        },
       ],
     },
     {
       name: 'Forum',
-      url: '/forum',
       icon: 'cui-people',
       attributes: { disabled: false },
+      children: [
+        {
+          name: 'Add New Post',
+          url: '/AddPost',
+          icon: 'icon-cursor',
+        },
+        {
+          name: 'All Q & A',
+          url: '/Forum',
+          icon: 'icon-star'
+        }
+      ]
     },
     {
       name: 'Claims',
       url: '/Claims',
       icon: 'cui-envelope-open',
-      attributes: { disabled: false },
-    },
+      attributes: { disabled: false }
+    }
+
 
   ],
 };
