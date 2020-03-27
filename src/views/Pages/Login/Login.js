@@ -74,7 +74,7 @@ const Login = ({ login, isAuthenticated }) => {
                     <div>
                       <h2>Sign up</h2>
                       <p className="text-white">Qwizard !</p>
-                      <Link to="/register">
+                      <Link to="/register1">
                         <Button color="primary" className="mt-3" active tabIndex={-1}>Register Now!</Button>
                       </Link>
                     </div>
