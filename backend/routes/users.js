@@ -4,7 +4,7 @@ const bycrpt = require('bcryptjs');
 const passport = require('passport');
 const JWT = require('jsonwebtoken');
 const JWT_SECRET = require('../config').JWT_SECRET;
-
+const config = require('config');
 
 
 
@@ -33,7 +33,7 @@ router.route('/register').post((req, res) => {
             res.json('user exists');
         }
         else {
-            const newUser = new User({
+            const user = new User({
                 username,
                 email,
                 password,
@@ -45,11 +45,16 @@ router.route('/register').post((req, res) => {
                 phonenumber
             })
             bycrpt.genSalt(10, (err, salt) =>
-                bycrpt.hash(newUser.password, salt, (err, hash) => {
-                    newUser.password = hash;
-                    const token = JWT.sign(newUser.toJSON(), JWT_SECRET);
-                    res.cookie('access_token', token, { expires: new Date(Date.now() + 900000), httpOnly: true });
-                    newUser.save().then(() => res.json('user registred and you can log in your token is : ' + token)).catch(err => res.status(400).json('Error:' + err));
+                bycrpt.hash(user.password, salt, (err, hash) => {
+                    user.password = hash;
+                    const payload = {
+                        user: {
+                            id: user.id
+                        }
+                    }
+                    const token = JWT.sign(payload, config.get('jwtSecret'));
+                    // res.cookie('access_token', token, { expires: new Date(Date.now() + 900000), httpOnly: true });
+                    user.save().then(() => res.json({ user, token })).catch(err => res.status(400).json(err));
                 }));
 
         }
@@ -73,9 +78,14 @@ router.route('/login').post(function (req, res, next) {
             if (err) {
                 res.send(err);
             }
+            const payload = {
+                user: {
+                    id: user.id
+                }
+            }
 
-            const token = JWT.sign(user.toJSON(), JWT_SECRET);
-            res.cookie('access_token', token, { expires: new Date(Date.now() + 900000), httpOnly: true });
+            const token = JWT.sign(payload, config.get('jwtSecret'));
+            // res.cookie('access_token', token, { expires: new Date(Date.now() + 900000), httpOnly: true });
             return res.json({ user, token });
         });
     })
@@ -85,7 +95,7 @@ router.route('/login').post(function (req, res, next) {
 
 //Logout 
 router.route('/logout').get((req, res) => {
-    res.clearCookie('access_token');
+    //res.clearCookie('access_token');
     req.logout();
     res.json("logged out ")
     console.log('Logged out');

@@ -4,12 +4,16 @@ import axios from 'axios';
 import "react-datepicker/dist/react-datepicker.css";
 import { Redirect } from 'react-router-dom';
 import SimpleReactValidator from 'simple-react-validator';
-
-
+import { register } from '../../../actions/auth';
+import { connect } from 'react-redux';
+import { setAlert } from '../../../actions/alert';
+import propTypes from 'prop-types';
 
 class Register extends Component {
+
   constructor(props) {
     super(props);
+
     this.validator = new SimpleReactValidator(
       {
         element: message =>
@@ -42,6 +46,7 @@ class Register extends Component {
       isSignedUp: false
     };
   }
+
   onChangeEmail(e) {
     this.setState({
       email: e.target.value
@@ -114,7 +119,7 @@ class Register extends Component {
 
       }).catch(this.validator.showMessages(), this.forceUpdate());
 
-    console.log(user);
+
   }
   render() {
 
@@ -254,5 +259,8 @@ class Register extends Component {
     );
   }
 }
-
-export default Register;
+Register.propTypes = {
+  setAlert: propTypes.func.isRequired,
+  register: propTypes.func.isRequired
+}
+export default connect(null, { setAlert, register })(Register);

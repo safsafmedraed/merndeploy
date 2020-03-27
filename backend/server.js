@@ -8,7 +8,6 @@ const passport = require('passport');
 const usersRouter = require('./routes/users');
 const subjectRouter = require('./routes/Subjects');
 const forgotpassword = require('./configuration/forgotpassword');
-
 const app = express();
 
 //passport config
@@ -32,8 +31,8 @@ connection.once('open', () => {
 })
 
 
-//body-parser
-app.use(express.json());
+
+app.use(express.json({ extended: false }));
 //express session
 app.use(session({
   secret: 'secret',
@@ -57,7 +56,7 @@ app.use((req, res, next) => {
 app.use('/subjects', subjectRouter);
 app.use('/users', usersRouter);
 app.use('/forgot', forgotpassword);
-
+app.use('/api/auth', require('./routes/auth'));
 
 app.listen(port, () => {
   console.log(`Server is running at port : ${port}`);

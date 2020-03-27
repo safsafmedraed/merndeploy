@@ -234,6 +234,11 @@ export default {
           url: '/500',
           icon: 'icon-star',
         },
+        {
+          name: 'Register',
+          url: '/Register1',
+          icon: 'icon-star',
+        },
       ],
     },
     {

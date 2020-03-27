@@ -1,69 +1,35 @@
-import React, { Component } from 'react';
+import React, { useState, Fragment } from 'react';
 import { Link, Redirect } from 'react-router-dom';
-import { Button, Card, CardBody, CardGroup, Col, Container, Form, Input, InputGroup, InputGroupAddon, InputGroupText, Row, Alert, Fade } from 'reactstrap';
-import axios from 'axios';
+import { Button, Card, CardBody, CardGroup, Col, Container, Form, Input, InputGroup, InputGroupAddon, InputGroupText, Row } from 'reactstrap';
+
 import { connect } from 'react-redux';
 import { setAlert } from '../../../actions/alert';
 import propTypes from 'prop-types';
-class Login extends Component {
-  constructor(props) {
+import { login } from '../../../actions/auth';
+const Login = ({ login, isAuthenticated }) => {
 
-    super(props);
-    this.Onchangepwd = this.Onchangepwd.bind(this);
-    this.onChangeUsername = this.onChangeUsername.bind(this);
-    this.Onsubmit = this.Onsubmit.bind(this);
-    this.toggleFade = this.toggleFade.bind(this);
-    this.state = {
-      email: '',
-      password: '',
-      isSignedUp: false,
-      hide: true,
-      fadeIn: true,
-    };
-  }
-  onChangeUsername(e) {
-    this.setState({
-      email: e.target.value
-    });
-  }
-  Onchangepwd(e) {
-    this.setState({
-      password: e.target.value
-    })
-  }
-  toggleFade() {
-    this.setState((prevState) => { return { fadeIn: !prevState } });
-  }
-  Onsubmit(e) {
+  const [formData, setFormData] = useState({
+    email: '',
+    password: ''
+  });
+
+  const { email, password } = formData;
+
+  const onchange = e => setFormData({ ...formData, [e.target.name]: e.target.value });
+
+  const onSubmit = async e => {
     e.preventDefault();
-    const user = {
-      email: this.state.email,
-      password: this.state.password,
-    };
-    axios.post('http://localhost:5000/users/login', user)
-      .then(res => {
-        if (res.status === 200) {
-          this.setState({ isSignedUp: true })
-        }
-      }).catch(
-        this.setState({ hide: false })
-        , this.props.setAlert('cant connect', 'warning', 'id')
-      );;
-
-
-
-
-
+    login(email, password);
   }
-  render() {
 
 
-    if (this.state.isSignedUp) {
-      // redirect to Forum if signed up
-      return <Redirect to={{ pathname: "/dashboard" }} />;
-    }
-    return (
+  //redirect if logged in
+  if (isAuthenticated) {
+    return <Redirect to="/dashboard" />
+  }
 
+  return (
+    <Fragment>
       <div className="app flex-row align-items-center">
         <Container>
 
@@ -72,7 +38,7 @@ class Login extends Component {
               <CardGroup>
                 <Card className="p-4">
                   <CardBody>
-                    <Form onSubmit={this.Onsubmit}>
+                    <Form onSubmit={e => onSubmit(e)}>
                       <h1>Login</h1>
                       <p className="text-muted">Sign In to your account</p>
                       <InputGroup className="mb-3">
@@ -81,7 +47,7 @@ class Login extends Component {
                             <i className="icon-user"></i>
                           </InputGroupText>
                         </InputGroupAddon>
-                        <Input type="text" placeholder="email" autoComplete="email" value={this.state.email} onChange={this.onChangeUsername} />
+                        <Input type="text" placeholder="email" autoComplete="email" name="email" value={email} onChange={e => onchange(e)} />
                       </InputGroup>
                       <InputGroup className="mb-4">
                         <InputGroupAddon addonType="prepend">
@@ -89,7 +55,7 @@ class Login extends Component {
                             <i className="icon-lock"></i>
                           </InputGroupText>
                         </InputGroupAddon>
-                        <Input type="password" placeholder="Password" value={this.state.password} onChange={this.Onchangepwd} />
+                        <Input type="password" placeholder="Password" name="password" value={password} onChange={e => onchange(e)} />
                       </InputGroup>
                       <Row>
                         <Col xs="6">
@@ -98,13 +64,7 @@ class Login extends Component {
                         <Col xs="6" className="text-right">
                           <Button color="link" className="px-0">Forgot password?</Button>
                         </Col>
-                        <Fade timeout={this.state.timeout} in={this.state.fadeIn}>
-                          <CardBody hidden={this.state.hide}>
-                            <Button color="link" className="card-header-action btn-close" onClick={this.toggleFade}><i className="icon-close"></i></Button>
-                            <Alert color="warning">
-                              Please Check your email or Password !
-                             </Alert>
-                          </CardBody></Fade>
+
                       </Row>
                     </Form>
                   </CardBody>
@@ -125,10 +85,13 @@ class Login extends Component {
           </Row>
         </Container>
       </div>
-    );
-  }
+    </Fragment>)
 }
 Login.propTypes = {
-  setAlert: propTypes.func.isRequired
+  login: propTypes.func.isRequired,
+  isAuthenticated: propTypes.bool
 }
-export default connect(null, { setAlert })(Login);
+const mapStateToProps = state => ({
+  isAuthenticated: state.auth.isAuthenticated
+})
+export default connect(mapStateToProps, { setAlert, login })(Login);
