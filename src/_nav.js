@@ -242,6 +242,12 @@ export default {
       icon: 'cui-people',
       attributes: { disabled: false },
     },
+    {
+      name: 'Claims',
+      url: '/Claims',
+      icon: 'cui-envelope-open',
+      attributes: { disabled: false },
+    },
 
   ],
 };

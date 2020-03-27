@@ -36,6 +36,8 @@ const Widgets = React.lazy(() => import('./views/Widgets/Widgets'));
 const Users = React.lazy(() => import('./views/Users/Users'));
 const User = React.lazy(() => import('./views/Users/User'));
 const Forum = React.lazy(() => import('./views/Forum/Forum'));
+const Claims = React.lazy(() => import('./views/Claims/Claims'));
+const Claim = React.lazy(() => import('./views/Claims/Claim'));
 
 // https://github.com/ReactTraining/react-router/tree/master/packages/react-router-config
 const routes = [
@@ -81,6 +83,9 @@ const routes = [
   { path: '/users', exact: true,  name: 'Users', component: Users },
   { path: '/users/:id', exact: true, name: 'User Details', component: User },
   { path: '/Forum', exact: true, name: 'Forum', component: Forum },
+  { path: '/Claims', exact: true, name: 'Claims', component: Claims },
+  { path: '/Claims/:id', exact: true, name: 'Claim', component: Claim }
+  
 ];
 
 export default routes;

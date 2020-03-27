@@ -16,7 +16,7 @@ require('dotenv').config();
 app.use(cookieParser());
 app.use(
   cors({
-    origin: "http://localhost:5000",
+    origin: "http://localhost:3000",
     credentials: true
   })
 );
@@ -54,9 +54,11 @@ app.use((req, res, next) => {
 
 
 
+
 app.use('/users', cors(), usersRouter);
 app.use('/forgot', forgotpassword);
 app.use('/reset', resetpassword);
+app.use('/claims', require('./routes/claims'));
 
 app.listen(port, () => {
   console.log(`Server is running at port : ${port}`);
