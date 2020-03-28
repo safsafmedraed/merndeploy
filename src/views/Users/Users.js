@@ -1,10 +1,47 @@
-import React, { Component } from 'react';
+import React, { useEffect, Fragment } from 'react';
 import { Link } from 'react-router-dom';
 import { Badge, Card, CardBody, CardHeader, Col, Row, Table } from 'reactstrap';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import { getCurrentProfile } from '../../actions/profile';
+import Spinner from '../Theme/Spinner';
 
-import usersData from './UsersData'
 
-function UserRow(props) {
+
+const Users = ({ getCurrentProfile, auth: { user }, profile: { profile, loading } }) => {
+  useEffect(() => {
+    getCurrentProfile();
+  }, [])
+
+  return loading && profile === null ? <Spinner /> : <Fragment>
+    <h1>Welcome {user && user.username}</h1>
+  </Fragment>;
+
+
+
+
+
+
+
+
+
+
+}
+Users.propTypes = {
+  getCurrentProfile: PropTypes.func.isRequired,
+  auth: PropTypes.object.isRequired,
+  profile: PropTypes.object.isRequired
+};
+
+const mapStateToProps = state => ({
+  auth: state.auth,
+  profile: state.profile
+})
+
+
+
+
+/*function UserRow(props) {
   const user = props.user
   const userLink = `/users/${user.id}`
 
@@ -25,9 +62,9 @@ function UserRow(props) {
       <td><Link to={userLink}><Badge color={getBadge(user.status)}>{user.status}</Badge></Link></td>
     </tr>
   )
-}
+}*/
 
-class Users extends Component {
+/*class Users extends Component {
 
   render() {
 
@@ -65,6 +102,6 @@ class Users extends Component {
       </div>
     )
   }
-}
+}*/
 
-export default Users;
+export default connect(mapStateToProps, { getCurrentProfile })(Users);

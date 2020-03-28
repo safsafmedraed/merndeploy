@@ -239,6 +239,12 @@ export default {
           url: '/Register1',
           icon: 'icon-star',
         },
+
+        {
+          name: 'Forgot Password',
+          url: '/ForgotPassword',
+          icon: 'icon-star',
+        },
       ],
     },
     {

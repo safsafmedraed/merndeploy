@@ -5,7 +5,7 @@ import { register } from '../../../actions/auth';
 import { connect } from 'react-redux';
 import { setAlert } from '../../../actions/alert';
 import propTypes from 'prop-types';
-import { Redirect } from 'react-router-dom';
+import { Redirect, Link } from 'react-router-dom';
 
 
 const Register1 = ({ setAlert, register, isAuthenticated }) => {
@@ -182,11 +182,14 @@ const Register1 = ({ setAlert, register, isAuthenticated }) => {
                             </CardBody>
                             <CardFooter className="p-4">
                                 <Row>
+
                                     <Col xs="12" sm="6">
-                                        <Button className="btn-facebook mb-1" block><span>facebook</span></Button>
+                                        <Link to="/login">
+                                            <Button className="btn-facebook mb-1" block><span>Login</span></Button>
+                                        </Link>
                                     </Col>
                                     <Col xs="12" sm="6">
-                                        <Button className="btn-twitter mb-1" block><span>twitter</span></Button>
+                                        <Button className="btn-twitter mb-1" block><span>Gmail</span></Button>
                                     </Col>
                                 </Row>
                             </CardFooter>

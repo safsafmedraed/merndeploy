@@ -1,11 +1,14 @@
 import React, { useState, Fragment } from 'react';
-import { Link, Redirect } from 'react-router-dom';
+import { Link, Redirect, NavLink } from 'react-router-dom';
 import { Button, Card, CardBody, CardGroup, Col, Container, Form, Input, InputGroup, InputGroupAddon, InputGroupText, Row } from 'reactstrap';
 
 import { connect } from 'react-redux';
 import { setAlert } from '../../../actions/alert';
 import propTypes from 'prop-types';
 import { login } from '../../../actions/auth';
+
+
+
 const Login = ({ login, isAuthenticated }) => {
 
   const [formData, setFormData] = useState({
@@ -62,7 +65,7 @@ const Login = ({ login, isAuthenticated }) => {
                           <Button color="primary" className="px-4" >Login</Button>
                         </Col>
                         <Col xs="6" className="text-right">
-                          <Button color="link" className="px-0">Forgot password?</Button>
+                          <NavLink to="/ForgotPassword" color="link" className="px-0">Forgot password?</NavLink>
                         </Col>
 
                       </Row>
