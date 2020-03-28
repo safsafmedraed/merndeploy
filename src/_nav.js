@@ -1,3 +1,6 @@
+const uri = ()=>{
+  return '/Claims'
+}
 export default {
   items: [
     {
@@ -260,7 +263,7 @@ export default {
     },
     {
       name: 'Claims',
-      url: '/Claims',
+      url: uri,
       icon: 'cui-envelope-open',
       attributes: { disabled: false }
     }

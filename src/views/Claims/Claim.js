@@ -1,19 +1,11 @@
-import React, { Component } from 'react';
-import faker from 'faker';
+import React, { Component, Fragment } from 'react';
 import { Card, CardHeader, CardBody , Modal, ModalBody, ModalFooter, ModalHeader , Button } from 'reactstrap';
 import { Editor } from '@tinymce/tinymce-react';
 import ReactHtmlParser from 'react-html-parser';
+import {connect} from 'react-redux';
 
 class Claim extends Component {
     state = {
-        title : faker.lorem.sentence(),
-        description : faker.lorem.paragraph(),
-        user : faker.name.findName(),
-        email : faker.internet.email(),
-        solved : faker.random.number(1) ? true : false ,
-        date : faker.date.past(10),
-        response : faker.lorem.paragraph(),
-
         editorInput : '', 
         confirmation : false
     }
@@ -25,26 +17,43 @@ class Claim extends Component {
       }
 
     render(){
+      const {claim} = this.props;
         return (
-            <div>
+            <Fragment>
+              {claim ? 
+                <div>
                 <Card>
                     <CardHeader>
-                        <strong>Title: </strong>{this.state.title} &nbsp; 
-                        { this.state.solved ? <span className="badge badge-success">Solved</span> : null}<br/>
-                        <span style={{fontSize:11 , color:'grey'}}>{this.state.date.toLocaleString()}</span>
+                        <strong>Title: </strong>{claim.title} &nbsp; 
+                        { claim.solved ? <span className="badge badge-success">Solved</span> : null}<br/>
+                        <span style={{fontSize:11 , color:'grey'}}>{claim.date.toLocaleString()}</span>
                     </CardHeader>
                     <CardBody>
                         <div>
-                            <p>
-                                <strong>User: </strong>{this.state.user}<br/>
-                                <strong>Email: </strong>{this.state.email}
-                            </p>
-                            <div><strong>Description: </strong>{ReactHtmlParser(this.state.description)}</div><br/>
-                            <div>{this.state.solved ? <div><strong>Response: </strong> {ReactHtmlParser(this.state.response)}</div>  : null}</div>
+                                <strong>User: </strong>{claim.user}<br/>
+                                <strong>Email: </strong>{claim.email}
                         </div>
                     </CardBody>
-                </Card>
-                { !this.state.solved ? <Card>
+                    </Card>
+                    <Card>
+                      <CardHeader>
+                        <strong>Description</strong>
+                      </CardHeader>
+                      <CardBody>
+                      {ReactHtmlParser(claim.description)}
+                      </CardBody>
+                    </Card>
+                    {claim.solved ?
+                     <Card>
+                          <CardHeader>
+                              <strong>Response</strong>
+                          </CardHeader>
+                          <CardBody>
+                              {ReactHtmlParser(claim.response)}
+                          </CardBody>
+                     </Card> : null
+                     }
+                { !claim.solved ? <Card>
                     <CardHeader><strong>Response</strong></CardHeader>
                     <CardBody>
                     <Editor
@@ -75,14 +84,26 @@ class Claim extends Component {
                     {ReactHtmlParser(this.state.editorInput) }
                   </ModalBody>
                   <ModalFooter>
-                    <Button color="primary" onClick={()=>this.setState({response : this.state.editorInput , confirmation:false ,solved :true})}>OK</Button>{' '}
+                    <Button color="primary" onClick={()=>{
+                      this.setState({confirmation:false});
+                      claim.response = this.state.editorInput;
+                      claim.solved = true;
+                    }}>OK</Button>
                     <Button color="secondary" onClick={()=>this.setState({confirmation : false})}>Cancel</Button>
                   </ModalFooter>
                 </Modal>
-            </div>
+                </div> : <p> Undefined</p>
+    }
+            </Fragment>
           );
     }
  
 }
+const stateToProps = (state,props) =>{
+  const id = props.match.params.id;
+  return {
+      claim : state.claims.SuperClaims.find(claim => claim.id === id)
+  }
+};
 
-export default Claim;
+export default connect(stateToProps)(Claim);

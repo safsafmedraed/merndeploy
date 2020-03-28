@@ -4,33 +4,33 @@ import {Table , Card} from 'reactstrap';
 import {connect} from 'react-redux';
 
 
-class Claims extends Component {
+
+class UserClaims extends Component {
   
     constructor(props){
         super(props)
         if(!props.claims.length) {
-          let list = [];
-          for(let i=0;i<50;i++){
-              const item = {
-                  id : faker.random.uuid(),
-                  title : faker.lorem.sentence(),
-                  description : faker.lorem.paragraph(),
-                  response : faker.lorem.paragraph(),
-                  user : faker.name.findName(),
-                  email : faker.internet.email(),
-                  solved : faker.random.number(1) ? true : false ,
-                  date : faker.date.past(10)
-              }
-              list = [...list,item];
-          }
-          props.loadState(list);
-          
-      }
+            let list = [];
+            for(let i=0;i<50;i++){
+                const item = {
+                    id : faker.random.uuid(),
+                    title : faker.lorem.sentence(),
+                    description : faker.lorem.paragraph(),
+                    response : faker.lorem.paragraph(),
+                    user : faker.name.findName(),
+                    email : faker.internet.email(),
+                    solved : faker.random.number(1) ? true : false ,
+                    date : faker.date.past(10)
+                }
+                list = [...list,item];
+            }
+            props.loadState(list);
+            
+        } 
         this.state = {
             filter : null,
             search : "",
         }
-        console.log(this.state)
     }
     search(e){
         this.setState({
@@ -41,7 +41,7 @@ class Claims extends Component {
 
 
 render(){
-  const {claims} = this.props;
+    const {claims} = this.props;
   return (
     <div>
     <Card>
@@ -57,10 +57,7 @@ render(){
             <Table hover responsive className="table-outline mb-0 d-none d-sm-table">
                   <thead className="thead-light">
                   <tr>
-                    <th className="text-center"><i className="icon-people"></i></th>
-                    <th className="text-center">User</th>
                     <th className="text-center">Title</th>
-                    <th className="text-center">E-mail</th>
                     <th className="text-center">Date</th>
                     <th className="text-center">Status</th>
                   </tr>
@@ -75,21 +72,9 @@ render(){
                           })
                           .sort((a,b)=>b.date-a.date)
                           .map((claim , i) => {
-                          return  <tr key={i} onClick={()=>this.props.history.push("/Claims/"+claim.id)}>
-                          <td className="text-center">
-                            <div className="avatar">
-                              <img src={'assets/img/avatars/1.jpg'} className="img-avatar" alt="admin@bootstrapmaster.com" />
-                              {/* <span className="avatar-status badge-success"></span> */}
-                            </div>
-                          </td>
-                          <td>
-                          <div>{claim.user}</div>
-                          </td>
+                          return  <tr key={i} onClick={()=>this.props.history.push("/UserClaims/"+claim.id)}>
                           <td className="text-center">
                             {claim.title}
-                          </td>
-                          <td>
-                          <div>{claim.email}</div>
                           </td>
                           <td className="text-center">
                           <div>{claim.date.toLocaleString()}</div>
@@ -110,15 +95,15 @@ render(){
 }
 }
 const stateToProps = state => {
-  return {
-      claims : state.claims.SuperClaims
-  }
+    return {
+        claims : state.claims.UserClaims
+    }
 }
 const newState = dispatch =>{
-  return {
-      loadState : claims =>{
-          dispatch({type : "LOAD_STATE_SUPER" , payload : claims})
-      }
-  }
+    return {
+        loadState : Userclaims =>{
+            dispatch({type : "LOAD_STATE" , payload : Userclaims})
+        }
+    }
 }
-export default connect(stateToProps , newState)(Claims);
+export default connect(stateToProps , newState)(UserClaims);
