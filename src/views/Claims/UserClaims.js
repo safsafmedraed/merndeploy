@@ -41,6 +41,7 @@ class UserClaims extends Component {
     }
     handlePageChange(pageNumber) {
         this.setState({activePage: pageNumber});
+        document.body.scrollTop = document.documentElement.scrollTop = 0;
       }
 
 
@@ -59,12 +60,12 @@ render(){
   return (
     <div>
     <Card>
-        <form>
+        <div>
             <label><input defaultChecked={true} type="radio" name="fruit" onChange={()=>this.setState({filter : null , activePage :1})} value="" />All</label>
             <label><input type="radio" name="fruit" onChange={()=>this.setState({filter : true , activePage : 1})} value={true} />Solved</label>
             <label><input type="radio" name="fruit" onChange={()=>this.setState({filter : false , activePage :1})} value={false} />Not yet</label>
             <input type="text" value={this.state.search} placeholder="Search" onChange={this.search.bind(this)}/>
-        </form>
+        </div>
         <button className="btn btn-success" onClick={()=>this.props.history.push("/UserClaims/AddClaim")} >Add claim</button>
     </Card>
         <Card>
