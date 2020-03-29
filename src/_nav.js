@@ -1,5 +1,8 @@
 const uri = ()=>{
-  return '/Claims'
+if(localStorage.getItem("role")==="super")
+  return '/Claims';
+else
+  return '/UserClaims';
 }
 export default {
   items: [
