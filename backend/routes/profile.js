@@ -27,6 +27,9 @@ router.route('/').post([auth, [
     check('status', 'status  is required')
         .not()
         .isEmpty(),
+    check('institution', 'institution  is required')
+        .not()
+        .isEmpty(),
 
 ]], async (req, res) => {
     const errors = validationResult(req);
@@ -36,13 +39,14 @@ router.route('/').post([auth, [
         });
     }
 
-    const { status, education, location } = req.body;
+    const { status, education, location, institution } = req.body;
     //build profile object
     const profileFields = {};
     profileFields.user = req.user.id
 
     if (location) profileFields.location = location;
     if (status) profileFields.status = status;
+    if (institution) profileFields.institution = institution;
 
     profileFields.education = {};
     /*if (school) profileFields.education.school = school;
@@ -110,7 +114,7 @@ router.route('/').delete(auth, async (req, res) => {
         res.status(500).send('Server error')
     }
 })
-//add experience
+//add education
 router.route('/education').put([auth, [
     check('school', 'school  is required')
         .not()
@@ -148,7 +152,7 @@ router.route('/education').put([auth, [
         }
     }
 )
-//delete experience
+//delete education
 router.route('/education/:edu_id').delete(auth, async (req, res) => {
     try {
         const profile = await Profile.findOne({ user: req.user.id });

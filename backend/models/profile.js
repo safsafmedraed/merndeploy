@@ -8,6 +8,10 @@ const ProfileSchema = new Schema({
     location: {
         type: String
     },
+    institution: {
+        type: String,
+        required: true
+    },
     status: {
         type: String,
         required: true

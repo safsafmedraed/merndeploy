@@ -12,3 +12,4 @@ export const PASS_SEND = 'PASS_SEND';
 export const PASS_FAIL = 'PASS_FAIL';
 export const GET_PROFILE = 'GET_PROFILE';
 export const PROFILE_ERROR = 'PROFILE_ERROR';
+export const CLEAR_PROFILE = 'CLEAR_PROFILE';

@@ -37,6 +37,7 @@ const Users = React.lazy(() => import('./views/Users/Users'));
 const User = React.lazy(() => import('./views/Users/User'));
 const Forum = React.lazy(() => import('./views/Forum/Forum'));
 const AddPost = React.lazy(() => import('./views/Forum/ForumContainer/AddPost'));
+const CreateProfile = React.lazy(() => import('./views/CreateProfile/CreateProfile'));
 
 // https://github.com/ReactTraining/react-router/tree/master/packages/react-router-config
 const routes = [
@@ -83,6 +84,7 @@ const routes = [
   { path: '/users/:id', exact: true, name: 'User Details', component: User },
   { path: '/Forum', exact: true, name: 'Forum', component: Forum },
   { path: '/Addpost', exact: true, name: 'Add new Post', component: AddPost },
+  { path: '/CreateProfile', exact: true, name: 'Create Profile', component: CreateProfile }
 ];
 
 export default routes;

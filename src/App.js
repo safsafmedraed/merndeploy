@@ -41,7 +41,7 @@ const App = () => {
     <Provider store={store}>
       <HashRouter>
         <React.Suspense fallback={loading()}>
-          <Alert />
+          {/*<Alert />*/}
           <Switch>
             <Route exact path="/login" name="Login Page" render={props => <Login {...props} />} />
             {/*<Route exact path="/register" name="Register Page" render={props => <Register {...props} />} />*/}
@@ -49,6 +49,7 @@ const App = () => {
             <Route exact path="/ForgotPassword" name="Register Page" render={props => <ForgotPassword {...props} />} />
             <Route exact path="/404" name="Page 404" render={props => <Page404 {...props} />} />
             <Route exact path="/500" name="Page 500" render={props => <Page500 {...props} />} />
+
             <PrivateRoute path="/" name="Home" component={DefaultLayout} />
           </Switch>
 

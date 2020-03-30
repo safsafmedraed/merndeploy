@@ -1,11 +1,11 @@
 import React, { useEffect, Fragment } from 'react';
 import { Link } from 'react-router-dom';
-import { Badge, Card, CardBody, CardHeader, Col, Row, Table } from 'reactstrap';
+import { Col, Button } from 'reactstrap';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { getCurrentProfile } from '../../actions/profile';
 import Spinner from '../Theme/Spinner';
-
+import Widget04 from '../Widgets/Widget04';
 
 
 const Users = ({ getCurrentProfile, auth: { user }, profile: { profile, loading } }) => {
@@ -14,7 +14,14 @@ const Users = ({ getCurrentProfile, auth: { user }, profile: { profile, loading 
   }, [])
 
   return loading && profile === null ? <Spinner /> : <Fragment>
-    <h1>Welcome {user && user.username}</h1>
+
+
+    <Col sm="15" md="5">
+      <Widget04 icon="icon-people" color="info" header="Welcome" value="25">{user && user.username}</Widget04>
+    </Col>
+    {profile !== null ? <Fragment>has</Fragment> : <Fragment><h2>You have not set up a profile yet, please add some info </h2>
+      <Link to='/CreateProfile' className="mb-3 mb-xl-0"><Button color="primary">Create Profile</Button></Link>
+    </Fragment>}
   </Fragment>;
 
 
