@@ -13,3 +13,5 @@ export const PASS_FAIL = 'PASS_FAIL';
 export const GET_PROFILE = 'GET_PROFILE';
 export const PROFILE_ERROR = 'PROFILE_ERROR';
 export const CLEAR_PROFILE = 'CLEAR_PROFILE';
+export const RESET_ERROR = 'RESET_ERROR';
+export const RESET_OK = 'RESET_OK';

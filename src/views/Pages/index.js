@@ -4,7 +4,8 @@ import Page500 from './Page500';
 import Register from './Register';
 import Register1 from './Register1';
 import ForgotPassword from './ForgotPassword/ForgotPassword'
+import Reset from './ForgotPassword/reset/Reset';
 
 export {
-  Login, Page404, Page500, Register, Register1, ForgotPassword
+  Login, Page404, Page500, Register, Register1, ForgotPassword, Reset
 };

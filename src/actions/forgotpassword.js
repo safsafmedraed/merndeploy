@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { PASS_SEND, PASS_FAIL } from './types';
+import { PASS_SEND, PASS_FAIL, RESET_OK, RESET_ERROR } from './types';
 import { setAlert } from './alert';
 
 
@@ -35,6 +35,27 @@ export const sendpass = (email) => async dispatch => {
 
         })
     }
+}
+export const resetpass = (password, token) => async dispatch => {
+    const config = {
+        headers: {
+            'content-Type': 'application/json'
+        }
+    }
+    const body = JSON.stringify({ password });
+    try {
+
+        const res = await axios.post(`http://localhost:5000/forgot/reset/${token}`, body, config)
+        dispatch({
+            type: RESET_OK,
+            payload: res.data
+        })
+    } catch (error) {
+        dispatch({
+            type: RESET_ERROR,
+        })
+    }
+
 }
 
 

@@ -245,6 +245,11 @@ export default {
           url: '/ForgotPassword',
           icon: 'icon-star',
         },
+        {
+          name: 'reset password',
+          url: '/Reset',
+          icon: 'icon-star',
+        },
       ],
     },
     {

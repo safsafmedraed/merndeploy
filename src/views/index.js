@@ -28,7 +28,9 @@ import { Colors, Typography } from './Theme';
 import Widgets from './Widgets';
 import AddPost from './Forum/ForumContainer';
 import CreateProfile from './CreateProfile/CreateProfile'
+import Reset from './pages/ForgotPassword/reset'
 export {
+  Reset,
   CreateProfile,
   ForgotPassword,
   AddPost,

@@ -24,15 +24,6 @@ const Users = ({ getCurrentProfile, auth: { user }, profile: { profile, loading 
     </Fragment>}
   </Fragment>;
 
-
-
-
-
-
-
-
-
-
 }
 Users.propTypes = {
   getCurrentProfile: PropTypes.func.isRequired,
