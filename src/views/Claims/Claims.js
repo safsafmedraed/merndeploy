@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import faker from 'faker';
-import {Table , Card} from 'reactstrap';
+import {Table , Card, Row, CardBody, Col} from 'reactstrap';
 import {connect} from 'react-redux';
 import Pagination from "react-js-pagination";
+import './style.scss'
 
 
 class Claims extends Component {
@@ -59,12 +60,20 @@ render(){
   return (
     <div>
     <Card>
-        <div>
-            <label><input defaultChecked={true} type="radio" name="fruit" onChange={()=>this.setState({filter : null , activePage :1})} value="" />All</label>
-            <label><input type="radio" name="fruit" onChange={()=>this.setState({filter : true , activePage :1})} value={true} />Solved</label>
-            <label><input type="radio" name="fruit" onChange={()=>this.setState({filter : false , activePage :1})} value={false} />Not yet</label>
-            <input type="text" value={this.state.search} placeholder="Search" onChange={this.search.bind(this)}/>
-        </div>
+      <CardBody>
+        <Row>
+          <Col md="5">
+          <div className="div-radio">
+              <label><input className="radio" defaultChecked={true} type="radio" name="radio" onChange={()=>this.setState({filter : null , activePage :1})} value="" />All</label> &nbsp;
+              <label><input className="radio" type="radio" name="radio" onChange={()=>this.setState({filter : true , activePage :1})} value={true} />Solved</label> &nbsp;
+              <label><input className="radio" type="radio" name="radio" onChange={()=>this.setState({filter : false , activePage :1})} value={false} />Not yet</label>
+          </div>
+          </Col>
+          <Col md="4">
+            <input type="text" className="form-control" value={this.state.search} placeholder="Search" onChange={this.search.bind(this)}/>
+          </Col>        
+        </Row>
+      </CardBody>
     </Card>
         <Card>
             <br/>
