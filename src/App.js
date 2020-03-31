@@ -9,6 +9,8 @@ import store from './store';
 import Alert from './actions/alerts';
 import { loadUser } from './actions/auth';
 import setAuthToken from './utlis/setAuthToken';
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 const loading = () => <div className="animated fadeIn pt-3 text-center">Loading...</div>;
 
 // Containers
@@ -27,6 +29,7 @@ if (localStorage.token) {
 }
 
 const App = () => {
+  toast.configure();
 
   useEffect(() => {
     store.dispatch(loadUser());

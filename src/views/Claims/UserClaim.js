@@ -13,7 +13,7 @@ render(){
                         <CardHeader>
                             <strong>Title:</strong> {claim.title} &nbsp;
                             {claim.solved ? <span className="badge badge-success">Solved</span> : null}<br/>
-                            <span style={{fontSize:11 , color:'grey'}}>{claim.date.toLocaleString()}</span>
+                            <span style={{fontSize:11 , color:'grey'}}>{claim.date.toLocaleString('en-US')}</span>
                         </CardHeader>
                     </Card>
                     <Card>
@@ -27,7 +27,8 @@ render(){
                     {claim.solved ?
                         <Card>
                         <CardHeader>
-                            <strong>Response</strong>
+                            <strong>Response</strong><br/>
+                            <span style={{fontSize:11 , color:'grey'}}>{claim.dateResponse.toLocaleString('en-US')}</span>
                         </CardHeader>
                         <CardBody>
                             {ReactHtmlParser(claim.response)}

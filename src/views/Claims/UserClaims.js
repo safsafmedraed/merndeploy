@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import faker from 'faker';
-import {Table , Card} from 'reactstrap';
+import {Table , Card, CardBody, Row, Col} from 'reactstrap';
 import {connect} from 'react-redux';
 import Pagination from "react-js-pagination";
+import './style.scss'
 
 
 
@@ -21,7 +22,8 @@ class UserClaims extends Component {
                     user : faker.name.findName(),
                     email : faker.internet.email(),
                     solved : faker.random.number(1) ? true : false ,
-                    date : faker.date.past(10)
+                    date : faker.date.past(10),
+                    dateResponse : faker.date.past(10)
                 }
                 list = [...list,item];
             }
@@ -29,7 +31,7 @@ class UserClaims extends Component {
             
         } 
         this.state = {
-            filter : null,
+            filter : true,
             search : "",
             activePage: 1
         }
@@ -60,22 +62,32 @@ render(){
   return (
     <div>
     <Card>
-        <div>
-            <label><input defaultChecked={true} type="radio" name="fruit" onChange={()=>this.setState({filter : null , activePage :1})} value="" />All</label>
-            <label><input type="radio" name="fruit" onChange={()=>this.setState({filter : true , activePage : 1})} value={true} />Solved</label>
-            <label><input type="radio" name="fruit" onChange={()=>this.setState({filter : false , activePage :1})} value={false} />Not yet</label>
-            <input type="text" value={this.state.search} placeholder="Search" onChange={this.search.bind(this)}/>
-        </div>
-        <button className="btn btn-success" onClick={()=>this.props.history.push("/UserClaims/AddClaim")} >Add claim</button>
+      <CardBody>
+        <Row>
+          <Col md="5">
+          <div className="div-radio">
+              <label><input className="radio"  type="radio" name="radio" onChange={()=>this.setState({filter : null , activePage :1})} value="" />All</label> &nbsp;
+              <label><input className="radio" defaultChecked={true} type="radio" name="radio" onChange={()=>this.setState({filter : true , activePage :1})} value={true} />Solved</label> &nbsp;
+              <label><input className="radio"  type="radio" name="radio" onChange={()=>this.setState({filter : false , activePage :1})} value={false} />Not yet</label>
+          </div>
+          </Col>
+          <Col md="4">
+            <input type="text" className="form-control" value={this.state.search} placeholder="Search" onChange={this.search.bind(this)}/>
+          </Col> 
+          <Col style={{textAlign : "right"}}>
+              <button className="btn btn-success" onClick={()=>this.props.history.push("/UserClaims/AddClaim")} >Add claim</button>
+          </Col>       
+        </Row>
+      </CardBody>
     </Card>
         <Card>
             <br/>
             <Table hover responsive className="table-outline mb-0 d-none d-sm-table">
                   <thead className="thead-light">
                   <tr>
-                    <th className="text-center">Title</th>
-                    <th className="text-center">Date</th>
-                    <th className="text-center">Status</th>
+                    <th className="text-center" style={{width : "50%"}}>Title</th>
+                    <th className="text-center" style={{width : "30%"}}>Date</th>
+                    {this.state.filter === null ? <th className="text-center" style={{width : "30%"}}>Status</th> : null }
                   </tr>
                   </thead>
                   <tbody>
@@ -93,11 +105,11 @@ render(){
                             {claim.title}
                           </td>
                           <td className="text-center">
-                          <div>{claim.date.toLocaleString()}</div>
+                          <div>{claim.date.toLocaleString('en-US')}</div>
                           </td>
-                          <td>
-                            {claim.solved ? "solved" : "not yet"}
-                          </td>
+                          {this.state.filter === null ?  <td className="text-center">
+                          <div>{claim.solved ? <div>Solved</div> : <div>Not yet</div>}</div>
+                          </td> : null}
                         </tr>
                           }
                           )

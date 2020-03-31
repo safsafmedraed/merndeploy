@@ -2,12 +2,17 @@ import React, { Component, Fragment } from 'react';
 import { CardHeader, Card, CardBody, Col, Input, FormGroup, Modal, ModalHeader, ModalBody, ModalFooter, Button } from 'reactstrap';
 import { Editor } from '@tinymce/tinymce-react';
 import ReactHtmlParser from 'react-html-parser';
+import { toast } from 'react-toastify';
 
 class AddClaim extends Component {
     state = {
         confirmation : false,
             title : '',
-            editorInput: ''
+            editorInput: '',
+            error : false,
+            errorMessage : '',
+
+            
     }
 
     handleEditorChange = (content, editor) => {
@@ -19,6 +24,14 @@ class AddClaim extends Component {
     setTitle = e =>{
         this.setState({title: e.target.value})
     }
+    notifySuccess = ()=> toast.success(' ✔ Claim Added!', {
+        position: "top-right",
+        autoClose: 4000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true
+        });
 
     render(){
         return <Fragment>
@@ -59,7 +72,12 @@ class AddClaim extends Component {
                     </FormGroup>
                     <FormGroup row>
                         <Col  style={{textAlign :"center"}}>
-                            <button onClick={()=>this.setState({confirmation : true})} style={{color:"white" , width:"200px"}} className="btn btn-info">Add Claim</button>
+                            <button onClick={()=>{
+                                window.scrollTo(0,document.body.scrollHeight);
+                            !this.state.title ? this.setState({error : true , errorMessage:'Title cannot be empty!'}) : 
+                            !this.state.editorInput?  this.setState({error : true , errorMessage:'Description cannot be empty!'}) :this.setState({confirmation : true})
+                                }} style={{color:"white" , width:"200px"}} className="btn btn-info">Add Claim</button>
+                                {this.state.error ? <div style={{color : "red"}}>{this.state.errorMessage}</div> : null}
                         </Col>
                     </FormGroup>
                 </CardBody>
@@ -76,6 +94,8 @@ class AddClaim extends Component {
                   <ModalFooter>
                     <Button color="primary" onClick={()=>{
                       this.setState({confirmation:false});
+                      this.notifySuccess();
+                      this.props.history.push("/UserClaims")
                     }}>OK</Button>
                     <Button color="secondary" onClick={()=>this.setState({confirmation : false})}>Cancel</Button>
                   </ModalFooter>
