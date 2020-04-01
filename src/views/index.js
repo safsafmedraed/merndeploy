@@ -29,7 +29,13 @@ import Widgets from './Widgets';
 import AddPost from './Forum/ForumContainer';
 import CreateProfile from './CreateProfile/CreateProfile'
 import Reset from './pages/ForgotPassword/reset'
+import EditProfile from "./Users/EditProfile";
+import AddEducation from "./Users/AddEducation";
+import Education from "./Users/Education";
 export {
+  Education,
+  AddEducation,
+  EditProfile,
   Reset,
   CreateProfile,
   ForgotPassword,

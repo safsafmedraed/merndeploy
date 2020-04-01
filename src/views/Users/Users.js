@@ -6,7 +6,8 @@ import { connect } from 'react-redux';
 import { getCurrentProfile } from '../../actions/profile';
 import Spinner from '../Theme/Spinner';
 import Widget04 from '../Widgets/Widget04';
-
+import HasProfile from "../../actions/HasProfile";
+import Education from "./Education"
 
 const Users = ({ getCurrentProfile, auth: { user }, profile: { profile, loading } }) => {
   useEffect(() => {
@@ -19,9 +20,11 @@ const Users = ({ getCurrentProfile, auth: { user }, profile: { profile, loading 
     <Col sm="15" md="5">
       <Widget04 icon="icon-people" color="info" header="Welcome" value="25">{user && user.username}</Widget04>
     </Col>
-    {profile !== null ? <Fragment>has</Fragment> : <Fragment><h2>You have not set up a profile yet, please add some info </h2>
-      <Link to='/CreateProfile' className="mb-3 mb-xl-0"><Button color="primary">Create Profile</Button></Link>
-    </Fragment>}
+    {profile !== null ? <Fragment><HasProfile />
+      <Education education={profile.education} />
+    </Fragment> : <Fragment><h2>You have not set up a profile yet, please add some info </h2>
+        <Link to='/CreateProfile' className="mb-3 mb-xl-0"><Button color="primary">Create Profile</Button></Link>
+      </Fragment>}
   </Fragment>;
 
 }

@@ -2,7 +2,7 @@ import axios from 'axios';
 import { setAlert } from './alert';
 
 
-import { GET_PROFILE, PROFILE_ERROR } from './types';
+import { GET_PROFILE, PROFILE_ERROR, UPDATE_PROFILE } from './types';
 
 
 //get current users profile
@@ -54,4 +54,36 @@ export const createProfile = (formData, history, edit = false) => async dispatch
 
         });
     }
+}
+//ADD Education 
+export const addEducation = (formData, history) => async dispatch => {
+    try {
+        const config = {
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        }
+        const res = await axios.put('http://localhost:5000/profile/education', formData, config);
+        dispatch({
+            type: UPDATE_PROFILE,
+            payload: res.data
+        });
+        dispatch(setAlert('Education Added', 'success'));
+
+        history.push('/dashboard');
+
+    } catch (error) {
+        const errors = error.response.data.errors;
+        if (errors) {
+            errors.forEach(error => {
+                dispatch(setAlert(error.msg, 'warning'))
+            });
+        }
+        dispatch({
+            type: PROFILE_ERROR,
+            payload: { msg: error.response.statusText, status: error.response.status }
+
+        });
+    }
+
 }

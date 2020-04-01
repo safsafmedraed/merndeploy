@@ -21,17 +21,21 @@ const ProfileSchema = new Schema({
             school: {
                 type: String,
 
+
             },
             degree: {
                 type: String,
+
 
             },
             fieldofstudy: {
                 type: String,
 
+
             },
             from: {
                 type: Date,
+
 
             },
             to: {
