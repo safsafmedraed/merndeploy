@@ -1,9 +1,9 @@
-import React, { Component } from 'react';
-import faker from 'faker';
+import React, { Component, Fragment } from 'react';
 import {Table , Card, CardBody, Row, Col} from 'reactstrap';
 import {connect} from 'react-redux';
 import Pagination from "react-js-pagination";
 import './style.scss'
+import axios from 'axios';
 
 
 
@@ -11,7 +11,7 @@ class UserClaims extends Component {
   
     constructor(props){
         super(props)
-        if(!props.claims.length) {
+        /*if(!props.claims.length) {
             let list = [];
             for(let i=0;i<50;i++){
                 const item = {
@@ -29,7 +29,10 @@ class UserClaims extends Component {
             }
             props.loadState(list);
             
-        } 
+        } */
+
+        axios.get("http://localhost:5000/claims/userClaims/"+this.props.user._id)
+        .then(res => props.loadState(res.data));
         this.state = {
             filter : true,
             search : "",
@@ -80,7 +83,7 @@ render(){
         </Row>
       </CardBody>
     </Card>
-        <Card>
+       { current.length ? <Fragment> <Card>
             <br/>
             <Table hover responsive className="table-outline mb-0 d-none d-sm-table">
                   <thead className="thead-light">
@@ -100,12 +103,12 @@ render(){
                           })
                           .sort((a,b)=>b.date-a.date)
                           .map((claim , i) => {
-                          return  <tr key={i} onClick={()=>this.props.history.push("/UserClaims/Claim/"+claim.id)}>
+                          return  <tr key={i} onClick={()=>this.props.history.push("/UserClaims/Claim/"+claim._id)}>
                           <td className="text-center">
                             {claim.title}
                           </td>
                           <td className="text-center">
-                          <div>{claim.date.toLocaleString('en-US')}</div>
+                          <div>{new Date(claim.date).toLocaleString('en-US')}</div>
                           </td>
                           {this.state.filter === null ?  <td className="text-center">
                           <div>{claim.solved ? <div>Solved</div> : <div>Not yet</div>}</div>
@@ -133,14 +136,15 @@ render(){
           totalItemsCount={data.length}
           pageRangeDisplayed={5}
           onChange={this.handlePageChange.bind(this)}
-        /></div>
+        /></div></Fragment> : <p>No data found here!</p>}
         </div>
   );
 }
 }
 const stateToProps = state => {
     return {
-        claims : state.claims.UserClaims
+        claims : state.claims.UserClaims,
+        user : state.auth.user
     }
 }
 const newState = dispatch =>{

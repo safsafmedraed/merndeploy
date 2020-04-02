@@ -7,13 +7,14 @@ import ReactHtmlParser from 'react-html-parser';
 class UserClaim extends Component {
 render(){
     const {claim} = this.props;
+    console.log(this.props)
     return  <Fragment>
                 {claim?
                     <div><Card>
                         <CardHeader>
                             <strong>Title:</strong> {claim.title} &nbsp;
                             {claim.solved ? <span className="badge badge-success">Solved</span> : null}<br/>
-                            <span style={{fontSize:11 , color:'grey'}}>{claim.date.toLocaleString('en-US')}</span>
+                            <span style={{fontSize:11 , color:'grey'}}>{new Date(claim.date).toLocaleString('en-US')}</span>
                         </CardHeader>
                     </Card>
                     <Card>
@@ -28,7 +29,7 @@ render(){
                         <Card>
                         <CardHeader>
                             <strong>Response</strong><br/>
-                            <span style={{fontSize:11 , color:'grey'}}>{claim.dateResponse.toLocaleString('en-US')}</span>
+                            <span style={{fontSize:11 , color:'grey'}}>{new Date(claim.dateResponse).toLocaleString('en-US')}</span>
                         </CardHeader>
                         <CardBody>
                             {ReactHtmlParser(claim.response)}
@@ -44,7 +45,7 @@ render(){
 const stateToProps = (state,props) =>{
     const id = props.match.params.id;
     return {
-        claim : state.claims.UserClaims.find(claim => claim.id === id)
+        claim : state.claims.UserClaims.find(claim => claim._id === id)
     }
 };
 export default connect(stateToProps)(UserClaim);

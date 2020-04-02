@@ -14,22 +14,25 @@ var claimSchema = new Schema({
         type: String,
         default: ""
     },
-    responseDate : {
+    dateResponse : {
         type: Date
     },
     date: {
         type: Date,
         default: Date.now
     },
-    Solved: {
+    solved: {
+        type: Boolean,
+        default: false
+    },
+    removed: {
         type: Boolean,
         default: false
     },
     user: {
-        type: mongoose.Schema.Types.ObjectId, ref: 'User'
+        type: mongoose.Schema.Types.ObjectId, ref: 'users',
+        required : true
     }
-
-
 });
 
 

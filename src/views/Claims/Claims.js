@@ -1,10 +1,10 @@
 import React, { Component, Fragment } from 'react';
-import faker from 'faker';
 import {Table , Card, Row, CardBody, Col} from 'reactstrap';
 import {connect} from 'react-redux';
 import Pagination from "react-js-pagination";
 import './style.scss';
 import { AppSwitch } from '@coreui/react';
+import axios from 'axios';
 
 
 
@@ -12,7 +12,7 @@ class Claims extends Component {
   
     constructor(props){
         super(props)
-        if(!props.claims.length) {
+        /*if(!props.claims.length) {
           let list = [];
           for(let i=0;i<200;i++){
             const random = faker.random.number(1);
@@ -34,8 +34,11 @@ class Claims extends Component {
           }
           props.loadState(list);
           
-      }
-        this.state = {
+      }*/
+    axios.get('http://localhost:5000/claims').then(res => props.loadState(res.data));
+        
+      
+      this.state = {
             filter : false,
             block : false,
             search : "",
@@ -60,7 +63,7 @@ render(){
   const data =  claims.filter(claim=>this.state.filter === null? true : this.state.filter===claim.solved)
   .filter(claim => this.state.block === claim.removed)
   .filter(claim => {
-      const ch = (claim.user + claim.title + claim.email).toLowerCase();
+      const ch = (claim.user.Firstname + claim.user.Lastname + claim.title + claim.user.email).toLowerCase();
       if(ch.includes(this.state.search.toLocaleLowerCase())) return true
       else return false
   })
@@ -90,7 +93,7 @@ render(){
         </Row>
       </CardBody>
     </Card>
-        <Card>
+    { current.length ? <Fragment> <Card>
             <br/>
             <Table hover responsive className="table-outline mb-0 d-none d-sm-table">
                   <thead className="thead-light">
@@ -105,7 +108,7 @@ render(){
                   <tbody>
                       {
                           current.map((claim , i) => {
-                          return  <tr key={i} onClick={()=>this.props.history.push("/Claims/Claim/"+claim.id)}>
+                          return  <tr key={i} onClick={()=>this.props.history.push("/Claims/Claim/"+claim._id)}>
                          {/* <td className="text-center">
                             <div className="avatar">
                               <img src={'assets/img/avatars/1.jpg'} className="img-avatar" alt="admin@bootstrapmaster.com" />
@@ -113,16 +116,16 @@ render(){
                             </div>
                           </td>*/}
                           <td className="text-center">
-                          <div>{claim.user}</div>
+                        <div>{claim.user.Firstname} {claim.user.Lastname}</div>
                           </td>
                           <td className="text-center">
                             {claim.title}
                           </td>
                           <td className="text-center">
-                          <div>{claim.email}</div>
+                          <div>{claim.user.email}</div>
                           </td>
                           <td className="text-center">
-                          <div>{claim.date.toLocaleString('en-US')}</div>
+                          <div>{new Date(claim.date).toLocaleString('en-US')}</div>
                           </td>
                           {this.state.filter === null ?  <td className="text-center">
                           <div>{claim.solved ? <div>Solved</div> : <div>Not yet</div>}</div>
@@ -150,7 +153,7 @@ render(){
           totalItemsCount={data.length}
           pageRangeDisplayed={5}
           onChange={this.handlePageChange.bind(this)}
-        /></div>
+          /></div> </Fragment>  :  <p> No data found here!</p> } 
         </div>
   );
 }

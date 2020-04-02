@@ -3,6 +3,8 @@ import { CardHeader, Card, CardBody, Col, Input, FormGroup, Modal, ModalHeader, 
 import { Editor } from '@tinymce/tinymce-react';
 import ReactHtmlParser from 'react-html-parser';
 import { toast } from 'react-toastify';
+import {connect} from 'react-redux';
+import axios from 'axios';
 
 class AddClaim extends Component {
     state = {
@@ -32,6 +34,15 @@ class AddClaim extends Component {
         pauseOnHover: true,
         draggable: true
         });
+    notifyError = ()=> toast.error(' ✗ Something went wrong!', {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true
+        });
+    
 
     render(){
         return <Fragment>
@@ -75,7 +86,7 @@ class AddClaim extends Component {
                             <button onClick={()=>{
                                 window.scrollTo(0,document.body.scrollHeight);
                             !this.state.title ? this.setState({error : true , errorMessage:'Title cannot be empty!'}) : 
-                            !this.state.editorInput?  this.setState({error : true , errorMessage:'Description cannot be empty!'}) :this.setState({confirmation : true})
+                            !this.state.editorInput?  this.setState({error : true , errorMessage:'Description cannot be empty!'}) :this.setState({confirmation : true , error : false})
                                 }} style={{color:"white" , width:"200px"}} className="btn btn-info">Add Claim</button>
                                 {this.state.error ? <div style={{color : "red"}}>{this.state.errorMessage}</div> : null}
                         </Col>
@@ -94,8 +105,15 @@ class AddClaim extends Component {
                   <ModalFooter>
                     <Button color="primary" onClick={()=>{
                       this.setState({confirmation:false});
-                      this.notifySuccess();
-                      this.props.history.push("/UserClaims")
+                      const claim ={
+                            title : this.state.title,
+                            description : this.state.editorInput,
+                            user : this.props.user._id
+                      };
+                      axios.post("http://localhost:5000/claims/addClaim",claim).then(()=>{
+                          this.notifySuccess();
+                          this.props.history.push("/UserClaims");
+                      }).catch(()=>this.notifyError());
                     }}>OK</Button>
                     <Button color="secondary" onClick={()=>this.setState({confirmation : false})}>Cancel</Button>
                   </ModalFooter>
@@ -104,4 +122,10 @@ class AddClaim extends Component {
     }
 }
 
-export default AddClaim;
+const stateUserToProps = (state) =>{
+    return {
+        user : state.auth.user
+    }
+  };
+
+export default connect(stateUserToProps)(AddClaim);

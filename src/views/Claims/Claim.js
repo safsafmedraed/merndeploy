@@ -4,6 +4,7 @@ import { Editor } from '@tinymce/tinymce-react';
 import ReactHtmlParser from 'react-html-parser';
 import {connect} from 'react-redux';
 import { toast } from 'react-toastify';
+import axios from 'axios';
 
 class Claim extends Component {
     state = {
@@ -49,7 +50,7 @@ class Claim extends Component {
                           { claim.solved ? <span className="badge badge-success">Solved</span> : 
                             claim.removed ? <span className="badge badge-danger">Blocked</span> : null
                           }<br/>
-                          <span style={{fontSize:11 , color:'grey'}}>{claim.date.toLocaleString('en-US')}</span>
+                          <span style={{fontSize:11 , color:'grey'}}>{new Date(claim.date).toLocaleString('en-US')}</span>
                         </Col >
                         {!claim.solved && !claim.removed ?<Col style={{textAlign:"right"}}>
                           <Button onClick={()=>{
@@ -60,8 +61,8 @@ class Claim extends Component {
                     </CardHeader>
                     <CardBody>
                         <div>
-                                <strong>User: </strong>{claim.user}<br/>
-                                <strong>Email: </strong>{claim.email}
+                                <strong>User: </strong>{claim.user.Firstname} {claim.user.Lastname}<br/>
+                                <strong>Email: </strong>{claim.user.email}
                         </div>
                     </CardBody>
                     </Card>
@@ -77,7 +78,7 @@ class Claim extends Component {
                      <Card>
                           <CardHeader>
                               <strong>Response</strong><br/>
-                          <span style={{fontSize:11 , color:'grey'}}>{claim.dateResponse.toLocaleString('en-US')}</span>
+                          <span style={{fontSize:11 , color:'grey'}}>{new Date(claim.dateResponse).toLocaleString('en-US')}</span>
                           </CardHeader>
                           <CardBody>
                               {ReactHtmlParser(claim.response)}
@@ -105,9 +106,12 @@ class Claim extends Component {
        />
        <br/>
        <button className="btn btn-info" style={{color : 'white'}} onClick={()=>{
-         this.state.editorInput ? this.setState({confirmation : true}) :
-         window.scrollTo(0,document.body.scrollHeight); 
-         this.setState({error:true,errorMessage:'Response cannot be empty!'})
+         if(this.state.editorInput)  this.setState({confirmation : true , error :false}) ;
+         else
+         {
+          window.scrollTo(0,document.body.scrollHeight); 
+          this.setState({error:true,errorMessage:'Response cannot be empty!'});
+         }
          }}>Post the answer</button><br/>
          {this.state.error ? <p style={{color : "red"}}>{this.state.errorMessage}</p> : null}
                     </CardBody>
@@ -124,6 +128,7 @@ class Claim extends Component {
                       this.setState({confirmation:false});
                       claim.response = this.state.editorInput;
                       claim.solved = true;
+                      axios.put("http://localhost:5000/claims/answer" , claim)
                       this.props.history.push("/Claims");
                       this.notifySuccess();
                       claim.removed = false;
@@ -146,6 +151,7 @@ class Claim extends Component {
                     <Button color="danger" onClick={()=>{
                       this.setState({confirmationBlock : false});
                       claim.removed = true;
+                      axios.put("http://localhost:5000/claims/block/"+claim._id);
                       this.notifyBlock();
                       this.props.history.push("/Claims");
                     }}>Block</Button>{' '}
@@ -164,7 +170,7 @@ class Claim extends Component {
 const stateToProps = (state,props) =>{
   const id = props.match.params.id;
   return {
-      claim : state.claims.SuperClaims.find(claim => claim.id === id)
+      claim : state.claims.SuperClaims.find(claim => claim._id === id)
   }
 };
 
