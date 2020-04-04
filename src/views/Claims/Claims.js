@@ -80,9 +80,11 @@ render(){
     <Card>
       <CardBody>
         <Row>
-          <Col md="4">
+          <Col md="5">
           <div className="div-radio">
-              { !this.state.block ? <Fragment> <label><input className="radio"  type="radio" name="radio" onChange={()=>this.setState({filter : null , activePage :1})} value="" />All</label> &nbsp;
+              { !this.state.block ? <Fragment>
+                <label style={{fontWeight : "bold"}}>Status</label> &nbsp;
+              <label><input className="radio"  type="radio" name="radio" onChange={()=>this.setState({filter : null , activePage :1})} value="" />All</label> &nbsp;
               <label><input className="radio" type="radio" name="radio" onChange={()=>this.setState({filter : true , activePage :1})} value={true} />Solved</label> &nbsp;
               <label><input className="radio" defaultChecked={true} type="radio" name="radio" onChange={()=>this.setState({filter : false , activePage :1})} value={false} />In progress</label> &nbsp; </Fragment> : null}
           </div>
@@ -100,6 +102,7 @@ render(){
         <Row>
           <Col md="4">
           <div className="div-radio">
+              <label style={{fontWeight : "bold"}}>User role</label> &nbsp;
               <label><input className="radio" defaultChecked={true} type="radio" name="filter" onChange={()=>this.setState({role : "all" , activePage :1})} value="" />All</label> &nbsp;
               <label><input className="radio" type="radio" name="filter" onChange={()=>this.setState({role : "Teacher" , activePage :1})} value={true} />Teacher</label> &nbsp;
               <label><input className="radio"  type="radio" name="filter" onChange={()=>this.setState({role : "Student" , activePage :1})} value={false} />Student</label>
