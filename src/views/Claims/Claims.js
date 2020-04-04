@@ -33,6 +33,7 @@ class Claims extends Component {
         }  
       
       this.state = {
+            role: 'all',
             filter : false,
             block : false,
             search : "",
@@ -68,8 +69,8 @@ render(){
   .filter(claim => {
       const ch = (claim.user.Firstname + claim.user.Lastname + claim.title + claim.user.email).toLowerCase();
       if(ch.includes(this.state.search.toLocaleLowerCase())) return true
-      else return false
-  })
+      else return false})
+  .filter(claim =>this.state.role === "all"? true : this.state.role === claim.user.role)
   .sort((a,b)=>a.date-b.date);
   const current = data.slice(first, last);
   return (
@@ -96,6 +97,15 @@ render(){
             </div>
           </Col>        
         </Row>
+        <Row>
+          <Col md="4">
+          <div className="div-radio">
+              <label><input className="radio" defaultChecked={true} type="radio" name="filter" onChange={()=>this.setState({role : "all" , activePage :1})} value="" />All</label> &nbsp;
+              <label><input className="radio" type="radio" name="filter" onChange={()=>this.setState({role : "Teacher" , activePage :1})} value={true} />Teacher</label> &nbsp;
+              <label><input className="radio"  type="radio" name="filter" onChange={()=>this.setState({role : "Student" , activePage :1})} value={false} />Student</label>
+          </div>
+          </Col>
+        </Row>
       </CardBody>
     </Card>
     { current.length ? <Fragment> <Card>
@@ -104,10 +114,11 @@ render(){
                   <thead className="thead-light">
                   <tr>
                     <th className="text-center" style={{width : "20%"}}>User</th>
-                    <th className="text-center" style={{width : "40%"}}>Title</th>
-                    <th className="text-center" style={{width : "20%"}}>E-mail</th>
-                    <th className="text-center" style={{width : "20%"}}>Date</th>
+                    <th className="text-center" style={{width : "35%"}}>Title</th>
+                    <th className="text-center" style={{width : "15%"}}>E-mail</th>
+                    <th className="text-center" style={{width : "15%"}}>Date</th>
                     {this.state.filter === null ? <th className="text-center" style={{width : "30%"}}>Status</th> : null }
+                    {this.state.role === "all" ? <th className="text-center" style={{width : "30%"}}>User role</th> : null }
                   </tr>
                   </thead>
                   <tbody>
@@ -134,6 +145,9 @@ render(){
                           </td>
                           {this.state.filter === null ?  <td className="text-center">
                           <div>{claim.solved ? <div>Solved</div> : <div>In progress</div>}</div>
+                          </td> : null}
+                          {this.state.role === "all" ?  <td className="text-center">
+                          <div>{claim.user.role === "Student" ? <div>Student</div> : <div>Teacher</div>}</div>
                           </td> : null}
                         </tr>
                           }
