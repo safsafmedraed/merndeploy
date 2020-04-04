@@ -5,6 +5,8 @@ import Pagination from "react-js-pagination";
 import './style.scss';
 import { AppSwitch } from '@coreui/react';
 import axios from 'axios';
+import { toast } from 'react-toastify';
+import LoopCircleLoading from 'react-loadingg/lib/LoopCircleLoading';
 
 
 
@@ -12,39 +14,40 @@ class Claims extends Component {
   
     constructor(props){
         super(props)
-        /*if(!props.claims.length) {
-          let list = [];
-          for(let i=0;i<200;i++){
-            const random = faker.random.number(1);
-            console.log(random);
-              const item = {
-                  id : faker.random.uuid(),
-                  title : faker.lorem.sentence(),
-                  description : faker.lorem.paragraph(),
-                  response : faker.lorem.paragraph(),
-                  user : faker.name.findName(),
-                  email : faker.internet.email(),
-                  solved : random ? true : false ,
-                  removed : random ? false : 
-                  faker.random.number(1) ? true : false ,
-                  date : faker.date.past(10),
-                  dateResponse : faker.date.past(10)
-              }
-              list = [...list,item];
-          }
-          props.loadState(list);
-          
-      }*/
-    axios.get('http://localhost:5000/claims').then(res => props.loadState(res.data));
-        
+        if(props.user) { 
+          if(props.user.role)
+            if(props.user.role === 'super')
+              axios.get('http://localhost:5000/claims')
+              .then(res => {
+                props.loadState(res.data);
+                this.setState({loading : false});
+              })
+              .catch(()=>this.notifyBlock('Oups! something went wrong'));
+            else
+              props.history.push('/Dashboard');
+          else
+            props.history.push('/Dashboard');
+        }
+        else {
+          props.history.push("/login");
+        }  
       
       this.state = {
             filter : false,
             block : false,
             search : "",
-            activePage: 1
+            activePage: 1,
+            loading :true
         }
     }
+    notifyBlock = msg=> toast.error(msg, {
+      position: "top-right",
+      autoClose: 4000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true
+      });
     search(e){
         this.setState({
             search : e.target.value , activePage :1
@@ -70,6 +73,8 @@ render(){
   .sort((a,b)=>a.date-b.date);
   const current = data.slice(first, last);
   return (
+    <Fragment>
+      { !this.state.loading ?
     <div>
     <Card>
       <CardBody>
@@ -78,7 +83,7 @@ render(){
           <div className="div-radio">
               { !this.state.block ? <Fragment> <label><input className="radio"  type="radio" name="radio" onChange={()=>this.setState({filter : null , activePage :1})} value="" />All</label> &nbsp;
               <label><input className="radio" type="radio" name="radio" onChange={()=>this.setState({filter : true , activePage :1})} value={true} />Solved</label> &nbsp;
-              <label><input className="radio" defaultChecked={true} type="radio" name="radio" onChange={()=>this.setState({filter : false , activePage :1})} value={false} />Not yet</label> &nbsp; </Fragment> : null}
+              <label><input className="radio" defaultChecked={true} type="radio" name="radio" onChange={()=>this.setState({filter : false , activePage :1})} value={false} />In progress</label> &nbsp; </Fragment> : null}
           </div>
           </Col>
           <Col md="4">
@@ -128,7 +133,7 @@ render(){
                           <div>{new Date(claim.date).toLocaleString('en-US')}</div>
                           </td>
                           {this.state.filter === null ?  <td className="text-center">
-                          <div>{claim.solved ? <div>Solved</div> : <div>Not yet</div>}</div>
+                          <div>{claim.solved ? <div>Solved</div> : <div>In progress</div>}</div>
                           </td> : null}
                         </tr>
                           }
@@ -154,13 +159,15 @@ render(){
           pageRangeDisplayed={5}
           onChange={this.handlePageChange.bind(this)}
           /></div> </Fragment>  :  <p> No data found here!</p> } 
-        </div>
+        </div> : <LoopCircleLoading  />}
+        </Fragment> 
   );
 }
 }
 const stateToProps = state => {
   return {
-      claims : state.claims.SuperClaims
+      claims : state.claims.SuperClaims,
+      user : state.auth.user
   }
 }
 const newState = dispatch =>{

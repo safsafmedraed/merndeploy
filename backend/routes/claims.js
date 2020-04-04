@@ -3,7 +3,7 @@ var router = express.Router();
 var claim = require('../models/claim.model');
 const auth = require('../middleware/auth');
 
-router.get('/',(req , res)=>{
+router.get('/',auth,(req , res)=>{
     claim.find().populate({
         path : "user",
         model : "users"
@@ -12,26 +12,26 @@ router.get('/',(req , res)=>{
     });
 });
 
-router.get('/:id',(req,res) => {
+router.get('/:id',auth,(req,res) => {
     claim.findById(req.params.id, (err ,data) =>{
         if(err) return res.status(400).send("error"); 
         return res.status(200).json(data);
-    });
+    }).populate('user');
 }
 );
 
-router.get('/userClaims/:id',(req , res)=>{
+router.get('/userClaims/:id',auth,(req , res)=>{
     claim.find({user:req.params.id},(err , data)=>{
         return res.status(200).json(data);
     }).populate('user');
 });
 
-router.post('/addClaim' , (req , res)=>{
+router.post('/addClaim',auth , (req , res)=>{
     const newClaim = new claim(req.body);
     newClaim.save().then(()=>res.json(newClaim)).catch(e=>res.status(400).send(e.message));
 });
 
-router.put('/answer', (req , res)=>{
+router.put('/answer',auth, (req , res)=>{
     claim.findOneAndUpdate({_id:req.body._id},
         {response:req.body.response, dateResponse: new Date() , solved : true , removed : false},
         {new:true},
@@ -42,7 +42,7 @@ router.put('/answer', (req , res)=>{
       }).populate('user');
 });
 
-router.put('/block/:id', (req , res)=>{
+router.put('/block/:id',auth, (req , res)=>{
     claim.findOneAndUpdate({_id:req.params.id},
         {removed : true},
         {new:true},

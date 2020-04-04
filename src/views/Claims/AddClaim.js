@@ -5,6 +5,7 @@ import ReactHtmlParser from 'react-html-parser';
 import { toast } from 'react-toastify';
 import {connect} from 'react-redux';
 import axios from 'axios';
+import ReCAPTCHA from 'react-google-recaptcha';
 
 class AddClaim extends Component {
     state = {
@@ -13,8 +14,7 @@ class AddClaim extends Component {
             editorInput: '',
             error : false,
             errorMessage : '',
-
-            
+            notRobot : false           
     }
 
     handleEditorChange = (content, editor) => {
@@ -22,6 +22,12 @@ class AddClaim extends Component {
             editorInput : content
         });
       }
+    
+    recap = ()=>{
+        this.setState({
+            notRobot : true
+        })
+    }
 
     setTitle = e =>{
         this.setState({title: e.target.value})
@@ -45,6 +51,7 @@ class AddClaim extends Component {
     
 
     render(){
+        document.title = "add claim";
         return <Fragment>
             <Card>
                 <CardHeader style={{textAlign : "center" , fontSize:"30px"}}>
@@ -100,10 +107,17 @@ class AddClaim extends Component {
                     <p style={{fontSize : "25px"}}><strong>Your claim:</strong></p>
                     <strong>Title:</strong> {this.state.title} <br/>
                     <strong>Description:</strong>
-                     {ReactHtmlParser(this.state.editorInput) } 
+                     {ReactHtmlParser(this.state.editorInput) }
+                     <ReCAPTCHA
+                            sitekey="6Lchb-YUAAAAACniXnx0b0__70X5N41QJ9loXeAm"
+                            onChange={this.recap}
+                            onErrored={()=>this.setState({notRobot : false})}
+                            onExpired={()=>this.setState({notRobot : false})}
+                            hl="en"
+                    />
                   </ModalBody>
                   <ModalFooter>
-                    <Button color="primary" onClick={()=>{
+                    <Button color="primary" disabled={!this.state.notRobot} onClick={()=>{
                       this.setState({confirmation:false});
                       const claim ={
                             title : this.state.title,
@@ -115,7 +129,7 @@ class AddClaim extends Component {
                           this.props.history.push("/UserClaims");
                       }).catch(()=>this.notifyError());
                     }}>OK</Button>
-                    <Button color="secondary" onClick={()=>this.setState({confirmation : false})}>Cancel</Button>
+                    <Button color="secondary" onClick={()=>this.setState({confirmation : false , notRobot : false})}>Cancel</Button>
                   </ModalFooter>
                 </Modal>
         </Fragment>

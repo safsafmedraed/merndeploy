@@ -2,25 +2,32 @@ import React, { Component, Fragment } from 'react';
 import { Card, CardHeader, CardBody , Modal, ModalBody, ModalFooter, ModalHeader , Button, Row, Col } from 'reactstrap';
 import { Editor } from '@tinymce/tinymce-react';
 import ReactHtmlParser from 'react-html-parser';
-import {connect} from 'react-redux';
 import { toast } from 'react-toastify';
 import axios from 'axios';
+import { LoopCircleLoading  } from 'react-loadingg';
 
 class Claim extends Component {
-    state = {
+  constructor(props){
+    super(props);
+    this.state = {
         editorInput : '', 
         confirmation : false,
         confirmationBlock : false,
         error : false,
-        errorMessage : ''
+        errorMessage : '',
+        claim : ""
     }
+    axios.get("http://localhost:5000/claims/"+props.match.params.id)
+        .then(res => this.setState({claim : res.data}))
+        .catch(()=>this.notifyBlock('Oups! something went wrong'));
+  }
 
     handleEditorChange = (content, editor) => {
         this.setState({
             editorInput : content
         });
       }
-      notifyBlock = ()=> toast.error(' ⛔ Claim Blocked!', {
+      notifyBlock = msg=> toast.error(msg, {
         position: "top-right",
         autoClose: 4000,
         hideProgressBar: false,
@@ -37,7 +44,7 @@ class Claim extends Component {
           draggable: true
           });
     render(){
-      const {claim} = this.props;
+      const {claim} = this.state;
         return (
             <Fragment>
               {claim ? 
@@ -127,11 +134,11 @@ class Claim extends Component {
                     <Button color="primary" onClick={()=>{
                       this.setState({confirmation:false});
                       claim.response = this.state.editorInput;
-                      claim.solved = true;
                       axios.put("http://localhost:5000/claims/answer" , claim)
-                      this.props.history.push("/Claims");
-                      this.notifySuccess();
-                      claim.removed = false;
+                      .then(()=>{
+                        this.props.history.push("/Claims");
+                        this.notifySuccess();})
+                      .catch(()=>this.notifyBlock('Oups! something went wrong'));
                     }}>OK</Button>
                     <Button color="secondary" onClick={()=>this.setState({confirmation : false})}>Cancel</Button>
                   </ModalFooter>
@@ -151,27 +158,23 @@ class Claim extends Component {
                     <Button color="danger" onClick={()=>{
                       this.setState({confirmationBlock : false});
                       claim.removed = true;
-                      axios.put("http://localhost:5000/claims/block/"+claim._id);
-                      this.notifyBlock();
+                      axios.put("http://localhost:5000/claims/block/"+claim._id)
+                      .then(()=>{
+                        this.notifyBlock(' ⛔ Claim Blocked!');
                       this.props.history.push("/Claims");
+                      }).catch(()=>this.notifyBlock('Oups! something went wrong'));
                     }}>Block</Button>{' '}
                     <Button color="secondary" onClick={()=>{
                       this.setState({confirmationBlock : false});
                     }}>Cancel</Button>
                   </ModalFooter>
                 </Modal>
-                </div> : <p> Undefined</p>
+                </div> : <LoopCircleLoading  />
     }
             </Fragment>
           );
     }
  
 }
-const stateToProps = (state,props) =>{
-  const id = props.match.params.id;
-  return {
-      claim : state.claims.SuperClaims.find(claim => claim._id === id)
-  }
-};
 
-export default connect(stateToProps)(Claim);
+export default Claim;
