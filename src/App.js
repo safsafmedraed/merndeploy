@@ -5,7 +5,7 @@ import './App.scss';
 //Redux
 import { Provider } from 'react-redux';
 import store from './store';
-import Alert from './actions/alerts';
+
 import { loadUser } from './actions/auth';
 import setAuthToken from './utlis/setAuthToken';
 
@@ -42,10 +42,11 @@ const App = () => {
     <Provider store={store}>
       <HashRouter>
         <React.Suspense fallback={loading()}>
-          {/*<Alert />*/}
+
           <Switch>
             <Route exact path="/login" name="Login Page" render={props => <Login {...props} />} />
-            {/*<Route exact path="/register" name="Register Page" render={props => <Register {...props} />} />*/}
+
+
             <Route exact path="/Register1" name="Register Page" render={props => <Register1 {...props} />} />
             <Route exact path="/ForgotPassword" name="Register Page" render={props => <ForgotPassword {...props} />} />
             <Route exact path="/Reset/:token" name="Reset Page" render={props => <Reset {...props} />} />

@@ -13,6 +13,7 @@ const HasProfile = () => {
                 <Link to='/AddEducation'>
                     <Button block color="dark" className="btn-pill">Add Education</Button></Link>
             </Col>
+
         </Fragment>
     )
 }

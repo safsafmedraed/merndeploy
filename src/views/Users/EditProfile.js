@@ -38,7 +38,7 @@ const EditProfile = ({ profile: { profile, loading }, createProfile, history, ge
             //status: loading || !profile.status ? '' : profile.status,
             institution: loading || !profile.institution ? '' : profile.institution,
         })
-    }, [loading])
+    }, [loading, getCurrentProfile])
 
     const onchange = e => setFormData({ ...formdata, [e.target.name]: e.target.value })
 

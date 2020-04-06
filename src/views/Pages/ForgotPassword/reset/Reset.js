@@ -9,7 +9,7 @@ import { useParams } from "react-router-dom";
 
 
 
-const Reset = ({ resetpass }) => {
+const Reset = ({ resetpass, history }) => {
 
     const [formData, setFormData] = useState({
         password: '',
@@ -30,8 +30,8 @@ const Reset = ({ resetpass }) => {
 
         }
 
-        resetpass(password, token);
-        const query = new URLSearchParams();
+        resetpass(password, token, history);
+
         console.log(token);
 
     }

@@ -41,11 +41,16 @@ const CreateProfile = React.lazy(() => import('./views/CreateProfile/CreateProfi
 const EditProfile = React.lazy(() => import('./views/Users/EditProfile'));
 const AddEducation = React.lazy(() => import('./views/Users/AddEducation'));
 const Education = React.lazy(() => import('./views/Users/Education'));
+const Profiles = React.lazy(() => import('./views/Users/Profiles'));
+const SingleProfile = React.lazy(() => import('./views/Users/SingleProfile'));
 
-// https://github.com/ReactTraining/react-router/tree/master/packages/react-router-config
+
+
+
 const routes = [
-  { path: '/', exact: true, name: 'Home' },
-  { path: '/dashboard', name: 'Dashboard', component: Dashboard },
+
+  { path: '/', exact: true, name: 'Home', },
+  { path: '/dashboard', name: 'Dashboard', component: Dashboard, },
   { path: '/theme', exact: true, name: 'Theme', component: Colors },
   { path: '/theme/colors', name: 'Colors', component: Colors },
   { path: '/theme/typography', name: 'Typography', component: Typography },
@@ -89,7 +94,12 @@ const routes = [
   { path: '/Addpost', exact: true, name: 'Add new Post', component: AddPost },
   { path: '/CreateProfile', exact: true, name: 'Create Profile', component: CreateProfile },
   { path: '/EditProfile', exact: true, name: 'Edit Profile', component: EditProfile },
-  { path: '/Education', exact: true, name: 'Add Education', component: Education }
+  { path: '/Education', exact: true, name: 'Add Education', component: Education },
+  { path: '/AddEducation', exact: true, name: 'Add Education', component: AddEducation },
+  { path: '/Profiles', exact: true, name: 'All Profiles', component: Profiles },
+  { path: '/Single/:id', exact: true, name: 'Single Profile', component: SingleProfile }
 ];
+
+
 
 export default routes;

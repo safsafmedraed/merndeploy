@@ -6,7 +6,7 @@ import { connect } from 'react-redux';
 import { setAlert } from '../../../actions/alert';
 import propTypes from 'prop-types';
 import { login } from '../../../actions/auth';
-
+import Alert from '../../../actions/alerts';
 
 
 const Login = ({ login, isAuthenticated }) => {
@@ -35,7 +35,7 @@ const Login = ({ login, isAuthenticated }) => {
     <Fragment>
       <div className="app flex-row align-items-center">
         <Container>
-
+          <Alert />
           <Row className="justify-content-center">
             <Col md="8">
               <CardGroup>
@@ -81,6 +81,7 @@ const Login = ({ login, isAuthenticated }) => {
                         <Button color="primary" className="mt-3" active tabIndex={-1}>Register Now!</Button>
                       </Link>
                     </div>
+
                   </CardBody>
                 </Card>
               </CardGroup>

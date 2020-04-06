@@ -2,7 +2,7 @@ import React, { Fragment, useState } from 'react'
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import { addEducation } from '../../actions/profile';
-import { Link, withRouter } from "react-router-dom";
+import { Link } from "react-router-dom";
 import {
     Button,
     Card,
@@ -14,7 +14,7 @@ import {
     FormText,
     Input,
     Label,
-    Badge,
+
     Col,
 
 
@@ -92,7 +92,7 @@ const AddEducation = ({ addEducation, history }) => {
                             </Col>
                         </FormGroup>
                         <FormGroup >
-                            <Label>Current Educational Status</Label>
+                            <Label>Current School</Label>
                             <Col md="9">
                                 <FormGroup check inline>
                                     <Input className="form-check-input" type="checkbox" id="inline-checkbox3" name="current" checked={current} value={current}

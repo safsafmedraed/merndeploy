@@ -36,7 +36,7 @@ export const sendpass = (email) => async dispatch => {
         })
     }
 }
-export const resetpass = (password, token) => async dispatch => {
+export const resetpass = (password, token, history) => async dispatch => {
     const config = {
         headers: {
             'content-Type': 'application/json'
@@ -50,6 +50,7 @@ export const resetpass = (password, token) => async dispatch => {
             type: RESET_OK,
             payload: res.data
         })
+        history.push('/login');
     } catch (error) {
         dispatch({
             type: RESET_ERROR,

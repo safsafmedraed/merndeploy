@@ -2,8 +2,10 @@ import React, { Fragment } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import Moment from 'react-moment'
-import { Badge, Card, CardBody, CardHeader, Col, Pagination, PaginationItem, PaginationLink, Table, Button } from 'reactstrap';
-const Education = ({ education }) => {
+import Alert from '../../actions/alerts';
+import { Card, CardBody, CardHeader, Col, Pagination, PaginationItem, PaginationLink, Table, Button } from 'reactstrap';
+import { deleteEducation } from '../../actions/profile';
+const Education = ({ education, deleteEducation }) => {
 
 
     const educations = education.map(edu => (
@@ -17,12 +19,13 @@ const Education = ({ education }) => {
 
             </td>
             <td>{edu.description}</td>
-            <td><Button size="sm" color="primary"><i className="fa fa-dot-circle-o"></i> Delete</Button></td>
+            <td><Button size="sm" color="primary" onClick={() => deleteEducation(edu._id)}><i className="fa fa-dot-circle-o"></i> Delete</Button></td>
         </tr>
     ))
     return (
         <Fragment>
             <h1><i className="icon-book-open"></i>{' '}Education Credentials</h1>
+            <Alert />
             <Col xs="12" lg="15">
                 <Card>
                     <CardHeader>
@@ -64,6 +67,7 @@ const Education = ({ education }) => {
 
 Education.propTypes = {
     education: PropTypes.array.isRequired,
+    deleteEducation: PropTypes.func.isRequired,
 }
 
-export default Education
+export default connect(null, { deleteEducation })(Education)

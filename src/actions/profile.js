@@ -2,13 +2,51 @@ import axios from 'axios';
 import { setAlert } from './alert';
 
 
-import { GET_PROFILE, PROFILE_ERROR, UPDATE_PROFILE } from './types';
+import { GET_PROFILE, PROFILE_ERROR, UPDATE_PROFILE, CLEAR_PROFILE, DELETE_ACCOUNT, GET_PROFILES } from './types';
 
 
 //get current users profile
 export const getCurrentProfile = () => async dispatch => {
     try {
         const res = await axios.get('http://localhost:5000/profile/me');
+        dispatch({
+            type: GET_PROFILE,
+            payload: res.data
+        });
+
+    } catch (error) {
+        dispatch({
+            type: PROFILE_ERROR,
+            payload: { msg: error.response.statusText, status: error.response.status }
+
+        });
+
+    }
+}
+//get all Profiles
+export const getAllProfile = () => async dispatch => {
+    dispatch({ type: CLEAR_PROFILE });
+    try {
+        const res = await axios.get('http://localhost:5000/profile/');
+        dispatch({
+            type: GET_PROFILES,
+            payload: res.data
+        });
+
+    } catch (error) {
+        dispatch({
+            type: PROFILE_ERROR,
+            payload: { msg: error.response.statusText, status: error.response.status }
+
+        });
+
+    }
+}
+//get profile by ID
+export const getProfilebyID = userId => async dispatch => {
+
+    try {
+        const res = await axios.get(`http://localhost:5000/profile/user/${userId}`);
         dispatch({
             type: GET_PROFILE,
             payload: res.data
@@ -70,7 +108,7 @@ export const addEducation = (formData, history) => async dispatch => {
         });
         dispatch(setAlert('Education Added', 'success'));
 
-        history.push('/dashboard');
+        history.push('/users');
 
     } catch (error) {
         const errors = error.response.data.errors;
@@ -84,6 +122,45 @@ export const addEducation = (formData, history) => async dispatch => {
             payload: { msg: error.response.statusText, status: error.response.status }
 
         });
+    }
+
+}
+//Delete Education
+export const deleteEducation = id => async dispatch => {
+    try {
+        const res = await axios.delete(`http://localhost:5000/profile/education/${id}`);
+        dispatch({
+            type: UPDATE_PROFILE,
+            payload: res.data
+        })
+        dispatch(setAlert('Education Removed', 'warning'));
+    } catch (error) {
+        dispatch({
+            type: PROFILE_ERROR,
+            payload: { msg: error.response.statusText, status: error.response.status }
+
+        });
+    }
+}
+//Delete Account & profile
+export const deleteAccount = () => async dispatch => {
+    if (window.confirm('Are you sure? this can not be undone')) {
+        try {
+            await axios.delete(`http://localhost:5000/profile/`);
+            dispatch({
+                type: CLEAR_PROFILE,
+            })
+            dispatch({
+                type: DELETE_ACCOUNT,
+            })
+            dispatch(setAlert('Your Acccount has been permanantly deleted Removed'));
+        } catch (error) {
+            dispatch({
+                type: PROFILE_ERROR,
+                payload: { msg: error.response.statusText, status: error.response.status }
+
+            });
+        }
     }
 
 }

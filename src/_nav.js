@@ -1,7 +1,9 @@
 export default {
+
   items: [
     {
-      name: 'Dashboard',
+
+      name: 'Students Space',
       url: '/dashboard',
       icon: 'icon-speedometer',
       badge: {
@@ -261,6 +263,7 @@ export default {
           name: 'Add New Post',
           url: '/AddPost',
           icon: 'icon-cursor',
+
         },
         {
           name: 'All Q & A',
@@ -271,4 +274,5 @@ export default {
     },
 
   ],
+
 };

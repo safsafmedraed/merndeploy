@@ -6,8 +6,8 @@ import { connect } from 'react-redux';
 import { setAlert } from '../../../actions/alert';
 import propTypes from 'prop-types';
 import { Redirect, Link } from 'react-router-dom';
-
-
+import Alert from '../../../actions/alerts';
+import Widget04 from '../../Widgets/Widget04';
 const Register1 = ({ setAlert, register, isAuthenticated }) => {
 
     const [formData, setFormData] = useState({
@@ -63,10 +63,15 @@ const Register1 = ({ setAlert, register, isAuthenticated }) => {
     }
 
     return <Fragment>
+
         <div className="app flex-row align-items-center">
+
             <Container>
+
                 <Row className="justify-content-center">
+
                     <Col md="9" lg="7" xl="6">
+
                         <Card className="mx-4">
                             <CardBody className="p-4">
                                 <Form onSubmit={e => onSubmit(e)}>
@@ -180,24 +185,31 @@ const Register1 = ({ setAlert, register, isAuthenticated }) => {
                                     <Button color="success" block>Create Account</Button>
                                 </Form>
                             </CardBody>
-                            <CardFooter className="p-4">
-                                <Row>
+                            <Widget04 value="0" icon="none">
+                                <Alert />
+                                <CardFooter className="p-4">
+                                    <Row>
 
-                                    <Col xs="12" sm="6">
-                                        <Link to="/login">
-                                            <Button className="btn-facebook mb-1" block><span>Login</span></Button>
-                                        </Link>
-                                    </Col>
-                                    <Col xs="12" sm="6">
-                                        <Button className="btn-twitter mb-1" block><span>Gmail</span></Button>
-                                    </Col>
-                                </Row>
-                            </CardFooter>
+                                        <Col xs="12" sm="6">
+                                            <Link to="/login">
+                                                <Button className="btn-facebook mb-1" block><span>Login</span></Button>
+                                            </Link>
+                                        </Col>
+                                        <Col xs="12" sm="6">
+                                            <Button className="btn-twitter mb-1" block><span>Gmail</span></Button>
+                                        </Col>
+                                    </Row>
+                                </CardFooter>
+                            </Widget04>
+
                         </Card>
                     </Col>
                 </Row>
+
             </Container>
+
         </div>
+
     </Fragment>
 
 

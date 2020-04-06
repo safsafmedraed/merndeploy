@@ -89,7 +89,7 @@ export const login = (
         email,
         password,
     });
-    console.log(body);
+
     try {
         const res = await axios.post('http://localhost:5000/users/login', body, config)
 
@@ -105,9 +105,10 @@ export const login = (
     } catch (err) {
         const errors = err.response.data.errors;
         if (errors) {
-            errors.array.forEach(error => {
+            errors.forEach(error => {
                 dispatch(setAlert(error.msg, 'warning'))
             });
+
         }
         dispatch({
             type: LOGIN_FAIL

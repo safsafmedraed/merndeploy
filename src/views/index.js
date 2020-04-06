@@ -32,7 +32,11 @@ import Reset from './pages/ForgotPassword/reset'
 import EditProfile from "./Users/EditProfile";
 import AddEducation from "./Users/AddEducation";
 import Education from "./Users/Education";
+import Profiles from "./Users/Profiles";
+import SingleProfile from "./Users/SingleProfile";
 export {
+  Profiles,
+  SingleProfile,
   Education,
   AddEducation,
   EditProfile,

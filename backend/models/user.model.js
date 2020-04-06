@@ -32,6 +32,9 @@ const userSchema = new Schema({
     role: {
         type: String
     },
+    avatar: {
+        type: String
+    },
     resetPasswordToken: {
         type: String,
         default: null
