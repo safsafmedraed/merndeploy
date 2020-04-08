@@ -1,4 +1,5 @@
 import React from 'react';
+import {List} from "@material-ui/core";
 
 const Breadcrumbs = React.lazy(() => import('./views/Base/Breadcrumbs'));
 const Cards = React.lazy(() => import('./views/Base/Cards'));
@@ -43,6 +44,9 @@ const AddEducation = React.lazy(() => import('./views/Users/AddEducation'));
 const Education = React.lazy(() => import('./views/Users/Education'));
 const Profiles = React.lazy(() => import('./views/Users/Profiles'));
 const SingleProfile = React.lazy(() => import('./views/Users/SingleProfile'));
+const Classes = React.lazy(() => import('./views/Classes/Classes'));
+const Addcl = React.lazy(() => import('./views/Classes/Ajout'));
+const affcl = React.lazy(() => import('./views/Classes/Affiche'));
 
 
 
@@ -97,7 +101,11 @@ const routes = [
   { path: '/Education', exact: true, name: 'Add Education', component: Education },
   { path: '/AddEducation', exact: true, name: 'Add Education', component: AddEducation },
   { path: '/Profiles', exact: true, name: 'All Profiles', component: Profiles },
-  { path: '/Single/:id', exact: true, name: 'Single Profile', component: SingleProfile }
+  { path: '/Single/:id', exact: true, name: 'Single Profile', component: SingleProfile },
+  { path: '/Addclass', exact: true, name: 'Add Class', component: Addcl },
+  { path: '/Listclasses', exact: true, name: 'List Classes', component: affcl },
+  { path: '/Classes', exact: true, name: 'Manage Classes', component: Classes }
+
 ];
 
 

@@ -27,6 +27,11 @@ export default {
           name: 'All Users Profiles',
           url: '/Profiles',
           icon: 'icon-star'
+        },
+        {
+          name: 'Manage classes',
+          url: '/Classes',
+          icon: 'icon-star',
         }
       ]
     },

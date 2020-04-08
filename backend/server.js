@@ -8,6 +8,9 @@ const passport = require('passport');
 const usersRouter = require('./routes/users');
 const subjectRouter = require('./routes/Subjects');
 const forgotpassword = require('./configuration/forgotpassword');
+const cl = require('./routes/Classes');
+const presence = require('./routes/Presences');
+
 const app = express();
 
 //passport config
@@ -58,7 +61,8 @@ app.use('/users', usersRouter);
 app.use('/forgot', forgotpassword);
 app.use('/api/auth', require('./routes/auth'));
 app.use('/profile', require('./routes/profile'));
-
+app.use('/class', cl);
+app.use('/presence', presence);
 app.listen(port, () => {
   console.log(`Server is running at port : ${port}`);
 })
