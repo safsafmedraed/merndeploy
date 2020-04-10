@@ -8,8 +8,23 @@ import propTypes from 'prop-types';
 import { Redirect, Link } from 'react-router-dom';
 import Alert from '../../../actions/alerts';
 import Widget04 from '../../Widgets/Widget04';
-const Register1 = ({ setAlert, register, isAuthenticated }) => {
 
+import Dialog from '@material-ui/core/Dialog';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogContentText from '@material-ui/core/DialogContentText';
+import DialogTitle from '@material-ui/core/DialogTitle';
+
+const Register1 = ({ setAlert, register, isAuthenticated }) => {
+    const [open, setOpen] = React.useState(false);
+
+    const handleClickOpen = () => {
+        setOpen(true);
+    };
+
+    const handleClose = () => {
+        setOpen(false);
+    };
     const [formData, setFormData] = useState({
         username: '',
         email: '',
@@ -55,6 +70,7 @@ const Register1 = ({ setAlert, register, isAuthenticated }) => {
             });
         }
     }
+
 
 
     //redirect if logged in
@@ -196,8 +212,30 @@ const Register1 = ({ setAlert, register, isAuthenticated }) => {
                                             </Link>
                                         </Col>
                                         <Col xs="12" sm="6">
-                                            <Button className="btn-twitter mb-1" block><span>Gmail</span></Button>
+                                            <Button className="btn-google-plus btn-brand " block onClick={handleClickOpen}><i className="fa fa-google-plus"></i><span>Google+</span></Button>
                                         </Col>
+                                        <Dialog
+                                            open={open}
+                                            onClose={handleClose}
+                                            aria-labelledby="alert-dialog-title"
+                                            aria-describedby="alert-dialog-description"
+                                        >
+                                            <DialogTitle id="alert-dialog-title">{"Use Google's Authentification service? Student only"}</DialogTitle>
+                                            <DialogContent>
+                                                <DialogContentText id="alert-dialog-description">
+                                                    Let google register you in this platform , by default your mail address will be your password then you can change it anytime
+                                           </DialogContentText>
+                                            </DialogContent>
+                                            <DialogActions>
+                                                <Button onClick={handleClose} color="primary">
+                                                    Disagree
+                                                   </Button>
+                                                <a href="http://localhost:5000/auth/google">
+                                                    <Button color="primary" autoFocus>
+                                                        Agree
+                                                 </Button></a>
+                                            </DialogActions>
+                                        </Dialog>
                                     </Row>
                                 </CardFooter>
                             </Widget04>
@@ -221,6 +259,7 @@ const Register1 = ({ setAlert, register, isAuthenticated }) => {
 Register1.propTypes = {
     setAlert: propTypes.func.isRequired,
     register: propTypes.func.isRequired,
+
     isAuthenticated: propTypes.bool
 }
 const mapStateToProps = state => ({

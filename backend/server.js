@@ -8,6 +8,7 @@ const passport = require('passport');
 const usersRouter = require('./routes/users');
 const subjectRouter = require('./routes/Subjects');
 const forgotpassword = require('./configuration/forgotpassword');
+const googleauth = require('./routes/googleauth');
 const app = express();
 
 //passport config
@@ -56,6 +57,7 @@ app.use((req, res, next) => {
 app.use('/subjects', subjectRouter);
 app.use('/users', usersRouter);
 app.use('/forgot', forgotpassword);
+app.use('/', googleauth);
 app.use('/api/auth', require('./routes/auth'));
 app.use('/profile', require('./routes/profile'));
 

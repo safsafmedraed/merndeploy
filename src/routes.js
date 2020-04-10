@@ -1,5 +1,6 @@
 import React from 'react';
 
+
 const Breadcrumbs = React.lazy(() => import('./views/Base/Breadcrumbs'));
 const Cards = React.lazy(() => import('./views/Base/Cards'));
 const Carousels = React.lazy(() => import('./views/Base/Carousels'));
@@ -43,6 +44,7 @@ const AddEducation = React.lazy(() => import('./views/Users/AddEducation'));
 const Education = React.lazy(() => import('./views/Users/Education'));
 const Profiles = React.lazy(() => import('./views/Users/Profiles'));
 const SingleProfile = React.lazy(() => import('./views/Users/SingleProfile'));
+const EditAccount = React.lazy(() => import('./views/Users/EditAccount'));
 
 
 
@@ -97,7 +99,8 @@ const routes = [
   { path: '/Education', exact: true, name: 'Add Education', component: Education },
   { path: '/AddEducation', exact: true, name: 'Add Education', component: AddEducation },
   { path: '/Profiles', exact: true, name: 'All Profiles', component: Profiles },
-  { path: '/Single/:id', exact: true, name: 'Single Profile', component: SingleProfile }
+  { path: '/Single/:id', exact: true, name: 'Single Profile', component: SingleProfile },
+  { path: '/EditAccount', exact: true, name: 'Single Profile', component: EditAccount }
 ];
 
 

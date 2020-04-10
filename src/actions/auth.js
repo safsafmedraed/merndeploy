@@ -18,9 +18,9 @@ export const loadUser = () => async dispatch => {
             type: AUTH_ERROR
         })
     }
-
-
 }
+
+
 //Register User 
 
 export const register = ({
@@ -92,7 +92,6 @@ export const login = (
 
     try {
         const res = await axios.post('http://localhost:5000/users/login', body, config)
-
 
         dispatch({
             type: LOGIN_SUCCESS,

@@ -34,7 +34,9 @@ import AddEducation from "./Users/AddEducation";
 import Education from "./Users/Education";
 import Profiles from "./Users/Profiles";
 import SingleProfile from "./Users/SingleProfile";
+import EditAccount from "./Users/EditAccount";
 export {
+  EditAccount,
   Profiles,
   SingleProfile,
   Education,

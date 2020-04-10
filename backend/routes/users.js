@@ -150,8 +150,82 @@ router.route('/login').post([
     }
 
 );
+//edit account 
+router.route('/update').post([
+    check('Firstname', 'First name is required')
+        .not()
+        .isEmpty(),
+    check('Lastname', 'Last name is required')
+        .not()
+        .isEmpty(),
+    check('username', 'username is required')
+        .not()
+        .isEmpty(),
+    check('phonenumber', 'phone number is required')
+        .isLength({
+            min: 8
+        }),
+    check('email', 'Please enter a valid email')
+        .isEmail(),
+], async (req, res) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+        return res.status(400).json({ errors: errors.array() });
+    }
+
+    const { username,
+        email,
+        //   password,
+        Firstname,
+        Lastname,
+        borndate,
+        bornplace,
+        phonenumber } = req.body;
+    //build profile object
+    const profileFields = {};
+    // profileFields = req._id
+    if (username) profileFields.username = username;
+    if (email) profileFields.email = email;
+    // if (password) profileFields.password = password;
+    if (Firstname) profileFields.Firstname = Firstname;
+    if (Lastname) profileFields.Lastname = Lastname;
+    //if (borndate) profileFields.borndate = borndate;
+    if (bornplace) profileFields.bornplace = bornplace;
+    if (phonenumber) profileFields.phonenumber = phonenumber;
+
+    try {
+
+        // See if user exists
+        let user = await User.findOne({ user: req.email });
+        if (user) {
+            user = await User.findOneAndUpdate({ user: req.email }, {
+                $set:
+                    profileFields,
+            },
+                { new: true });
+            return res.json(user);
+        }
 
 
+    } catch (err) {
+        console.error(err.message + "ddddddd");
+        res.status(500).send('Server error')
+    }
+}
+);
+//get current user account 
+router.route('/me').get(auth, async (req, res) => {
+    try {
+        const user = await User.findOne({ user: req.email })
+        if (!user) {
+            return res.status(400).json({ msg: 'there is no profile for this user ' });
+        }
+        res.json(user);
+    } catch (error) {
+        console.error(error.message);
+        res.status(500).send('server error')
+    }
+});
 
 //Logout 
 router.route('/logout').get((req, res) => {
