@@ -1,5 +1,5 @@
 const uri = ()=>{
-if(localStorage.getItem("role")==="super" && localStorage.getItem("token"))
+if(localStorage.getItem("role")==="Admin" && localStorage.getItem("token"))
   return '/Claims';
 else
   return '/UserClaims';

@@ -5,6 +5,7 @@ import ReactHtmlParser from 'react-html-parser';
 import { toast } from 'react-toastify';
 import axios from 'axios';
 import { LoopCircleLoading  } from 'react-loadingg';
+import {connect} from 'react-redux';
 
 class Claim extends Component {
   constructor(props){
@@ -21,6 +22,11 @@ class Claim extends Component {
         .then(res => this.setState({claim : res.data}))
         .catch(()=>this.notifyBlock('Oups! something went wrong'));
   }
+
+  /*renderHello =()=> 
+    setInterval(() => {
+      console.log('Hello');      
+    }, 5000);*/
 
     handleEditorChange = (content, editor) => {
         this.setState({
@@ -85,7 +91,7 @@ class Claim extends Component {
                      <Card>
                           <CardHeader>
                               <strong>Response</strong><br/>
-                          <span style={{fontSize:11 , color:'grey'}}>{new Date(claim.dateResponse).toLocaleString('en-US')}</span>
+                    <span style={{fontSize:11 , color:'grey'}}>{new Date(claim.dateResponse).toLocaleString('en-US')} by {claim.admin.Firstname} {claim.admin.Lirstname}</span>
                           </CardHeader>
                           <CardBody>
                               {ReactHtmlParser(claim.response)}
@@ -134,6 +140,7 @@ class Claim extends Component {
                     <Button color="primary" onClick={()=>{
                       this.setState({confirmation:false});
                       claim.response = this.state.editorInput;
+                      claim.admin = this.props.user._id;
                       axios.put("http://localhost:5000/claims/answer" , claim)
                       .then(()=>{
                         this.props.history.push("/Claims");
@@ -176,5 +183,10 @@ class Claim extends Component {
     }
  
 }
+const stateToProps = state => {
+  return {
+      user : state.auth.user
+  }
+}
 
-export default Claim;
+export default connect(stateToProps)(Claim);

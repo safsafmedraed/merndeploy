@@ -7,6 +7,7 @@ import { AppSwitch } from '@coreui/react';
 import axios from 'axios';
 import { toast } from 'react-toastify';
 import LoopCircleLoading from 'react-loadingg/lib/LoopCircleLoading';
+import logo from '../../../src/logo.svg'
 
 
 
@@ -16,7 +17,7 @@ class Claims extends Component {
         super(props)
         if(props.user) { 
           if(props.user.role)
-            if(props.user.role === 'super')
+            if(props.user.role === 'Admin')
               axios.get('http://localhost:5000/claims')
               .then(res => {
                 props.loadState(res.data);
@@ -100,13 +101,18 @@ render(){
           </Col>        
         </Row>
         <Row>
-          <Col md="4">
+          <Col md="10">
           <div className="div-radio">
               <label style={{fontWeight : "bold"}}>User role</label> &nbsp;
               <label><input className="radio" defaultChecked={true} type="radio" name="filter" onChange={()=>this.setState({role : "all" , activePage :1})} value="" />All</label> &nbsp;
               <label><input className="radio" type="radio" name="filter" onChange={()=>this.setState({role : "Teacher" , activePage :1})} value={true} />Teacher</label> &nbsp;
               <label><input className="radio"  type="radio" name="filter" onChange={()=>this.setState({role : "Student" , activePage :1})} value={false} />Student</label>
           </div>
+          </Col>
+          <Col>
+              <div>
+                <img onClick={()=>this.props.history.push('/Claims/stats')} alt="stats" height="100" width="100 " src={logo}></img>
+              </div>
           </Col>
         </Row>
       </CardBody>

@@ -29,9 +29,16 @@ var claimSchema = new Schema({
         type: Boolean,
         default: false
     },
+    admin:{
+        type : mongoose.Schema.Types.ObjectId, ref: 'users'
+    },
     user: {
         type: mongoose.Schema.Types.ObjectId, ref: 'users',
         required : true
+    },
+    processed :{
+        type: Boolean,
+        default: false
     }
 });
 
