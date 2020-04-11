@@ -6,7 +6,7 @@ const flash = require('connect-flash');
 const session = require('express-session');
 const passport = require('passport');
 const usersRouter = require('./routes/users');
-const subjectRouter = require('./routes/Subjects');
+const postRouter = require('./routes/Post')
 const forgotpassword = require('./configuration/forgotpassword');
 const googleauth = require('./routes/googleauth');
 const app = express();
@@ -54,7 +54,7 @@ app.use((req, res, next) => {
 })
 
 
-app.use('/subjects', subjectRouter);
+app.use('/post', postRouter)
 app.use('/users', usersRouter);
 app.use('/forgot', forgotpassword);
 app.use('/', googleauth);
