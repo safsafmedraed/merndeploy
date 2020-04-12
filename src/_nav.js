@@ -272,7 +272,14 @@ export default {
         }
       ]
     },
-
+    {
+      name: 'Anser a quizz',
+      icon: 'cui-people',
+      url : 'QuizzAnswer',
+      attributes: { disabled: false },
+      
+    }
   ],
+  
 
 };

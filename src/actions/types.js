@@ -18,3 +18,4 @@ export const CLEAR_PROFILE = 'CLEAR_PROFILE';
 export const RESET_ERROR = 'RESET_ERROR';
 export const RESET_OK = 'RESET_OK';
 export const DELETE_ACCOUNT = 'DELETE_ACCOUNT';
+export const ADD_QUESTION = 'ADD_QUESTION';

@@ -42,7 +42,32 @@ const userSchema = new Schema({
     resetPasswordExpires: {
         type: Date,
         default: null
-    }
+    },
+    quizzexist : {
+        type: Boolean,
+        default : false
+    },
+    Quizzs: [
+        {
+            quiz:{
+                    type: mongoose.Schema.Types.ObjectId,
+                    ref: "Quizz"
+                 },
+                 score : {
+                     type: Number,
+                     default : 0
+                 }
+        }
+    ],
+    note : {
+        type: Number,
+        default : 0
+    },
+    Classes: [
+        {
+          type: String
+        }
+    ]
 
 
 

@@ -24,6 +24,7 @@ export default function (state = initialState, action) {
         case LOGIN_SUCCESS:
             localStorage.setItem('token', payload.token);
             localStorage.setItem('user', JSON.stringify(payload.user.role).slice(1, -1))
+            localStorage.setItem('user1', payload.user._id)
             return {
                 ...state,
                 ...payload,

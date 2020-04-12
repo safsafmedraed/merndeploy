@@ -8,6 +8,7 @@ const config = require('config');
 const auth = require('../middleware/auth');
 const bcrypt = require('bcryptjs');
 const gravatar = require('gravatar');
+let Quizzz = require('../models/Quizz');
 const { check, validationResult } = require('express-validator');
 /**************GET USERS*************/
 router.route('/').get(auth, (req, res) => {
@@ -53,6 +54,10 @@ router.route('/register').post([
     const role = req.body.role;
     const bornplace = req.body.bornplace;
     const phonenumber = req.body.phonenumber;
+    const Classes = req.body.Classes;
+    const Quizzs = [];
+    const quizzexist = false
+    const note = 0;
     try {
         // See if user exists
         let user = await User.findOne({ email })
@@ -75,7 +80,11 @@ router.route('/register').post([
             role,
             bornplace,
             phonenumber,
-            avatar
+            avatar,
+            quizzexist,
+            Quizzs,
+            Classes,
+            note
         })
         bycrpt.genSalt(10, (err, salt) =>
             bycrpt.hash(user.password, salt, (err, hash) => {
@@ -97,7 +106,47 @@ router.route('/register').post([
     }
 }
 );
-
+router.get('/userid/:id', (req, res) => {
+    User.findById(req.params.id)
+    .then(user => res.json(user ))
+    .catch(err => res.status(400).json('Error: ' + err));
+})
+router.get('/userclasse/:classe', (req, res) => {
+    var query = req.params.classe;
+    User.find({role:"Student", 'Classes' : query})
+    .then(user => res.json(user))
+    .catch(err => res.status(400).json('Error: ' + err));
+})
+router.put('/usernoquizz/:id/:quizzid/:note',(req,res)=> {
+    User.findById(req.params.id)
+    .then(user=>  {
+        user.quizzexist= false
+        user.note = user.note+Number(req.params.note)
+        console.log(req.params.quizzid)
+        let found =user.Quizzs.find(element => element= req.params.quizzid)
+        console.log("////////////////"+found)
+        found.score = req.params.note
+        user.save()
+        .then(() => res.json('User state updated!'))
+        .catch(err => res.status(400).json('Error: ' + err));
+    })
+    .catch(err => res.status(400).json('Error: ' + err));
+})
+router.put('/Userquizz/:id/:quizzid', (req, res) => {
+    
+    User.findById(req.params.id)
+    .then(user => {
+        user.quizzexist =true
+             
+        Quizzz.findById(req.params.quizzid)
+        .then(kk => {
+        user.Quizzs.push(kk._id)
+        user.save()})
+        .then(() => res.json('quizz updated!'+user))
+        .catch(err => res.status(400).json('Error: ' + err));
+    })
+    .catch(err => res.status(400).json('Error: ' + err));
+    })
 //Login handle  /*********Token expire in 1 hour******** */
 router.route('/login').post([
     check('email', 'Please enter a valid email').isEmail(),

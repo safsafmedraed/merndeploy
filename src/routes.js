@@ -43,7 +43,11 @@ const AddEducation = React.lazy(() => import('./views/Users/AddEducation'));
 const Education = React.lazy(() => import('./views/Users/Education'));
 const Profiles = React.lazy(() => import('./views/Users/Profiles'));
 const SingleProfile = React.lazy(() => import('./views/Users/SingleProfile'));
-
+const Question  = React.lazy(()=> import('./views/Quizz/Question'));
+const ManageQuestions = React.lazy(()=> import('./views/Quizz/ManageQuestions'));
+const DetailsQuestion = React.lazy(()=> import('./views/Quizz/DetailsQuestion'));
+const AddQuizz = React.lazy(()=> import('./views/Quizz/AddQuizz'));
+const QuizzAnswer = React.lazy(()=>import('./views/Quizz/QuizzAnswer'));
 
 
 
@@ -97,7 +101,12 @@ const routes = [
   { path: '/Education', exact: true, name: 'Add Education', component: Education },
   { path: '/AddEducation', exact: true, name: 'Add Education', component: AddEducation },
   { path: '/Profiles', exact: true, name: 'All Profiles', component: Profiles },
-  { path: '/Single/:id', exact: true, name: 'Single Profile', component: SingleProfile }
+  { path: '/Single/:id', exact: true, name: 'Single Profile', component: SingleProfile },
+  { path: '/Question', exact: true, name: 'Question', component: Question },
+  { path : '/ManageQuestions', exact:true, name: 'ManageQuestions' , component: ManageQuestions},
+  { path : '/DetailsQuestion/:id', exact:true, name :'DetailsQuestion', component: DetailsQuestion},
+  { path : '/AddQuizz', exact:true, name :'AddQuizz', component: AddQuizz},
+  { path : '/QuizzAnswer', exact: true, name:'QuizzAnswer', component : QuizzAnswer}
 ];
 
 
