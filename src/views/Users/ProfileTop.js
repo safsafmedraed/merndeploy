@@ -1,5 +1,5 @@
 import React, { Fragment } from 'react'
-import { Button, Card, CardBody, CardHeader, Col, Jumbotron } from 'reactstrap';
+import { Card, CardBody, CardHeader, Col, Jumbotron } from 'reactstrap';
 import PropTypes from 'prop-types'
 const ProfileTop = ({ profile: {
     status, institution, location, user: { avatar, username }

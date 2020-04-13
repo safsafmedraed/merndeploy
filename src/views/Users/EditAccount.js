@@ -2,9 +2,9 @@ import React, { useState, useEffect, Fragment } from 'react'
 import PropTypes from 'prop-types'
 import { editaccount, getCurrentAccount } from '../../actions/profile';
 import Alert from '../../actions/alerts';
-import { withRouter, Link } from 'react-router-dom';
+import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { Button, Card, CardBody, CardFooter, Col, Container, Form, Input, InputGroup, InputGroupAddon, InputGroupText, Row, Label } from 'reactstrap';
+import { Button, Card, CardBody, Col, Container, Form, Input, InputGroup, InputGroupAddon, InputGroupText, Row } from 'reactstrap';
 import Widget04 from '../Widgets/Widget04';
 const EditAccount = ({ auth: { user, loading }, editaccount, history, getCurrentAccount }) => {
     const [formData, setFormData] = useState({

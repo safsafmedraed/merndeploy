@@ -1,6 +1,6 @@
 import React, { Fragment } from 'react'
 import PropTypes from 'prop-types'
-import { Card, CardBody, CardHeader, Col, Jumbotron } from 'reactstrap';
+import { Card, CardBody, Col, Jumbotron } from 'reactstrap';
 import Moment from 'react-moment'
 const ProfileAbout = ({ profile: { user: { Firstname, Lastname, email, phonenumber, borndate } } }) => {
     return (

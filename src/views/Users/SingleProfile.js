@@ -5,7 +5,7 @@ import Spinner from '../Theme/Spinner';
 import { getProfilebyID } from '../../actions/profile'
 import ProfileTop from './ProfileTop'
 import { Link } from 'react-router-dom';
-import { Button, Card, CardBody, CardHeader, Col, Container, Jumbotron, Row } from 'reactstrap';
+import { Button } from 'reactstrap';
 import ProfileAbout from './ProfileAbout'
 const SingleProfile = ({ match, getProfilebyID, profile: { profile, loading }, auth }) => {
     useEffect(() => {
