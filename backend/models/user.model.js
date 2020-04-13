@@ -1,37 +1,71 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
-
+const bcrypt = require('bcryptjs')
 const userSchema = new Schema({
-    username:{
-        type:String,
-        required:true,
-    },
-    email:{
-        type:String,
+    username: {
+        type: String,
         required: true,
     },
-    password:{
-        type:String,
-        required:true,
+    email: {
+        type: String,
+        required: true,
     },
-    phonenumber:{
-        type:String,
+    password: {
+        type: String,
+        required: true,
     },
-    borndate:{
-        type:Date
+    phonenumber: {
+        type: String,
     },
-    Firstname:{
-        type:String
+    borndate: {
+        type: Date
     },
-    Lastname:{
-        type:String,
+    bornplace: {
+        type: String
+    },
+    Firstname: {
+        type: String
+    },
+    Lastname: {
+        type: String,
+    },
+    role: {
+        type: String
+    },
+    avatar: {
+        type: String
+    },
+    resetPasswordToken: {
+        type: String,
+        default: null
+    },
+    resetPasswordExpires: {
+        type: Date,
+        default: null
+    },
+  Classes: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: 'classes',
+      default: null
     }
 
-
+  ],
+  ClassU:
+    {
+      type: Schema.Types.ObjectId,
+      ref: 'classes',
+      default: null
+    }
 
 
 });
 
-
-const User = mongoose.model('users',userSchema);
-module.exports=User;
+userSchema.methods.hashPassword = function (password) {
+    return bcrypt.hashSync(password, bcrypt.genSaltSync(10))
+};
+userSchema.methods.validPassword = function (pwd) {
+    return (this.password === pwd);
+};
+const User = mongoose.model('users', userSchema);
+module.exports = User;

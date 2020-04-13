@@ -4,111 +4,164 @@ const bycrpt = require('bcryptjs');
 const passport = require('passport');
 const JWT = require('jsonwebtoken');
 const JWT_SECRET = require('../config').JWT_SECRET;
-
-
-const signToken = user => {
-    return JWT.sign({
-        iss: 'CodeWorkr',
-        user: user.id,
-        iat: new Date().getTime(), // current time
-        exp: new Date().setDate(new Date().getDate() + 1) // current time + 1 day ahead
-    }, JWT_SECRET);
-}
-
-
+const config = require('config');
+const auth = require('../middleware/auth');
+const bcrypt = require('bcryptjs');
+const gravatar = require('gravatar');
+const { check, validationResult } = require('express-validator');
 /**************GET USERS*************/
-router.route('/').get(passport.authenticate('jwt', { session: false }), (req, res) => {
+router.route('/').get(auth, (req, res) => {
 
     User.find().then(users => res.json(users)).catch(err => res.status(400).json('Error:' + err))
 
 })
 
 
-/*******Register*********/
-router.route('/register').post((req, res) => {
+
+/*******Register*********//*********Token expire in 1 hour******** */
+router.route('/register').post([
+    check('Firstname', 'First name is required')
+        .not()
+        .isEmpty(),
+    check('Lastname', 'Last name is required')
+        .not()
+        .isEmpty(),
+    check('username', 'username is required')
+        .not()
+        .isEmpty(),
+    check('phonenumber', 'phone number is required')
+        .isLength({
+            min: 8
+        }),
+    check('email', 'Please enter a valid email')
+        .isEmail(),
+    check('password', 'Please enter a password with 6 or more characters')
+        .isLength({
+            min: 6
+        })
+], async (req, res) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+        return res.status(400).json({ errors: errors.array() });
+    }
+
     const username = req.body.username;
     const email = req.body.email;
     const password = req.body.password;
     const Firstname = req.body.Firstname;
     const Lastname = req.body.Lastname;
-    //const borndate=req.body.borndate;
-
-    User.findOne({ email: email }).then(user => {
+    const borndate = req.body.borndate;
+    const role = req.body.role;
+    const bornplace = req.body.bornplace;
+    const phonenumber = req.body.phonenumber;
+    try {
+        // See if user exists
+        let user = await User.findOne({ email })
         if (user) {
-            console.log("user exists!")
-            res.json('user exists');
-        }
-        else {
-            const newUser = new User({
-                username,
-                email,
-                password,
-                Firstname,
-                Lastname,
-                // borndate
-            })
-            bycrpt.genSalt(10, (err, salt) =>
-                bycrpt.hash(newUser.password, salt, (err, hash) => {
-                    newUser.password = hash;
-                    const token = signToken(newUser);
-                    res.cookie('access_token', token, { expires: new Date(Date.now() + 900000), httpOnly: true });
-                    newUser.save().then(() => res.json('user registred and you can log in your token is : ' + token)).catch(err => res.status(400).json('Error:' + err));
-                }));
-
+            return res.status(400).json({ errors: [{ msg: 'User Already exists' }] })
         }
 
-    })
+        const avatar = gravatar.url(email, {
+            s: '200',
+            r: 'pg',
+            d: 'mm'
+        })
+        user = new User({
+            username,
+            email,
+            password,
+            Firstname,
+            Lastname,
+            borndate,
+            role,
+            bornplace,
+            phonenumber,
+            avatar
+        })
+        bycrpt.genSalt(10, (err, salt) =>
+            bycrpt.hash(user.password, salt, (err, hash) => {
+                user.password = hash;
+                const payload = {
+                    user: {
+                        id: user.id
+                    }
+                }
+                const token = JWT.sign(payload, config.get('jwtSecret'), {
+                    expiresIn: 3600
+                });
+                user.save().then(() => res.json({ user, token })).catch(err => res.status(400).json(err));
+            }));
 
-})
-//Login handle 
-router.route('/login').post(function (req, res, next) {
+    } catch (err) {
+        console.error(err.message);
+        res.status(500).send('Server error')
+    }
+}
+);
 
-    passport.authenticate('local', { session: false }, (err, user, info) => {
-        console.log(err);
-        if (err || !user) {
+//Login handle  /*********Token expire in 1 hour******** */
+router.route('/login').post([
+    check('email', 'Please enter a valid email').isEmail(),
+    check('password', 'Password is required').exists()
+],
+    async (req, res) => {
+        const errors = validationResult(req);
+        if (!errors.isEmpty()) {
             return res.status(400).json({
-                message: info ? info.message : 'Login failed',
-                user: user
+                errors: errors.array()
             });
         }
-
-        req.login(user, { session: false }, (err) => {
-            if (err) {
-                res.send(err);
+        const { email, password } = req.body;
+        try {
+            let user = await User.findOne({
+                email
+            })
+            if (!user) {
+                return res.status(400).json({
+                    errors: [{
+                        msg: 'Invalid credentials'
+                    }]
+                })
+            }
+            const isMatch = await bcrypt.compare(password, user.password);
+            if (!isMatch) {
+                return res.status(400).json({
+                    errors: [{
+                        msg: 'Invalid credentials'
+                    }]
+                })
+            }
+            const payload = {
+                user: {
+                    id: user.id
+                }
             }
 
-            const token = JWT.sign(user.toJSON(), JWT_SECRET);
-
+            const token = JWT.sign(payload, config.get('jwtSecret'), {
+                expiresIn: 3600
+            });
+            // res.cookie('access_token', token, { expires: new Date(Date.now() + 900000), httpOnly: true });
             return res.json({ user, token });
-        });
-    })
-        (req, res);
+        }
+        catch (err) {
+            console.error(err.message);
+            res.status(500).send('Server error')
 
-});
+        }
+    }
 
-//Logout 
+);
+
+
+
+//Logout
 router.route('/logout').get((req, res) => {
-    res.clearCookie('access_token');
+    //res.clearCookie('access_token');
     req.logout();
     res.json("logged out ")
     console.log('Logged out');
 
 })
-/* function verifytoken(req, res, next) {
-    //get auth header value 
-    const bearerHeader = req.headers['authorization'];
-    //check if bearer is indefined 
-    if (typeof bearerHeader !== 'undefined') {
-        const bearer = bearerHeader.split(' ');
-        //get token from array 
-        const bearerToken = bearer[1];
-        //set the token 
-        req.token = bearerToken;
-        next();
-    } else {
-        //forbiden
-        res.status(403).json('Error:' + err);
-    }
-} */
+
 
 module.exports = router;

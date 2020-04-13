@@ -6,9 +6,13 @@ const flash = require('connect-flash');
 const session = require('express-session');
 const passport = require('passport');
 const usersRouter = require('./routes/users');
+const subjectRouter = require('./routes/Subjects');
 const forgotpassword = require('./configuration/forgotpassword');
-const resetpassword = require('./configuration/resetpassword');
+const cl = require('./routes/Classes');
+const presence = require('./routes/Presences');
+
 const app = express();
+
 //passport config
 require('./passport')(passport);
 
@@ -16,22 +20,22 @@ require('dotenv').config();
 app.use(cookieParser());
 app.use(
   cors({
-    origin: "http://localhost:5000",
+    origin: "http://localhost:3000",
     credentials: true
   })
 );
 
 const port = process.env.port || 5000;
 const uri = process.env.ATLAS_URI;
-mongoose.connect(uri, { useNewUrlParser: true, useCreateIndex: true, useUnifiedTopology: true });
+mongoose.connect(uri, { useNewUrlParser: true, useCreateIndex: true, useUnifiedTopology: true, useFindAndModify: false });
 const connection = mongoose.connection;
 connection.once('open', () => {
   console.log('***database works!!***');
 })
 
-app.use(cors());
-//body-parser
-app.use(express.json());
+
+
+app.use(express.json({ extended: false }));
 //express session
 app.use(session({
   secret: 'secret',
@@ -44,7 +48,7 @@ app.use(passport.initialize());
 app.use(passport.session());
 //connect flash
 app.use(flash());
-//global vars 
+//global vars
 app.use((req, res, next) => {
   res.locals.success_msg = req.flash('succes_msg');
   res.locals.error_msg = req.flash('error_msg');
@@ -52,12 +56,13 @@ app.use((req, res, next) => {
 })
 
 
-
-
-app.use('/users', cors(), usersRouter);
+app.use('/subjects', subjectRouter);
+app.use('/users', usersRouter);
 app.use('/forgot', forgotpassword);
-app.use('/reset', resetpassword);
-
+app.use('/api/auth', require('./routes/auth'));
+app.use('/profile', require('./routes/profile'));
+app.use('/class', cl);
+app.use('/presence', presence);
 app.listen(port, () => {
   console.log(`Server is running at port : ${port}`);
 })

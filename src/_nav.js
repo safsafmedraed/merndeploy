@@ -1,7 +1,9 @@
 export default {
+
   items: [
     {
-      name: 'Dashboard',
+
+      name: 'Students Space',
       url: '/dashboard',
       icon: 'icon-speedometer',
       badge: {
@@ -234,14 +236,43 @@ export default {
           url: '/500',
           icon: 'icon-star',
         },
+        {
+          name: 'Register',
+          url: '/Register1',
+          icon: 'icon-star',
+        },
+
+        {
+          name: 'Forgot Password',
+          url: '/ForgotPassword',
+          icon: 'icon-star',
+        },
+        {
+          name: 'reset password',
+          url: '/Reset',
+          icon: 'icon-star',
+        },
       ],
     },
     {
       name: 'Forum',
-      url: '/forum',
       icon: 'cui-people',
       attributes: { disabled: false },
+      children: [
+        {
+          name: 'Add New Post',
+          url: '/AddPost',
+          icon: 'icon-cursor',
+
+        },
+        {
+          name: 'All Q & A',
+          url: '/Forum',
+          icon: 'icon-star'
+        }
+      ]
     },
 
   ],
+
 };

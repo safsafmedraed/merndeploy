@@ -1,4 +1,5 @@
 import React from 'react';
+import {List} from "@material-ui/core";
 
 const Breadcrumbs = React.lazy(() => import('./views/Base/Breadcrumbs'));
 const Cards = React.lazy(() => import('./views/Base/Cards'));
@@ -36,11 +37,24 @@ const Widgets = React.lazy(() => import('./views/Widgets/Widgets'));
 const Users = React.lazy(() => import('./views/Users/Users'));
 const User = React.lazy(() => import('./views/Users/User'));
 const Forum = React.lazy(() => import('./views/Forum/Forum'));
+const AddPost = React.lazy(() => import('./views/Forum/ForumContainer/AddPost'));
+const CreateProfile = React.lazy(() => import('./views/CreateProfile/CreateProfile'));
+const EditProfile = React.lazy(() => import('./views/Users/EditProfile'));
+const AddEducation = React.lazy(() => import('./views/Users/AddEducation'));
+const Education = React.lazy(() => import('./views/Users/Education'));
+const Profiles = React.lazy(() => import('./views/Users/Profiles'));
+const SingleProfile = React.lazy(() => import('./views/Users/SingleProfile'));
+const Classes = React.lazy(() => import('./views/Classes/Classes'));
+const Addcl = React.lazy(() => import('./views/Classes/Ajout'));
+const affcl = React.lazy(() => import('./views/Classes/Affiche'));
 
-// https://github.com/ReactTraining/react-router/tree/master/packages/react-router-config
+
+
+
 const routes = [
-  { path: '/', exact: true, name: 'Home' },
-  { path: '/dashboard', name: 'Dashboard', component: Dashboard },
+
+  { path: '/', exact: true, name: 'Home', },
+  { path: '/dashboard', name: 'Dashboard', component: Dashboard, },
   { path: '/theme', exact: true, name: 'Theme', component: Colors },
   { path: '/theme/colors', name: 'Colors', component: Colors },
   { path: '/theme/typography', name: 'Typography', component: Typography },
@@ -78,9 +92,22 @@ const routes = [
   { path: '/notifications/modals', name: 'Modals', component: Modals },
   { path: '/widgets', name: 'Widgets', component: Widgets },
   { path: '/charts', name: 'Charts', component: Charts },
-  { path: '/users', exact: true,  name: 'Users', component: Users },
+  { path: '/users', exact: true, name: 'Users', component: Users },
   { path: '/users/:id', exact: true, name: 'User Details', component: User },
   { path: '/Forum', exact: true, name: 'Forum', component: Forum },
+  { path: '/Addpost', exact: true, name: 'Add new Post', component: AddPost },
+  { path: '/CreateProfile', exact: true, name: 'Create Profile', component: CreateProfile },
+  { path: '/EditProfile', exact: true, name: 'Edit Profile', component: EditProfile },
+  { path: '/Education', exact: true, name: 'Add Education', component: Education },
+  { path: '/AddEducation', exact: true, name: 'Add Education', component: AddEducation },
+  { path: '/Profiles', exact: true, name: 'All Profiles', component: Profiles },
+  { path: '/Single/:id', exact: true, name: 'Single Profile', component: SingleProfile },
+  { path: '/Addclass', exact: true, name: 'Add Class', component: Addcl },
+  { path: '/Listclasses', exact: true, name: 'List Classes', component: affcl },
+  { path: '/Classes', exact: true, name: 'Manage Classes', component: Classes }
+
 ];
+
+
 
 export default routes;
