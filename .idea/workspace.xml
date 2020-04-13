@@ -48,6 +48,7 @@
       <workItem from="1583586298461" duration="145000" />
       <workItem from="1583597805292" duration="132000" />
       <workItem from="1583677390072" duration="242000" />
+      <workItem from="1586821481930" duration="267000" />
     </task>
     <task id="LOCAL-00001" summary="first commit backend Ready!">
       <created>1583435846979</created>
@@ -84,7 +85,14 @@
       <option name="project" value="LOCAL" />
       <updated>1583677469873</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="aaaaaa">
+      <created>1586821667427</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1586821667427</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -109,6 +117,7 @@
     <MESSAGE value="user login logout register version 0.1" />
     <MESSAGE value="jwt token login and register" />
     <MESSAGE value="forgot password via mail and reset password" />
-    <option name="LAST_COMMIT_MESSAGE" value="forgot password via mail and reset password" />
+    <MESSAGE value="aaaaaa" />
+    <option name="LAST_COMMIT_MESSAGE" value="aaaaaa" />
   </component>
 </project>
