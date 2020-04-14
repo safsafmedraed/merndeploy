@@ -67,11 +67,22 @@ const userSchema = new Schema({
         type: Number,
         default : 0
     }
-    ,Classes: [
-        {
-          type: String
-        }
-    ]
+    ,
+    Classes: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: 'classes',
+        default: null
+      }
+  
+    ],
+    ClassU:
+      {
+        type: Schema.Types.ObjectId,
+        ref: 'classes',
+        default: null
+      }
+  
 
 
 

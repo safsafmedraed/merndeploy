@@ -22,10 +22,12 @@ class AddQuizz extends Component {
             take : [],
             code : '',
             Classes : [],
+            ss : [],
             Users : [],
             value1 : [],
             take1 : [],
-            idd: ''
+            idd: '',
+            cl : []
            
         }
     }
@@ -48,34 +50,55 @@ class AddQuizz extends Component {
         this.setState({
           Classes: res.data.Classes
         })
-      })
+        this.state.Classes.forEach(element => {
+          console.log(element)
+          axios.get(`http://localhost:5000/class/classeid/${element}`)
+            .then(res=> {
+              console.log(res);
+              this.setState({cl: [...this.state.cl,res.data]})
+            })
+        });
+      });
+      
+      
     }
     
     onchangeclass(e){
       this.setState({
         classe: e.target.value
       })
-      console.log(this.state.classe)
+     // console.log(this.state.classe)
       const classe = this.state.classe
-      axios.get(`http://localhost:5000/users/userclasse/${classe}`)
-      .then(res => {
-        this.setState({Users: res.data})
+      this.setState({
+        Users : []
       })
-      console.log(this.state.Users)
+      axios.get(`http://localhost:5000/class/classeid/${classe}`)
+            .then(res=> {
+              this.setState({ss: res.data.Users })
+            })
+            console.log(this.state.ss)
+            this.state.ss.forEach(element => {
+              //console.log(element._id)
+              let x = element._id
+              axios.get(`http://localhost:5000/users/userid/${x}`)
+              .then( res=> {
+                console.log(res.data)
+                this.setState({Users: [...this.state.Users,res.data]})
+                console.log(this.state.Users)
+              })
+            })
+            
     }
     onchangetimer(e){
       this.setState({
         Timer: e.target.value
       })
     }
-    getusers(){
-          
-          //console.log(this.state.Users)
-    }
+  
     componentDidMount() {
         this.getQuestion();
         this.getClasses();
-       this.getusers();
+       //this.getclassnames();
       }
     handleChange (e) {
 
@@ -88,7 +111,7 @@ class AddQuizz extends Component {
               }
         this.setState({value: value});
        
-              console.log(this.state.value);
+              //console.log(this.state.value);
               
     }
     handleChange1 (e) {
@@ -102,7 +125,7 @@ class AddQuizz extends Component {
               }
         this.setState({value1: value1});
        
-              console.log(this.state.value1);
+             // console.log(this.state.value1);
               
     }
       onsubmit(e){
@@ -130,7 +153,7 @@ class AddQuizz extends Component {
                   code : res.data.code,
                   idd : res.data._id
                 })
-                console.log("///////////////////////////")
+                console.log("///////////////////////////"+res)
                 this.state.value1.forEach(element => {
                    axios.put(`http://localhost:5000/users/Userquizz/${element}/${this.state.idd}`)
                     .then(res=> {
@@ -160,10 +183,10 @@ class AddQuizz extends Component {
                     <Col xs="12" md="9">
                     <Input type="select" name="select-select" id="select-select"   onChange={this.onchangeclass}>
                   {
-                  this.state.Classes.map((optione,index) => {
+                  this.state.cl.map((optione,index) => {
                     return <option 
                       key={index}
-                      value={optione}>{optione}
+                      value={optione._id}>{optione.name}
                       </option>;
                   })
                 }

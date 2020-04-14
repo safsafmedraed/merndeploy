@@ -10,6 +10,7 @@ const subjectRouter = require('./routes/Subjects');
 const forgotpassword = require('./configuration/forgotpassword');
 const QuestionRouter = require('./routes/Questions');
 const QuizzRouter = require('./routes/Quizzs');
+const cl = require('./routes/Classes');
 const app = express();
 
 //passport config
@@ -62,6 +63,7 @@ app.use('/api/auth', require('./routes/auth'));
 app.use('/profile', require('./routes/profile'));
 app.use('/questions', QuestionRouter);
 app.use('/quizz', QuizzRouter);
+app.use('/class', cl);
 app.listen(port, () => {
   console.log(`Server is running at port : ${port}`);
 })

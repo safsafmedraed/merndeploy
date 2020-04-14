@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
-import {Table,Progress, Row,Input} from 'reactstrap'
+import {Table,Row,Input} from 'reactstrap'
 import Axios from "axios";
-import { number } from 'prop-types';
 class TeacherAnswers extends Component {  
     constructor(props){
       super(props);
@@ -9,34 +8,58 @@ class TeacherAnswers extends Component {
       this.state = {
         teacher : '',
         students : [],
+        studentsnames: [],
         classe : '',
-        classes : []
+        classes : [],
+        classnames : []
       }
     }
     getTeacher()
-{
-  const id = localStorage.getItem('user1');
-  console.log(id)
-  Axios.get(`http://localhost:5000/users/userid/${id}`)
-  .then(res=>{
-    this.setState({
-     teacher : res.data,
-     classes : res.data.Classes
-    })
-    console.log(this.state.teacher)
-  })
-}
+    {
+      const id = localStorage.getItem('user1');
+      console.log(id)
+      Axios.get(`http://localhost:5000/users/userid/${id}`)
+      .then(res=>{
+        this.setState({
+          Classes: res.data.Classes
+        })
+        this.state.Classes.forEach(element => {
+          console.log(element)
+          Axios.get(`http://localhost:5000/class/classeid/${element}`)
+            .then(res=> {
+              console.log(res);
+              this.setState({classnames: [...this.state.classnames,res.data]})
+            })
+        });
+      });
+      
+      
+    }
 onchangeclass(e){
   this.setState({
     classe: e.target.value
   })
   console.log(this.state.classe)
   const classe = this.state.classe
-  Axios.get(`http://localhost:5000/users/userclasse/${classe}`)
-  .then(res => {
-    this.setState({students: res.data})
+  this.setState({
+    students : []
   })
-  console.log(this.state.students)
+  Axios.get(`http://localhost:5000/class/classeid/${classe}`)
+        .then(res=> {
+          this.setState({studentsnames: res.data.Users })
+        })
+        console.log(this.state.studentsnames)
+        this.state.studentsnames.forEach(element => {
+          //console.log(element._id)
+          let x = element._id
+          Axios.get(`http://localhost:5000/users/userid/${x}`)
+          .then( res=> {
+            console.log(res.data)
+            this.setState({students: [...this.state.students,res.data]})
+            console.log(this.state.students)
+          })
+        })
+        
 }
 componentDidMount(){
   this.getTeacher();
@@ -48,10 +71,10 @@ componentDidMount(){
       <div>
       <Input type="select" name="select-select" id="select-select"   onChange={this.onchangeclass}>
                   {
-                  this.state.classes.map((optione,index) => {
+                  this.state.classnames.map((optione,index) => {
                     return <option 
                       key={index}
-                      value={optione}>{optione}
+                      value={optione._id}>{optione.name}
                       </option>;
                   })
                 }

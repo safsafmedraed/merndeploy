@@ -111,6 +111,7 @@ router.get('/userid/:id', (req, res) => {
     .then(user => res.json(user ))
     .catch(err => res.status(400).json('Error: ' + err));
 })
+
 router.get('/userclasse/:classe', (req, res) => {
     var query = req.params.classe;
     User.find({role:"Student", 'Classes' : query})
