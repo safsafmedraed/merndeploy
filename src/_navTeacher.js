@@ -56,6 +56,11 @@ export default {
           name: 'Add a quizz',
           url: '/AddQuizz',
           icon: 'icon-star'
+        },
+        {
+          name : 'view Quizz scores',
+          url : 'TeacherAnswers',
+          icon : 'icon-star'
         }
       ]
     }

@@ -63,7 +63,11 @@ const userSchema = new Schema({
         type: Number,
         default : 0
     },
-    Classes: [
+     answered : {
+        type: Number,
+        default : 0
+    }
+    ,Classes: [
         {
           type: String
         }

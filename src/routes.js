@@ -48,7 +48,7 @@ const ManageQuestions = React.lazy(()=> import('./views/Quizz/ManageQuestions'))
 const DetailsQuestion = React.lazy(()=> import('./views/Quizz/DetailsQuestion'));
 const AddQuizz = React.lazy(()=> import('./views/Quizz/AddQuizz'));
 const QuizzAnswer = React.lazy(()=>import('./views/Quizz/QuizzAnswer'));
-
+const TeacherAnswers = React.lazy(()=> import('./views/Quizz/TeacherAnswers'));
 
 
 const routes = [
@@ -106,7 +106,8 @@ const routes = [
   { path : '/ManageQuestions', exact:true, name: 'ManageQuestions' , component: ManageQuestions},
   { path : '/DetailsQuestion/:id', exact:true, name :'DetailsQuestion', component: DetailsQuestion},
   { path : '/AddQuizz', exact:true, name :'AddQuizz', component: AddQuizz},
-  { path : '/QuizzAnswer', exact: true, name:'QuizzAnswer', component : QuizzAnswer}
+  { path : '/QuizzAnswer', exact: true, name:'QuizzAnswer', component : QuizzAnswer},
+  { path: '/TeacherAnswers',exact: true, name:'TeacherAnswers', component: TeacherAnswers}
 ];
 
 

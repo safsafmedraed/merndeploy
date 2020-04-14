@@ -126,6 +126,7 @@ router.put('/usernoquizz/:id/:quizzid/:note',(req,res)=> {
         let found =user.Quizzs.find(element => element= req.params.quizzid)
         console.log("////////////////"+found)
         found.score = req.params.note
+        user.answered = user.answered+1
         user.save()
         .then(() => res.json('User state updated!'))
         .catch(err => res.status(400).json('Error: ' + err));
