@@ -1,6 +1,6 @@
-import React, { Fragment } from 'react';
-import { NavLink } from 'react-router-dom';
-import { Nav, NavItem } from 'reactstrap';
+import React, { Fragment, useState, useEffect, Component } from 'react';
+import { NavLink, Link } from 'react-router-dom';
+import { Badge, UncontrolledDropdown, DropdownItem, DropdownMenu, DropdownToggle, Nav, NavItem } from 'reactstrap';
 import PropTypes from 'prop-types';
 
 import { AppAsideToggler, AppNavbarBrand, AppSidebarToggler } from '@coreui/react';
@@ -8,22 +8,52 @@ import logo from '../../assets/img/brand/logo.svg'
 import sygnet from '../../assets/img/brand/sygnet.svg'
 import { connect } from 'react-redux';
 import { logout } from '../../actions/auth';
-
-
-
+import Avatar from '@material-ui/core/Avatar';
+import axios from 'axios'
 const DefaultHeader = ({ auth: { isAuthenticated, loading, user }, logout }) => {
 
 
-  const authLinks = (
+  const [user1, setuser1] = useState({});
+  const getuser = () => {
+    const id = localStorage.getItem('user1');
+    console.log(id)
+    axios.get(`http://localhost:5000/users/userid/${id}`)
+      .then(res => {
+        setuser1(res.data.avatar)
+      })
+    console.log(user1)
+  }
+  useEffect(() => {
+    getuser();
+  })
 
-    <NavItem className="d-md-down-none">
-      <NavLink to="/login" tag="div" className="text-center" onClick={logout}><i className="fa fa-lock"><strong>Logout</strong> </i></NavLink>
-    </NavItem>
+  const authLinks = (
+    <UncontrolledDropdown nav direction="down">
+      <DropdownToggle nav>
+        <Avatar src={user1} />
+      </DropdownToggle>
+      <DropdownMenu right>
+
+        <DropdownItem header tag="div" className="text-center"><strong>Settings</strong></DropdownItem>
+        <Link to="/editavatar"  >
+          <DropdownItem><i className="fa fa-lock" ></i> Edit Profile picture</DropdownItem></Link>
+        <Link to='/users'>
+          <DropdownItem>
+
+            <i className="fa fa-user" ></i> Profile</DropdownItem>
+
+
+          <DropdownItem divider />
+        </Link>
+
+        <Link to="/login" onClick={logout} >
+          <DropdownItem><i className="fa fa-lock" ></i> Logout</DropdownItem></Link>
+      </DropdownMenu>
+    </UncontrolledDropdown>
   );
   const GuestLinks = (
     null
   );
-
 
   // eslint-disable-next-line
 
@@ -47,32 +77,15 @@ const DefaultHeader = ({ auth: { isAuthenticated, loading, user }, logout }) => 
         </Nav>
 
         <Nav className="ml-auto" navbar>
+
           <NavItem className="d-md-down-none">
-            <NavLink to="/users" tag="div" className="text-center"><h5 className="fa fa-user"><strong>Profile</strong></h5></NavLink>
-          </NavItem>
-          <NavItem className="d-md-down-none">
-            <NavLink to="#" className="nav-link"><h3><strong>Welcome <i>{user.username}</i></strong></h3></NavLink>
+
+            <NavLink to="#" className="nav-link"><h3><strong>Welcome <i>{user.username} </i></strong></h3></NavLink>
           </NavItem>
           {!loading && (<Fragment>{isAuthenticated ? authLinks : GuestLinks}</Fragment>)}
 
 
-          {/*<UncontrolledDropdown nav direction="down">
-            <DropdownToggle nav>
-              <img src={'../../assets/img/avatars/6.jpg'} className="img-avatar" alt="admin@bootstrapmaster.com" />
-            </DropdownToggle>
-            <DropdownMenu right>
 
-              <DropdownItem header tag="div" className="text-center"><strong>Settings</strong></DropdownItem>
-              <DropdownItem>
-
-                <i className="fa fa-user" ></i> Profile</DropdownItem>
-
-
-              <DropdownItem divider />
-
-              <DropdownItem><i className="fa fa-lock" ></i> Logout</DropdownItem>
-            </DropdownMenu>
-  </UncontrolledDropdown>*/}
         </Nav>
 
         <AppAsideToggler className="d-md-down-none" />
@@ -86,7 +99,8 @@ const DefaultHeader = ({ auth: { isAuthenticated, loading, user }, logout }) => 
 
 DefaultHeader.propTypes = {
   logout: PropTypes.func.isRequired,
-  auth: PropTypes.object.isRequired
+  auth: PropTypes.object.isRequired,
+
 };
 const mapStateToProps = state => ({
   auth: state.auth

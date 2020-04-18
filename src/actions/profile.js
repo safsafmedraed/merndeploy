@@ -125,6 +125,8 @@ export const editaccount = (formData, history, edit = false) => async dispatch =
         });
     }
 }
+
+
 //get current users Account
 export const getCurrentAccount = () => async dispatch => {
     try {

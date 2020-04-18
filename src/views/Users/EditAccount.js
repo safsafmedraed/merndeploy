@@ -4,7 +4,7 @@ import { editaccount, getCurrentAccount } from '../../actions/profile';
 import Alert from '../../actions/alerts';
 import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { Button, Card, CardBody, Col, Container, Form, Input, InputGroup, InputGroupAddon, InputGroupText, Row } from 'reactstrap';
+import { Button, Card, CardBody, Col, Container, Form, Input, InputGroup, InputGroupAddon, InputGroupText, Row, Label } from 'reactstrap';
 import Widget04 from '../Widgets/Widget04';
 const EditAccount = ({ auth: { user, loading }, editaccount, history, getCurrentAccount }) => {
     const [formData, setFormData] = useState({
@@ -17,7 +17,8 @@ const EditAccount = ({ auth: { user, loading }, editaccount, history, getCurrent
         borndate: '',
 
         bornplace: '',
-        phonenumber: ''
+        phonenumber: '',
+        avatar: ''
     });
 
     const { username,
@@ -27,7 +28,7 @@ const EditAccount = ({ auth: { user, loading }, editaccount, history, getCurrent
         Firstname,
         Lastname,
         borndate,
-
+        avatar,
         bornplace,
         phonenumber } = formData;
     useEffect(() => {
@@ -134,9 +135,14 @@ const EditAccount = ({ auth: { user, loading }, editaccount, history, getCurrent
                                             </InputGroupAddon>
                                             <Input type="Text" placeholder="Born Place" autoComplete="Born Place" name="bornplace" value={bornplace} onChange={e => onchange(e)} />
                                         </InputGroup>
-
-
-
+                                        <InputGroup className="mb-3">
+                                            <Col md="3">
+                                                <Label htmlFor="file-input">change profile pic</Label>
+                                            </Col>
+                                            <Col xs="12" md="9">
+                                                <Input type="file" id="file-input" name="file-input" value={avatar} onchange={e => e.target.files[0]} />
+                                            </Col>
+                                        </InputGroup>
                                         <Button color="success" block>Edit Account</Button>
                                     </Form>
                                 </CardBody>

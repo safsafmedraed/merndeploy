@@ -6,6 +6,9 @@ const PostSchema = new Schema({
         type: Schema.Types.ObjectId,
         ref: 'users'
     },
+    title: {
+        type: String
+    },
     text: {
         type: String,
         required: true
@@ -16,6 +19,15 @@ const PostSchema = new Schema({
     avatar: {
         type: String
     },
+    views: {
+        type: Number,
+        default: 0
+    },
+    rate: {
+        type: Number,
+        default: 0
+    },
+
     likes: [
         {
             user: {

@@ -1,12 +1,12 @@
 import React, { useState } from "react";
 import {
-    Alert,
+
     Button,
     Card,
     CardBody,
     CardHeader,
     Col,
-    Collapse,
+
     Fade,
     Form,
     FormGroup,
@@ -15,16 +15,35 @@ import {
     InputGroupAddon,
     InputGroupText,
     Label,
-    Modal, ModalBody, ModalFooter, ModalHeader,
+
     Row,
 } from 'reactstrap';
 import { connect } from 'react-redux'
 import { addPost } from '../../../actions/post'
 import PropTypes from "prop-types";
-const AddPost = ({ addPost }) => {
-    const [text, setText] = useState('');
-    const Onsubmit = () => {
 
+
+import CKEditor from '@ckeditor/ckeditor5-react';
+import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
+
+
+const AddPost = ({ addPost }) => {
+
+    const [formData, setFormData] = useState({
+        title: ''
+    })
+    const [text, setText] = useState('')
+
+    const { title } = formData;
+    const onchange = e => setFormData({ ...formData, [e.target.name]: e.target.value });
+    const handlechange = (e, editor) => {
+        const data = editor.getData();
+        console.log(data)
+        setText(data)
+    }
+    const Onsubmit = e => {
+        e.preventDefault();
+        addPost({ text, title });
     }
 
     return (
@@ -44,11 +63,7 @@ const AddPost = ({ addPost }) => {
                             </CardHeader>
 
                             <CardBody>
-                                <Form className="form-horizontal" onSubmit={e => {
-                                    e.preventDefault();
-                                    addPost({ text });
-                                    setText('')
-                                }}>
+                                <Form className="form-horizontal" onSubmit={e => { Onsubmit(e) }}>
                                     <FormGroup>
                                         <Label htmlFor="prependedInput">Post Title </Label>
                                         <div className="controls">
@@ -56,7 +71,20 @@ const AddPost = ({ addPost }) => {
                                                 <InputGroupAddon addonType="prepend">
                                                     <InputGroupText>Title</InputGroupText>
                                                 </InputGroupAddon>
-                                                <Input id="prependedInput" size="16" type="text" value={text} onChange={e => setText(e.target.value)} />
+                                                <Input id="prependedInput" size="16" type="text" name="title" value={title} onChange={e => { onchange(e) }} />
+                                            </InputGroup>
+                                            <InputGroup className="input-prepend">
+                                                <InputGroupAddon addonType="prepend">
+                                                    <InputGroupText>Description</InputGroupText>
+                                                </InputGroupAddon>
+                                                <CKEditor
+                                                    editor={ClassicEditor}
+                                                    name='text'
+                                                    value={text}
+                                                    onChange={handlechange}
+
+
+                                                />
                                             </InputGroup>
 
                                         </div>

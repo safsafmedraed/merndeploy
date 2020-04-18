@@ -11,7 +11,7 @@ export default {
         text: 'NEW',
       },
     },
-    {
+    /*{
       title: true,
       name: 'Features',
       wrapper: {
@@ -253,18 +253,18 @@ export default {
           icon: 'icon-star',
         },
       ],
-    },
+    },*/
     {
       name: 'Forum',
       icon: 'cui-people',
       attributes: { disabled: false },
       children: [
-        {
-          name: 'Add New Post',
-          url: '/AddPost',
-          icon: 'icon-cursor',
-
-        },
+        /* {
+           name: 'Add New Post',
+           url: '/AddPost',
+           icon: 'icon-cursor',
+ 
+         },*/
         {
           name: 'All Q & A',
           url: '/Forum',

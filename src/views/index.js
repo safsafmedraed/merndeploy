@@ -27,6 +27,7 @@ import { Login, Page404, Page500, Register, Register1, ForgotPassword } from './
 import { Colors, Typography } from './Theme';
 import Widgets from './Widgets';
 import AddPost from './Forum/ForumContainer';
+import SinglePost from './Forum';
 import CreateProfile from './CreateProfile/CreateProfile'
 import Reset from './pages/ForgotPassword/reset'
 import EditProfile from "./Users/EditProfile";
@@ -35,7 +36,10 @@ import Education from "./Users/Education";
 import Profiles from "./Users/Profiles";
 import SingleProfile from "./Users/SingleProfile";
 import EditAccount from "./Users/EditAccount";
+import EditAvatar from './Users/EditAvatar'
 export {
+  EditAvatar,
+  SinglePost,
   EditAccount,
   Profiles,
   SingleProfile,

@@ -45,8 +45,8 @@ const Education = React.lazy(() => import('./views/Users/Education'));
 const Profiles = React.lazy(() => import('./views/Users/Profiles'));
 const SingleProfile = React.lazy(() => import('./views/Users/SingleProfile'));
 const EditAccount = React.lazy(() => import('./views/Users/EditAccount'));
-
-
+const SinglePost = React.lazy(() => import('./views/Forum/SinglePost'));
+const EditAvatar = React.lazy(() => import('./views/Users/EditAvatar'));
 
 
 const routes = [
@@ -100,7 +100,9 @@ const routes = [
   { path: '/AddEducation', exact: true, name: 'Add Education', component: AddEducation },
   { path: '/Profiles', exact: true, name: 'All Profiles', component: Profiles },
   { path: '/Single/:id', exact: true, name: 'Single Profile', component: SingleProfile },
-  { path: '/EditAccount', exact: true, name: 'Single Profile', component: EditAccount }
+  { path: '/EditAccount', exact: true, name: 'Single Profile', component: EditAccount },
+  { path: '/EditAvatar', exact: true, name: 'Edit avatar', component: EditAvatar },
+  { path: '/SinglePost/:id', exact: true, name: 'Single Post', component: SinglePost }
 ];
 
 

@@ -15,6 +15,7 @@ router.route('/').post([auth, [
     try {
         const user = await User.findById(req.user.id).select('-password');
         const newPost = new Post({
+            title: req.body.title,
             text: req.body.text,
             name: user.username,
             avatar: user.avatar,
@@ -55,7 +56,9 @@ router.route('/:id').get(
             if (!post) {
                 return res.status(404).json({ msg: 'Post not found' })
             }
-
+            post.views = post.views + 1;
+            console.log("views  incremented to " + post.views)
+            post.save();
 
             res.json(post);
         } catch (error) {

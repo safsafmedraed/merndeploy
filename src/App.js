@@ -10,7 +10,7 @@ import { loadUser } from './actions/auth';
 import setAuthToken from './utlis/setAuthToken';
 
 import PrivateRoute from "./routing/PrivateRoute";
-
+import { connect } from 'react-redux';
 
 
 const loading = () => <div className="animated fadeIn pt-3 text-center">Loading...</div>;
