@@ -71,8 +71,8 @@ const cardChartOpts1 = {
         display: false,
         ticks: {
           display: false,
-          min: Math.min.apply(Math, cardChartData1.datasets[0].data) - 5,
-          max: Math.max.apply(Math, cardChartData1.datasets[0].data) + 5,
+          min: Math.min.apply(Math, cardChartData1.datasets[0].data) ,
+          max: Math.max.apply(Math, cardChartData1.datasets[0].data) ,
         },
       }],
   },

@@ -29,6 +29,9 @@ var claimSchema = new Schema({
         type: Boolean,
         default: false
     },
+    dateRemove: {
+        type: Date
+    },
     admin:{
         type : mongoose.Schema.Types.ObjectId, ref: 'users'
     },
@@ -36,7 +39,7 @@ var claimSchema = new Schema({
         type: mongoose.Schema.Types.ObjectId, ref: 'users',
         required : true
     },
-    processed :{
+    lock :{
         type: Boolean,
         default: false
     }

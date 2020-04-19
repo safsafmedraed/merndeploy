@@ -14,19 +14,28 @@ class Claim extends Component {
         editorInput : '', 
         confirmation : false,
         confirmationBlock : false,
+        confirmationUnblock : false,
         error : false,
         errorMessage : '',
         claim : ""
     }
     axios.get("http://localhost:5000/claims/"+props.match.params.id)
-        .then(res => this.setState({claim : res.data}))
-        .catch(()=>this.notifyBlock('Oups! something went wrong'));
+        .then(res => {
+          if(props.user){
+          if(res.data.lock===true && res.data.admin._id !== props.user._id){
+            this.notifyBlock('Oups! Claim being processed');
+            props.history.push("/Claims");
+          }
+          else if(res.data.lock === false && !res.data.solved) 
+          axios.put("http://localhost:5000/claims/lock/"+props.match.params.id,{admin : props.user._id})
+          .then(()=>this.setState({claim : res.data}))
+          .catch(()=>this.notifyBlock('Oups! something went wrong'));
+          else this.setState({claim : res.data});
+          }
+
+      }).catch(()=>this.notifyBlock('Oups! something went wrong'));
   }
 
-  /*renderHello =()=> 
-    setInterval(() => {
-      console.log('Hello');      
-    }, 5000);*/
 
     handleEditorChange = (content, editor) => {
         this.setState({
@@ -41,7 +50,7 @@ class Claim extends Component {
         pauseOnHover: true,
         draggable: true
         });
-        notifySuccess = ()=> toast.success(' ✔ Claim Solved!', {
+        notifySuccess = msg=> toast.success(msg, {
           position: "top-right",
           autoClose: 4000,
           hideProgressBar: false,
@@ -60,12 +69,15 @@ class Claim extends Component {
                       <Row>
                         <Col>
                           <strong>Title: </strong>{claim.title} &nbsp; 
-                          { claim.solved ? <span className="badge badge-success">Solved</span> : 
-                            claim.removed ? <span className="badge badge-danger">Blocked</span> : null
+                          { claim.solved ? <span className="badge badge-success">Solved</span> : null
                           }<br/>
                           <span style={{fontSize:11 , color:'grey'}}>{new Date(claim.date).toLocaleString('en-US')}</span>
                         </Col >
-                        {!claim.solved && !claim.removed ?<Col style={{textAlign:"right"}}>
+                        {!claim.solved ?<Col style={{textAlign:"right"}}>
+                          <Button onClick={()=>{
+                            this.setState({confirmationUnblock:true});
+                          }} className="btn btn-success">Unlock</Button>
+                          &nbsp;
                           <Button onClick={()=>{
                             this.setState({confirmationBlock:true});
                           }} className="btn btn-danger">Block</Button>
@@ -129,6 +141,8 @@ class Claim extends Component {
          {this.state.error ? <p style={{color : "red"}}>{this.state.errorMessage}</p> : null}
                     </CardBody>
                 </Card>: null}
+               
+               
                 <Modal isOpen={this.state.confirmation} toggle={this.togglePrimary}
                        className={'modal-primary ' + this.props.className}>
                   <ModalHeader toggle={this.togglePrimary}>Confirmation</ModalHeader>
@@ -144,7 +158,7 @@ class Claim extends Component {
                       axios.put("http://localhost:5000/claims/answer" , claim)
                       .then(()=>{
                         this.props.history.push("/Claims");
-                        this.notifySuccess();})
+                        this.notifySuccess(' ✔ Claim Solved!');})
                       .catch(()=>this.notifyBlock('Oups! something went wrong'));
                     }}>OK</Button>
                     <Button color="secondary" onClick={()=>this.setState({confirmation : false})}>Cancel</Button>
@@ -173,6 +187,29 @@ class Claim extends Component {
                     }}>Block</Button>{' '}
                     <Button color="secondary" onClick={()=>{
                       this.setState({confirmationBlock : false});
+                    }}>Cancel</Button>
+                  </ModalFooter>
+                </Modal>
+
+
+                <Modal isOpen={this.state.confirmationUnblock} toggle={this.toggleSuccess}
+                       className={'modal-success ' + this.props.className}>
+                  <ModalHeader toggle={this.toggleSuccess}>Confirm Unblock</ModalHeader>
+                  <ModalBody>
+                    <p style={{fontSize:"30px"}}>Do you want to unblock this claim ?</p>
+                    <p><span style={{fontWeight:"bold" , fontSize : "20px"}}>Title: </span>{claim.title}</p>
+                  </ModalBody>
+                  <ModalFooter>
+                    <Button color="success" onClick={()=>{
+                      this.setState({confirmationUnblock : false});
+                      axios.put("http://localhost:5000/claims/unlock/"+claim._id)
+                      .then(()=>{
+                        this.notifySuccess(' ✔ Claim Unlocked!');
+                        this.props.history.push("/Claims");
+                      }).catch(()=>this.notifyBlock('Oups! something went wrong'));
+                    }}>Unlock</Button>{' '}
+                    <Button color="secondary" onClick={()=>{
+                      this.setState({confirmationUnblock: false});
                     }}>Cancel</Button>
                   </ModalFooter>
                 </Modal>
