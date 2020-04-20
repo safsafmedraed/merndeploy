@@ -47,7 +47,8 @@ const SingleProfile = React.lazy(() => import('./views/Users/SingleProfile'));
 const EditAccount = React.lazy(() => import('./views/Users/EditAccount'));
 const SinglePost = React.lazy(() => import('./views/Forum/SinglePost'));
 const EditAvatar = React.lazy(() => import('./views/Users/EditAvatar'));
-
+const Join = React.lazy(() => import('./views/Forum/Join'));
+const Chat = React.lazy(() => import('./views/Forum/Chat'));
 
 const routes = [
 
@@ -102,7 +103,9 @@ const routes = [
   { path: '/Single/:id', exact: true, name: 'Single Profile', component: SingleProfile },
   { path: '/EditAccount', exact: true, name: 'Single Profile', component: EditAccount },
   { path: '/EditAvatar', exact: true, name: 'Edit avatar', component: EditAvatar },
-  { path: '/SinglePost/:id', exact: true, name: 'Single Post', component: SinglePost }
+  { path: '/SinglePost/:id', exact: true, name: 'Single Post', component: SinglePost },
+  { path: '/Join', exact: true, name: 'Join Chat', component: Join },
+  { path: '/Chat', exact: true, name: 'Chat Room', component: Chat }
 ];
 
 

@@ -23,7 +23,20 @@ const PostSchema = new Schema({
         type: Number,
         default: 0
     },
-    rate: {
+    rate: [
+        {
+            user: {
+                type: Schema.Types.ObjectId,
+                ref: 'users',
+            },
+            rating: {
+                type: Number,
+                default: 0
+            },
+
+        }
+    ],
+    avg: {
         type: Number,
         default: 0
     },

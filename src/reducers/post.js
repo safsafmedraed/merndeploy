@@ -1,4 +1,4 @@
-import { GET_POSTS, POST_ERROR, UPDATE_LIKES, DELETE_POST, ADD_POST, GET_POST, ADD_COMMENT, REMOVE_COMMENT } from '../actions/types'
+import { GET_POSTS, POST_ERROR, UPDATE_LIKES, DELETE_POST, ADD_POST, GET_POST, ADD_COMMENT, REMOVE_COMMENT, RATE } from '../actions/types'
 
 const initialState = {
     posts: [],
@@ -58,6 +58,11 @@ export default function (state = initialState, action) {
                     ...state.post,
                     comments: state.post.comments.filter(comment => comment._id !== payload)
                 }, loading: false
+            }
+        case RATE:
+            return {
+                ...state,
+                rate: payload
             }
         default:
             return state;

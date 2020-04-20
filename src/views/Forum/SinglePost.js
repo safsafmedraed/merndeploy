@@ -21,7 +21,7 @@ const SinglePost = ({ getPost, post: { post, loading }, match }) => {
             </Button>
 
         </Link>
-        <PostItem post={post} showActions={false} />
+        <PostItem post={post} showActions={false} show={true} />
         <Alert />
         <Addcomment postId={post._id} />
         <div>

@@ -200,7 +200,42 @@ router.route('/comment/:id/:comment_id').delete(auth, async (req, res) => {
 
 })
 
+// rating 
+router.route('/rate/:id').post(auth, async (req, res) => {
 
+    try {
+        const post = await Post.findById(req.params.id);
+        const user = await User.findById(req.user.id).select('-password');
+        if (post.rate.filter(rate => rate.user.toString() === req.user.id).length > 0) {
+            return res.status(400).json({ msg: 'Post already rated' });
+        }
+        // post.rate.unshift({ user: req.user.id });
+
+        const newrate = {
+            rating: req.body.rating,
+            user: req.user.id
+        }
+        post.rate.unshift(newrate);
+        console.log(post)
+        // await post.save();
+        let sum = 0;
+        post.rate.forEach(r => {
+            sum = sum + r.rating
+
+        });
+        post.avg = sum / post.rate.length;
+
+        console.log(post.avg);
+        await post.save();
+        res.json(post.rate)
+    } catch (error) {
+
+        if (error.kind === 'ObjectId') {
+            return res.status(404).json({ msg: 'Post not found' })
+        }
+        res.status(500).send('server Error')
+    }
+})
 
 
 

@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { setAlert } from './alert';
-import { GET_POSTS, POST_ERROR, UPDATE_LIKES, DELETE_POST, ADD_POST, GET_POST, ADD_COMMENT, REMOVE_COMMENT } from './types';
+import { GET_POSTS, POST_ERROR, UPDATE_LIKES, DELETE_POST, ADD_POST, GET_POST, ADD_COMMENT, REMOVE_COMMENT, RATE } from './types';
 
 //get posts
 export const getPosts = () => async dispatch => {
@@ -150,6 +150,26 @@ export const deleteComment = (postId, commentId) => async dispatch => {
             payload: { msg: error.response.statusText, status: error.response.status }
 
         });
+    }
+
+}
+//Rate
+export const addrate = (postId, formData) => async dispatch => {
+    const config = {
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    }
+    try {
+        const res = await axios.post(`http://localhost:5000/post/rate/${postId}`, formData, config)
+        dispatch({
+            type: RATE,
+            payload: res.data
+        })
+
+        dispatch(setAlert('Rate success', 'warning'))
+    } catch (error) {
+        dispatch(setAlert('Rating Failed or you already rated this post', 'warning'))
     }
 
 }

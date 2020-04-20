@@ -36,8 +36,11 @@ import Education from "./Users/Education";
 import Profiles from "./Users/Profiles";
 import SingleProfile from "./Users/SingleProfile";
 import EditAccount from "./Users/EditAccount";
-import EditAvatar from './Users/EditAvatar'
+import Join from './Forum/Join'
+import Chat from './Forum/Chat'
 export {
+  Chat,
+  Join,
   EditAvatar,
   SinglePost,
   EditAccount,

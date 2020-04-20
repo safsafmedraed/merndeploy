@@ -9,6 +9,7 @@ const usersRouter = require('./routes/users');
 const postRouter = require('./routes/Post')
 const forgotpassword = require('./configuration/forgotpassword');
 const googleauth = require('./routes/googleauth');
+const chat = require('./routes/chat')
 const app = express();
 
 //passport config
@@ -53,7 +54,7 @@ app.use((req, res, next) => {
   next();
 })
 
-
+app.use('/chat', chat)
 app.use('/post', postRouter)
 app.use('/users', usersRouter);
 app.use('/forgot', forgotpassword);
