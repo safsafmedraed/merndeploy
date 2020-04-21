@@ -1,9 +1,12 @@
 const express = require('express');
 const router = express.Router();
+
+
 const socketio = require('socket.io');
-const http = require('http')
-const server = http.createServer(express);
-const io = socketio(server);
+const cors = require('cors');
+
+const io = socketio(process.env.port || 5001);
+
 const { addUser, removeUser, getUser, getUsersInRoom } = require('./user');
 
 router.route('/').get((req, res) => {

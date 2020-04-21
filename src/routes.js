@@ -47,8 +47,8 @@ const SingleProfile = React.lazy(() => import('./views/Users/SingleProfile'));
 const EditAccount = React.lazy(() => import('./views/Users/EditAccount'));
 const SinglePost = React.lazy(() => import('./views/Forum/SinglePost'));
 const EditAvatar = React.lazy(() => import('./views/Users/EditAvatar'));
-const Join = React.lazy(() => import('./views/Forum/Join'));
-const Chat = React.lazy(() => import('./views/Forum/Chat'));
+const Join = React.lazy(() => import('./views/Forum/components/Join/Join'));
+const Chat = React.lazy(() => import('./views/Forum/components/Chat/Chat'));
 
 const routes = [
 

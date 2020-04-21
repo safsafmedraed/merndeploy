@@ -259,12 +259,15 @@ export default {
       icon: 'cui-people',
       attributes: { disabled: false },
       children: [
-        /* {
-           name: 'Add New Post',
-           url: '/AddPost',
-           icon: 'icon-cursor',
- 
-         },*/
+        {
+          name: 'Join Qwizard community chat',
+          url: '/Join',
+          icon: 'icon-cursor',
+          badge: {
+            variant: 'info',
+            text: 'Real time Messages',
+          },
+        },
         {
           name: 'All Q & A',
           url: '/Forum',

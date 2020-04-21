@@ -36,8 +36,8 @@ import Education from "./Users/Education";
 import Profiles from "./Users/Profiles";
 import SingleProfile from "./Users/SingleProfile";
 import EditAccount from "./Users/EditAccount";
-import Join from './Forum/Join'
-import Chat from './Forum/Chat'
+import Join from './Forum/components/Join/Join'
+import Chat from './Forum/components/Chat/Chat'
 export {
   Chat,
   Join,
