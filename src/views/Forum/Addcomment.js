@@ -21,6 +21,7 @@ import {
 
     Row,
 } from 'reactstrap';
+
 const Addcomment = ({ postId, addComment }) => {
     const [text, setText] = useState('')
     return (

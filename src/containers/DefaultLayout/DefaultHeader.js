@@ -12,20 +12,20 @@ import Avatar from '@material-ui/core/Avatar';
 import axios from 'axios'
 const DefaultHeader = ({ auth: { isAuthenticated, loading, user }, logout }) => {
 
-
-  const [user1, setuser1] = useState({});
+  useEffect(() => {
+    getuser();
+  }, [])
+  const [user1, setuser1] = useState('');
   const getuser = () => {
     const id = localStorage.getItem('user1');
-    console.log(id)
+
     axios.get(`http://localhost:5000/users/userid/${id}`)
       .then(res => {
         setuser1(res.data.avatar)
       })
-    console.log(user1)
+
   }
-  useEffect(() => {
-    getuser();
-  })
+
 
   const authLinks = (
     <UncontrolledDropdown nav direction="down">

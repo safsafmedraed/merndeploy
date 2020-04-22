@@ -3,7 +3,11 @@ let User = require('../models/user.model');
 let Post = require('../models/Post')
 const auth = require('../middleware/auth');
 const { check, validationResult } = require('express-validator')
-const Profile = require('../models/profile')
+var cron = require('node-cron');
+
+
+require('dotenv').config();
+let Filter = require('bad-words')
 //add post 
 router.route('/').post([auth, [
     check('text', 'Text is required').not().isEmpty()
@@ -14,6 +18,7 @@ router.route('/').post([auth, [
     }
     try {
         const user = await User.findById(req.user.id).select('-password');
+        var filter = new Filter();
         const newPost = new Post({
             title: req.body.title,
             text: req.body.text,
@@ -21,6 +26,12 @@ router.route('/').post([auth, [
             avatar: user.avatar,
             user: req.user.id
         })
+
+        var x = filter.clean(newPost.text);
+        var y = filter.clean(newPost.title)
+        newPost.text = x;
+        newPost.title = y;
+
         const post = await newPost.save();
         res.json(post);
 
@@ -151,13 +162,17 @@ router.route('/comment/:id').post([auth, [
     try {
         const user = await User.findById(req.user.id).select('-password');
         const post = await Post.findById(req.params.id);
-
+        var filter = new Filter();
         const newComment = {
             text: req.body.text,
             name: user.username,
             avatar: user.avatar,
             user: req.user.id
         }
+        var x = filter.clean(newComment.text);
+
+        newComment.text = x;
+
         post.comments.unshift(newComment);
         await post.save();
         res.json(post.comments);
@@ -239,12 +254,16 @@ router.route('/rate/:id').post(auth, async (req, res) => {
 
 
 
+cron.schedule('* * * * *', async function () {
 
-
-
-
-
-
+    console.log('run every 30 sec')
+    const post = await Post.find();
+    post.forEach(e => {
+        if (e.avg < 3) {
+            e.remove()
+        }
+    });
+})
 
 
 

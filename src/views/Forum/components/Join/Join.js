@@ -9,7 +9,7 @@ import MenuItem from '@material-ui/core/MenuItem';
 import ListSubheader from '@material-ui/core/ListSubheader';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
-
+import { connect } from 'react-redux'
 const useStyles = makeStyles((theme) => ({
   formControl: {
     margin: theme.spacing(1),
@@ -18,6 +18,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function SignIn() {
+
   const [name, setName] = useState('');
   const [room, setRoom] = useState('');
   const classes = useStyles();
@@ -27,6 +28,7 @@ export default function SignIn() {
       <div className="joinInnerContainer">
         <h1 className="heading">Join</h1>
         <div>
+
           <input placeholder="enter a username" className="joinInput" type="text" onChange={(event) => setName(event.target.value)} />
         </div>
         <div>
