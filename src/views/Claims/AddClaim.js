@@ -126,7 +126,9 @@ class AddClaim extends Component {
                       };
                       axios.post("http://localhost:5000/claims/addClaim",claim).then(()=>{
                           this.notifySuccess();
-                          this.props.history.push("/UserClaims");
+                          setTimeout(() => {
+                            this.props.history.push("/UserClaims");
+                          }, 500);
                       }).catch(()=>this.notifyError());
                     }}>OK</Button>
                     <Button color="secondary" onClick={()=>this.setState({confirmation : false , notRobot : false})}>Cancel</Button>

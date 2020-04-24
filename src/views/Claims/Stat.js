@@ -262,7 +262,7 @@ class Stat extends Component{
               </CardHeader>
               <CardBody>
                 <div className="chart-wrapper">
-                  <Doughnut height ="100px" data={doughnut1(this.state.stats.solvedPerAdmin)} />
+                  <Doughnut height = {100} data={doughnut1(this.state.stats.solvedPerAdmin)} />
                 </div>
               </CardBody>
             </Card>
@@ -320,7 +320,7 @@ class Stat extends Component{
             </CardHeader>
             <CardBody>
               <div className="chart-wrapper">
-                <Line height ="80px" data={line( this.state.stats.solvedPerAdmin[this.state.lineId].claimsPerDate)} options={options} />
+                <Line height = {80} data={line( this.state.stats.solvedPerAdmin[this.state.lineId].claimsPerDate)} options={options} />
               </div>
             </CardBody>
           </Card>

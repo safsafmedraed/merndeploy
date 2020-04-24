@@ -23,8 +23,8 @@ class Claim extends Component {
         .then(res => {
           if(props.user){
           if(res.data.lock===true && res.data.admin._id !== props.user._id){
-            this.notifyBlock('Oups! Claim being processed');
             props.history.push("/Claims");
+            this.notifyBlock('Oups! Claim being processed');
           }
           else if(res.data.lock === false && !res.data.solved) 
           axios.put("http://localhost:5000/claims/lock/"+props.match.params.id,{admin : props.user._id})
@@ -157,8 +157,11 @@ class Claim extends Component {
                       claim.admin = this.props.user._id;
                       axios.put("http://localhost:5000/claims/answer" , claim)
                       .then(()=>{
-                        this.props.history.push("/Claims");
-                        this.notifySuccess(' ✔ Claim Solved!');})
+                        this.notifySuccess(' ✔ Claim Solved!');
+                        setTimeout(() => {
+                          this.props.history.push("/Claims");
+                        }, 500);
+                      })
                       .catch(()=>this.notifyBlock('Oups! something went wrong'));
                     }}>OK</Button>
                     <Button color="secondary" onClick={()=>this.setState({confirmation : false})}>Cancel</Button>
@@ -182,7 +185,9 @@ class Claim extends Component {
                       axios.put("http://localhost:5000/claims/block/"+claim._id)
                       .then(()=>{
                         this.notifyBlock(' ⛔ Claim Blocked!');
-                      this.props.history.push("/Claims");
+                        setTimeout(() => {
+                          this.props.history.push("/Claims");
+                        }, 500);
                       }).catch(()=>this.notifyBlock('Oups! something went wrong'));
                     }}>Block</Button>{' '}
                     <Button color="secondary" onClick={()=>{
@@ -204,8 +209,10 @@ class Claim extends Component {
                       this.setState({confirmationUnblock : false});
                       axios.put("http://localhost:5000/claims/unlock/"+claim._id)
                       .then(()=>{
-                        this.notifySuccess(' ✔ Claim Unlocked!');
+                      setTimeout(() => {
                         this.props.history.push("/Claims");
+                      }, 500);
+                        this.notifySuccess(' ✔ Claim Unlocked!');
                       }).catch(()=>this.notifyBlock('Oups! something went wrong'));
                     }}>Unlock</Button>{' '}
                     <Button color="secondary" onClick={()=>{
