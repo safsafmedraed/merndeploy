@@ -115,7 +115,7 @@ render(){
                           <div>{new Date(claim.date).toLocaleString('en-US')}</div>
                           </td>
                           {this.state.filter === null ?  <td className="text-center">
-                          <div>{claim.solved ? <div>Solved</div> : <div>Not yet</div>}</div>
+                          <div>{claim.solved ? <div>Solved</div> : <div>In progress</div>}</div>
                           </td> : null}
                         </tr>
                           }

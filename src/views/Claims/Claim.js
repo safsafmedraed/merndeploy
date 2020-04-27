@@ -6,6 +6,7 @@ import { toast } from 'react-toastify';
 import axios from 'axios';
 import { LoopCircleLoading  } from 'react-loadingg';
 import {connect} from 'react-redux';
+import ln from './languages'
 
 class Claim extends Component {
   constructor(props){
@@ -17,10 +18,12 @@ class Claim extends Component {
         confirmationUnblock : false,
         error : false,
         errorMessage : '',
-        claim : ""
+        claim : "",
+        language: "loading..."
     }
     axios.get("http://localhost:5000/claims/"+props.match.params.id)
         .then(res => {
+          this.trans(res.data.description);
           if(props.user){
           if(res.data.lock===true && res.data.admin._id !== props.user._id){
             props.history.push("/Claims");
@@ -28,13 +31,32 @@ class Claim extends Component {
           }
           else if(res.data.lock === false && !res.data.solved) 
           axios.put("http://localhost:5000/claims/lock/"+props.match.params.id,{admin : props.user._id})
-          .then(()=>this.setState({claim : res.data}))
+          .then(()=>{
+            this.setState({claim : res.data});
+          })
           .catch(()=>this.notifyBlock('Oups! something went wrong'));
           else this.setState({claim : res.data});
           }
 
       }).catch(()=>this.notifyBlock('Oups! something went wrong'));
   }
+
+  trans = original =>{
+    const text = original.replace(/<\/?[^>]+>/ig, " ");
+    const config = {
+        headers: { Authorization: 'Bearer 70c3eeb47dac6b52f80ba4962c1fd037'}
+    };
+    axios.post("https://ws.detectlanguage.com/0.2/detect?q="+text,null,config)
+    .then(res=>{
+      const lang = ln.find(ln=>ln.code===res.data.data.detections[0].language);
+      this.setState({
+        language : lang.name.toLowerCase()
+      });
+    })
+    .catch(()=>this.setState({
+      language : 'failed'
+    }));
+}
 
 
     handleEditorChange = (content, editor) => {
@@ -58,6 +80,7 @@ class Claim extends Component {
           pauseOnHover: true,
           draggable: true
           });
+
     render(){
       const {claim} = this.state;
         return (
@@ -94,6 +117,9 @@ class Claim extends Component {
                     <Card>
                       <CardHeader>
                         <strong>Description</strong>
+                        <div className="card-header-actions">
+                          Language: {this.state.language}
+                        </div>
                       </CardHeader>
                       <CardBody>
                       {ReactHtmlParser(claim.description)}
