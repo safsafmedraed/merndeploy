@@ -5,6 +5,7 @@ import { getPosts } from '../../actions/post'
 import Spinner from '../Theme/Spinner';
 import PropTypes from 'prop-types'
 import PostItem from "./PostItem";
+import POSTUI from "./PostUI";
 import AddPost from './ForumContainer/AddPost'
 import Alert from '../../actions/alerts'
 const Forum = ({ getPosts, post: { posts, loading } }) => {
@@ -20,7 +21,7 @@ const Forum = ({ getPosts, post: { posts, loading } }) => {
       <h1>Welcome to Qwiazrd Community </h1>
       <AddPost />
       <div>
-        {posts.map(post => (<PostItem key={post._id} post={post} />))
+        {posts.map(post => (<POSTUI key={post._id} post={post} />))
 
         }
       </div>

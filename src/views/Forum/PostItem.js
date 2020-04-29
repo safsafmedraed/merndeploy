@@ -6,7 +6,6 @@ import Moment from 'react-moment'
 import { Card, CardBody, CardHeader, Col, Jumbotron, Button, Form } from 'reactstrap';
 import { addLike, removeLike, deletePost, addrate } from '../../actions/post'
 import Avatar from '@material-ui/core/Avatar';
-
 import ReactHtmlParser from 'react-html-parser'
 import { makeStyles } from '@material-ui/core/styles';
 import Rating from '@material-ui/lab/Rating';

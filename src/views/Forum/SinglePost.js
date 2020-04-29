@@ -9,6 +9,7 @@ import { Button } from 'reactstrap';
 import Addcomment from '../Forum/Addcomment'
 import Alert from "../../actions/alerts"
 import CommentItem from '../Forum/CommentItem'
+import POSTUI from "./PostUI";
 const SinglePost = ({ getPost, post: { post, loading }, match }) => {
     useEffect(() => {
         getPost(match.params.id)
@@ -21,7 +22,7 @@ const SinglePost = ({ getPost, post: { post, loading }, match }) => {
             </Button>
 
         </Link>
-        <PostItem post={post} showActions={false} show={true} />
+        <POSTUI post={post} showActions={false} show={true} />
         <Alert />
         <Addcomment postId={post._id} />
         <div>

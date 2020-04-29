@@ -135,14 +135,7 @@ const EditAccount = ({ auth: { user, loading }, editaccount, history, getCurrent
                                             </InputGroupAddon>
                                             <Input type="Text" placeholder="Born Place" autoComplete="Born Place" name="bornplace" value={bornplace} onChange={e => onchange(e)} />
                                         </InputGroup>
-                                        <InputGroup className="mb-3">
-                                            <Col md="3">
-                                                <Label htmlFor="file-input">change profile pic</Label>
-                                            </Col>
-                                            <Col xs="12" md="9">
-                                                <Input type="file" id="file-input" name="file-input" value={avatar} onchange={e => e.target.files[0]} />
-                                            </Col>
-                                        </InputGroup>
+
                                         <Button color="success" block>Edit Account</Button>
                                     </Form>
                                 </CardBody>

@@ -55,21 +55,23 @@ export const removeLike = id => async dispatch => {
 }
 //delete post 
 export const deletePost = id => async dispatch => {
-    try {
-        await axios.delete(`http://localhost:5000/post/${id}`)
-        dispatch({
-            type: DELETE_POST,
-            payload: id
-        })
-        dispatch(setAlert('Post Removed', 'warning'))
-    } catch (error) {
-        dispatch({
-            type: POST_ERROR,
-            payload: { msg: error.response.statusText, status: error.response.status }
+    if (window.confirm('Are you sure? this can not be undone')) {
+        try {
+            await axios.delete(`http://localhost:5000/post/${id}`)
+            dispatch({
+                type: DELETE_POST,
+                payload: id
+            })
+            dispatch(setAlert('Post Removed', 'warning'))
+        } catch (error) {
+            dispatch({
+                type: POST_ERROR,
+                payload: { msg: error.response.statusText, status: error.response.status }
 
-        });
+            });
+        }
+
     }
-
 }
 //Add post 
 export const addPost = formData => async dispatch => {
@@ -136,22 +138,23 @@ export const addComment = (postId, formData) => async dispatch => {
 }
 //delete Comment 
 export const deleteComment = (postId, commentId) => async dispatch => {
+    if (window.confirm('Are you sure? this can not be undone')) {
+        try {
+            await axios.delete(`http://localhost:5000/post/comment/${postId}/${commentId}`)
+            dispatch({
+                type: REMOVE_COMMENT,
+                payload: commentId
+            })
+            dispatch(setAlert('Comment Removed', 'warning'))
+        } catch (error) {
+            dispatch({
+                type: POST_ERROR,
+                payload: { msg: error.response.statusText, status: error.response.status }
 
-    try {
-        await axios.delete(`http://localhost:5000/post/comment/${postId}/${commentId}`)
-        dispatch({
-            type: REMOVE_COMMENT,
-            payload: commentId
-        })
-        dispatch(setAlert('Comment Removed', 'warning'))
-    } catch (error) {
-        dispatch({
-            type: POST_ERROR,
-            payload: { msg: error.response.statusText, status: error.response.status }
+            });
+        }
 
-        });
     }
-
 }
 //Rate
 export const addrate = (postId, formData) => async dispatch => {

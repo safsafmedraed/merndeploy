@@ -256,7 +256,7 @@ router.route('/rate/:id').post(auth, async (req, res) => {
 
 cron.schedule('* * * * *', async function () {
 
-    console.log('run every 30 sec')
+    console.log('run every 60 sec')
     const post = await Post.find();
     post.forEach(e => {
         if (e.avg < 3) {

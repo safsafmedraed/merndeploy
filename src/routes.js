@@ -1,4 +1,5 @@
 import React from 'react';
+import PostUI from './views/Forum/PostUI';
 
 
 const Breadcrumbs = React.lazy(() => import('./views/Base/Breadcrumbs'));
@@ -46,6 +47,7 @@ const Profiles = React.lazy(() => import('./views/Users/Profiles'));
 const SingleProfile = React.lazy(() => import('./views/Users/SingleProfile'));
 const EditAccount = React.lazy(() => import('./views/Users/EditAccount'));
 const SinglePost = React.lazy(() => import('./views/Forum/SinglePost'));
+
 const EditAvatar = React.lazy(() => import('./views/Users/EditAvatar'));
 const Join = React.lazy(() => import('./views/Forum/components/Join/Join'));
 const Chat = React.lazy(() => import('./views/Forum/components/Chat/Chat'));
@@ -105,7 +107,8 @@ const routes = [
   { path: '/EditAvatar', exact: true, name: 'Edit avatar', component: EditAvatar },
   { path: '/SinglePost/:id', exact: true, name: 'Single Post', component: SinglePost },
   { path: '/Join', exact: true, name: 'Join Chat', component: Join },
-  { path: '/Chat', exact: true, name: 'Chat Room', component: Chat }
+  { path: '/Chat', exact: true, name: 'Chat Room', component: Chat },
+
 ];
 
 
