@@ -18,7 +18,7 @@ const Forum = ({ getPosts, post: { posts, loading } }) => {
   return loading ? <Spinner /> : (
     <Fragment>
       <Alert />
-      <h1>Welcome to Qwiazrd Community </h1>
+      <h1>Welcome to Qwizard Community </h1>
       <AddPost />
       <div>
         {posts.map(post => (<POSTUI key={post._id} post={post} />))
