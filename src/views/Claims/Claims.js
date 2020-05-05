@@ -131,7 +131,7 @@ render(){
                     <th className="text-center" style={{width : "30%"}}>Title</th>
                     <th className="text-center" style={{width : "15%"}}>E-mail</th>
                     <th className="text-center" style={{width : "20%"}}>Date</th>
-                    {this.state.filter === "all" ? <th className="text-center" style={{width : "30%"}}>Status</th> : null }
+                    {this.state.filter === "all" ? <th className="text-center" style={{width : "10%"}}>Status</th> : null }
                     {this.state.role === "all" ? <th className="text-center" style={{width : "30%"}}>User role</th> : null }
                   </tr>
                   </thead>

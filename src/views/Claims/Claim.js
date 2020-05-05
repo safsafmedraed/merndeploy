@@ -6,7 +6,7 @@ import { toast } from 'react-toastify';
 import axios from 'axios';
 import { LoopCircleLoading  } from 'react-loadingg';
 import {connect} from 'react-redux';
-import ln from './languages'
+import ln from './languages';
 
 class Claim extends Component {
   constructor(props){
