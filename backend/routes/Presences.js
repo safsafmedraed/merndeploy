@@ -1,6 +1,8 @@
 const router = require('express').Router();
 const Presence = require('../models/presence');
 const Class = require('../models/class')
+const auth = require('../middleware/auth');
+const User = require('../models/user.model');
 
 
 /**********GETall Presence***********/
@@ -12,24 +14,49 @@ router.route('/Getall').get((req, res) => {
 
 
 /****************Marquer présence***************/
-router.route('/marquer/:id_c').post(async(req, res) => {
+router.route('/marquerpr/:studentid').put(auth,async(req, res) => {
+  try {
+    const classid = req.body.classid;
+    const studentid = req.params.studentid;
+    const y = await User.findById(studentid)
+    const t = await User.findById(req.user.id)
+    let  z = await t.Classes.find(z => z.classe == classid)
 
-  const classe= await Class.findById(req.params.id_c)
-  const presents= req.body.presents;
+    console.log()
+    const  presence = new Presence();
+    presence.teacher.teacherid =t.id;
+    presence.teacher.Firstname =t.Firstname;
+    presence.teacher.Lastname =t.Lastname;
+    presence.teacher.email=t.email;
+    presence.classe.className=z.classename;
+
+    let newusers=[];
+
+    let newuser = {
+      user: studentid,
+      cl: classid,
+      Firstname: y.Firstname,
+      Lastname: y.Lastname,
+      email: y.email,
+    }
+    newusers.push(newuser)
 
 
-      const newPresence = new Presence({
 
-        classe ,
-        presents
+    presence.presents  =newusers;
 
-      });
-      console.log(newPresence);
-  newPresence.save().then(() => res.status(200).json('presence  marquée')).catch(err => res.status(400).json(err))
+    presence.save();
+    res.json(presence)
 
-
+  }
+  catch (err) {
+      console.error(err.message);
+      res.status(500).send('Server error')
+    }
 
 })
+
+
 
 /****************update présence***************/
 

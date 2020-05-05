@@ -45,17 +45,26 @@ const userSchema = new Schema({
     },
   Classes: [
     {
-      type: Schema.Types.ObjectId,
-      ref: 'classes',
-      default: null
-    }
+      classe: {
+        type: Schema.Types.ObjectId,
+        ref: 'classes',
+      },
 
+      classename:{
+        type:String
+      },
+
+    }
   ],
   ClassU:
     {
-      type: Schema.Types.ObjectId,
-      ref: 'classes',
-      default: null
+      cl: {
+        type: Schema.Types.ObjectId,
+        ref: 'classes',
+      },
+      classname:{
+        type:String
+      }
     }
 
 

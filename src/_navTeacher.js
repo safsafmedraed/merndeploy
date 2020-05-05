@@ -36,6 +36,24 @@ export default {
         }
       ]
     },
+    {
+      name: 'Classes',
+      icon: 'cui-people',
+      attributes: { disabled: false },
+      children: [
+        {
+          name: 'My Classes',
+          url: '/TeachC',
+          icon: 'icon-cursor',
+
+        },
+        {
+          name: 'Mark presence',
+          url: '/Markp',
+          icon: 'icon-star'
+        }
+      ]
+    },
 
   ],
 

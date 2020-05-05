@@ -13,12 +13,81 @@ const classmodel = new Schema({
   Users:
     [
       {
+
         user: {
-          type: Schema.Types.ObjectId,
+          type: mongoose.Types.ObjectId,
           ref: 'users'
         },
+        cl: {
+          type: mongoose.Types.ObjectId,
+          ref: 'classes'
+
+        },
+        name: {
+          type: String
+        },
+        email: {
+          type: String
+        },
+        lastname: {
+          type: String
+        },
+        phonenumber: {
+          type: String,
+        }
+
+
       }
-      ]
+
+      ],
+
+     Presents:[
+          {
+
+             teacherid:{
+                type: Schema.Types.ObjectId,
+                ref: 'users'
+                   },
+
+             teachername:{
+             type:String
+               },
+            teacherlastname:{
+              type:String
+            },
+             date: {
+               type: Date,
+               required: true,
+               default:Date.now()
+                 },
+            Usersp: [
+              {
+                user: {
+                  type: mongoose.Types.ObjectId,
+                  ref: 'users'
+                 },
+                cl: {
+                  type: mongoose.Types.ObjectId,
+                  ref: 'classes'
+
+                },
+                name: {
+                  type: String
+                 },
+                email: {
+                  type: String
+                 },
+                lastname: {
+                  type: String
+                 }
+
+              }
+
+            ],
+
+          }
+
+       ]
 
 
 

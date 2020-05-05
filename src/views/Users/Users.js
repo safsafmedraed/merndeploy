@@ -11,7 +11,8 @@ import Education from "./Education"
 
 const Users = ({ getCurrentProfile,
   deleteAccount,
-  auth: { user }, profile: { profile, loading } }) => {
+  auth: { user },
+                 profile: { profile, loading } }) => {
   useEffect(() => {
     getCurrentProfile();
   }, [getCurrentProfile])

@@ -8,28 +8,52 @@ const presencemodel = new Schema({
     default:Date.now()
   },
 
-  classe:{
-    name: {
-      type: String,
-      required: true
+  teacher: {
+    teacherid: {
+      type: Schema.Types.ObjectId,
+      ref: 'users'
     },
-
-    Users: [
-      {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'users'
-      }
-    ]
-
+    Firstname: {
+      type: String
+    },
+    Lastname: {
+      type: String,
+    },
+    email: {
+      type: String,
+    },
   },
+     classe:{
+
+       className:{
+         type:String
+          },
+
+      },
+
 
   presents:[
     {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: 'users'
+      user: {
+        type: Schema.Types.ObjectId,
+        ref: 'users'
+      },
+      cl: {
+        type: Schema.Types.ObjectId,
+        ref: 'classes'
+      },
+      Firstname: {
+        type: String
+      },
+      Lastname: {
+        type: String,
+      },
+      email: {
+        type: String,
+      },
+
     }
   ]
-
 
 
 });

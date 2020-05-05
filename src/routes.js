@@ -47,7 +47,10 @@ const SingleProfile = React.lazy(() => import('./views/Users/SingleProfile'));
 const Classes = React.lazy(() => import('./views/Classes/Classes'));
 const Addcl = React.lazy(() => import('./views/Classes/Ajout'));
 const affcl = React.lazy(() => import('./views/Classes/Affiche'));
-
+const affSC = React.lazy(() => import('./views/Classes/AffectSC'));
+const affST = React.lazy(() => import('./views/Classes/AffectTC'));
+const teachercl= React.lazy(() => import('./views/Classes/Teacherclasses'));
+const mark= React.lazy(() => import('./views/Classes/MarquerP'));
 
 
 
@@ -104,7 +107,11 @@ const routes = [
   { path: '/Single/:id', exact: true, name: 'Single Profile', component: SingleProfile },
   { path: '/Addclass', exact: true, name: 'Add Class', component: Addcl },
   { path: '/Listclasses', exact: true, name: 'List Classes', component: affcl },
-  { path: '/Classes', exact: true, name: 'Manage Classes', component: Classes }
+  { path: '/Classes', exact: true, name: 'Manage Classes', component: Classes },
+  { path: '/AffectSC', exact: true, name: 'Affectsc', component: affSC },
+  { path: '/AffectST', exact: true, name: 'Affecttc', component: affST },
+  { path: '/TeachC', exact: true, name: 'Aff', component: teachercl },
+  { path: '/Markp', exact: true, name: 'Marquer', component: mark }
 
 ];
 

@@ -21,11 +21,15 @@ const Classes = () => {
 
 
       <Col col="6" sm="4" md="2" xl className="mb-3 mb-xl-0">
-        <Link to='/Listclasses'>
+        <Link to='/AffectSC'>
           <Button block color="dark" className="btn-pill">Affect Students</Button></Link>
       </Col>
 
+      <Col col="6" sm="4" md="2" xl className="mb-3 mb-xl-0">
+        <Link to='/AffectST'>
+          <Button block color="dark" className="btn-pill">Affect Teacher</Button></Link>
 
+      </Col>
     </Fragment>
   )
 }
