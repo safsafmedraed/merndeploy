@@ -88,7 +88,9 @@ endquizz=() =>
     computeAnswer = (answer,Correct,points) => {
         this.setState({number:this.state.number+1,
             total: this.state.total+points})
-            if(answer===Correct)
+           let str1 = answer.toUpperCase().replace(/\s+/g, '');
+           let str2 = Correct.toUpperCase().replace(/\s+/g, '');
+            if(str1===str2)
             {
                     this.setState({score:this.state.score+points
                    
@@ -103,7 +105,7 @@ render(){
     return(
         <Card>
             {this.state.yes===false? <h2>vous n'avez pas de quizz</h2>:null}
-            {this.state.questionbank.length===0 && this.state.yes===true && this.state.number===0? <CardHeader>
+            {/*this.state.questionbank.length===0 && this.state.yes===true && */this.state.number===0? <CardHeader>
                 <Form className="form-horizontal" onSubmit={e=> this.getcode(e)}>
                     <FormGroup>
                          <Col md="3">

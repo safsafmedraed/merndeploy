@@ -109,7 +109,7 @@ class Question extends Component {
               text : this.state.Correct1,
               isCorrect : true,
           }
-         let aa = [...this.state.alternatives1,alternative];
+       
             const Questionsingle ={
               description : this.state.d1,
               alternative : alternative,

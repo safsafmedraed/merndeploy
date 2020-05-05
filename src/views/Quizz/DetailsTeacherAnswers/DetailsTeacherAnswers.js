@@ -1,10 +1,8 @@
 import React, { Component } from 'react';
-import {Card,CardHeader,CardBody,Table, Button, CardFooter} from 'reactstrap';
-import { Link } from 'react-router-dom';
+import {Card,CardHeader,CardBody,Table, CardFooter} from 'reactstrap';
+
 import axios from 'axios';
-import SuccessAlert from '../Question/successAlert';
-import ErrorAlert from '../Question/ErrorAlert';
-import { element } from 'prop-types';
+
 
 class DetailsTeacherAnswers extends Component {  
     constructor(props){
@@ -19,6 +17,7 @@ class DetailsTeacherAnswers extends Component {
          score: 0
        }
       }
+      
       componentDidMount() {
         const id = this.props.match.params.id;
         axios.get(`http://localhost:5000/users/userid/${id}`)

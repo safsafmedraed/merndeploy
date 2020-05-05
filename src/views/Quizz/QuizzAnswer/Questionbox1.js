@@ -2,7 +2,7 @@ import React,{useState} from 'react';
 import { Input } from 'reactstrap';
 
 const QuestionBox1 = ({question,options,selected})=> {
-    const [answer,setAnswer] = useState(options);
+    
     const [greeting, setGreeting] = useState();
      
     const handleChange = event => setGreeting(event.target.value);

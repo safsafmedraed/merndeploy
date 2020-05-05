@@ -28,7 +28,7 @@ class TeacherAnswers extends Component {
         console.log(res.data)
         this.state.Classes.forEach(element => {
           console.log(element)
-          Axios.get(`http://localhost:5000/class/classeid/${element}`)
+          Axios.get(`http://localhost:5000/class/classeid/${element.classe}`)
             .then(res=> {
               console.log(res);
               this.setState({classnames: [...this.state.classnames,res.data]})
@@ -54,7 +54,7 @@ onchangeclass(e){
         console.log(this.state.studentsnames)
         this.state.studentsnames.forEach(element => {
           //console.log(element._id)
-          let x = element._id
+          let x = element.user
           Axios.get(`http://localhost:5000/users/userid/${x}`)
           .then( res=> {
             console.log(res.data)

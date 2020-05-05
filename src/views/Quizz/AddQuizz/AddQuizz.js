@@ -52,12 +52,12 @@ class AddQuizz extends Component {
         this.setState({
           Classes: res.data.Classes
         })
-        console.log(this.state.Classes)
+        console.log(res.data)
         this.state.Classes.forEach(element => {
-          console.log(element)
-          axios.get(`http://localhost:5000/class/classeid/${element}`)
+         
+          axios.get(`http://localhost:5000/class/classeid/${element.classe}`)
             .then(res=> {
-              console.log(res);
+              
               this.setState({cl: [...this.state.cl,res.data]})
             })
         });
@@ -82,7 +82,7 @@ class AddQuizz extends Component {
             console.log(this.state.ss)
             this.state.ss.forEach(element => {
               //console.log(element.user)
-              let x = element._id
+              let x = element.user
               axios.get(`http://localhost:5000/users/userid/${x}`)
               .then( res=> {
                 console.log("id :"+res.data._id)

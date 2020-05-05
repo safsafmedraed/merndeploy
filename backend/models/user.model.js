@@ -69,19 +69,29 @@ const userSchema = new Schema({
     }
     ,
     Classes: [
-      {
-        type: Schema.Types.ObjectId,
-        ref: 'classes',
-        default: null
-      }
-  
-    ],
-    ClassU:
-      {
-        type: Schema.Types.ObjectId,
-        ref: 'classes',
-        default: null
-      },
+        {
+          classe: {
+            type: Schema.Types.ObjectId,
+            ref: 'classes',
+          },
+    
+          classename:{
+            type:String
+          },
+    
+        }
+      ],
+      ClassU:
+        {
+          cl: {
+            type: Schema.Types.ObjectId,
+            ref: 'classes',
+          },
+          classname:{
+            type:String
+          }
+        }
+    ,
       Questionbank:
       {
         type:  mongoose.Schema.Types.ObjectId,
