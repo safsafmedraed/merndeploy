@@ -38,6 +38,7 @@ router.route('/').get(auth, (req, res) => {
 })
 
 
+
 /*******Register*********//*********Token expire in 1 hour******** */
 router.route('/register').post([
     check('Firstname', 'First name is required')
@@ -70,6 +71,7 @@ router.route('/register').post([
     const password = req.body.password;
     const Firstname = req.body.Firstname;
     const Lastname = req.body.Lastname;
+
     const borndate = req.body.borndate;
     const role = req.body.role;
     const bornplace = req.body.bornplace;
@@ -250,6 +252,7 @@ router.route('/me').get(auth, async (req, res) => {
 
 //Logout 
 router.route('/logout').get((req, res) => {
+
     //res.clearCookie('access_token');
     req.logout();
     res.json("logged out ")
@@ -290,6 +293,7 @@ router.route('/upload/:id').post(async (req, res) => {
 
 
 
+
                     // See if user exists
                     let user = await User.findOne({ _id: req.params.id });
                     console.log(user)
@@ -327,3 +331,4 @@ router.get('/userid/:id', (req, res) => {
         .catch(err => res.status(400).json('Error: ' + err));
 })
 module.exports = router;
+

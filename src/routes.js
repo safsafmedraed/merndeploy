@@ -39,7 +39,13 @@ const Widgets = React.lazy(() => import('./views/Widgets/Widgets'));
 const Users = React.lazy(() => import('./views/Users/Users'));
 const User = React.lazy(() => import('./views/Users/User'));
 const Forum = React.lazy(() => import('./views/Forum/Forum'));
+const Claims = React.lazy(() => import('./views/Claims/Claims'));
+const Claim = React.lazy(() => import('./views/Claims/Claim'));
 const AddPost = React.lazy(() => import('./views/Forum/ForumContainer/AddPost'));
+const UserClaims = React.lazy(() => import('./views/Claims/UserClaims'));
+const UserClaim = React.lazy(() => import('./views/Claims/UserClaim'));
+const AddClaim = React.lazy(() => import('./views/Claims/AddClaim'));
+const Stat = React.lazy(() => import('./views/Claims/Stat'));
 const CreateProfile = React.lazy(() => import('./views/CreateProfile/CreateProfile'));
 const EditProfile = React.lazy(() => import('./views/Users/EditProfile'));
 const AddEducation = React.lazy(() => import('./views/Users/AddEducation'));
@@ -55,9 +61,11 @@ const EditAccount = React.lazy(() => import('./views/Users/EditAccount'));
 const SinglePost = React.lazy(() => import('./views/Forum/SinglePost'));
 
 
+
 const EditAvatar = React.lazy(() => import('./views/Users/EditAvatar'));
 const Join = React.lazy(() => import('./views/Forum/components/Join/Join'));
 const Chat = React.lazy(() => import('./views/Forum/components/Chat/Chat'));
+
 
 const routes = [
 
@@ -104,6 +112,12 @@ const routes = [
   { path: '/users/:id', exact: true, name: 'User Details', component: User },
   { path: '/Forum', exact: true, name: 'Forum', component: Forum },
   { path: '/Addpost', exact: true, name: 'Add new Post', component: AddPost },
+  { path: '/Claims', exact: true, name: 'Claims', component: Claims },
+  { path: '/Claims/Claim/:id', exact: true, name: 'Claim', component: Claim },
+  { path: '/UserClaims', exact: true, name: 'Claims', component: UserClaims },
+  { path: '/UserClaims/Claim/:id', exact: true, name: 'Claim', component: UserClaim },
+  { path: '/UserClaims/AddClaim', exact: true, name: 'Add Claim', component: AddClaim },
+  { path: '/Claims/stats', exact: true, name: 'Stats', component: Stat },
   { path: '/CreateProfile', exact: true, name: 'Create Profile', component: CreateProfile },
   { path: '/EditProfile', exact: true, name: 'Edit Profile', component: EditProfile },
   { path: '/Education', exact: true, name: 'Add Education', component: Education },
@@ -113,6 +127,7 @@ const routes = [
 
   { path: '/Addclass', exact: true, name: 'Add Class', component: Addcl },
   { path: '/Listclasses', exact: true, name: 'List Classes', component: affcl },
+
   { path: '/Classes', exact: true, name: 'Manage Classes', component: Classes },
 
   { path: '/EditAccount', exact: true, name: 'Single Profile', component: EditAccount },
@@ -120,7 +135,7 @@ const routes = [
   { path: '/SinglePost/:id', exact: true, name: 'Single Post', component: SinglePost },
   { path: '/Join', exact: true, name: 'Join Chat', component: Join },
   { path: '/Chat', exact: true, name: 'Chat Room', component: Chat },
-
+  { path: '/Classes', exact: true, name: 'Manage Classes', component: Classes }
 
 ];
 

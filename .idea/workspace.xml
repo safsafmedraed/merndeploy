@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="ed1fe0c3-c8cb-44bd-a64b-e3ff19c3a860" name="Default Changelist" comment="" />
+    <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="ProjectId" id="1Yiq6w0yvWXFyWQZFi0ZTCswRKJ" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="PropertiesComponent">
+    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="node.js.detected.package.eslint" value="true" />
+    <property name="node.js.path.for.package.eslint" value="project" />
+    <property name="node.js.selected.package.eslint" value="(autodetect)" />
+    <property name="nodejs_package_manager_path" value="npm" />
+  </component>
+  <component name="RunDashboard">
+    <option name="ruleStates">
+      <list>
+        <RuleState>
+          <option name="name" value="ConfigurationTypeDashboardGroupingRule" />
+        </RuleState>
+        <RuleState>
+          <option name="name" value="StatusDashboardGroupingRule" />
+        </RuleState>
+      </list>
+    </option>
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="ed1fe0c3-c8cb-44bd-a64b-e3ff19c3a860" name="Default Changelist" comment="" />
+      <created>1583435601663</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1583435601663</updated>
+      <workItem from="1583435619382" duration="361000" />
+      <workItem from="1583437283449" duration="1181000" />
+      <workItem from="1583586298461" duration="145000" />
+      <workItem from="1583597805292" duration="132000" />
+      <workItem from="1583677390072" duration="242000" />
+    </task>
+    <task id="LOCAL-00001" summary="first commit backend Ready!">
+      <created>1583435846979</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1583435846979</updated>
+    </task>
+    <task id="LOCAL-00002" summary="react template">
+      <created>1583438415820</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1583438415820</updated>
+    </task>
+    <task id="LOCAL-00003" summary="user login logout register version 0.1">
+      <created>1583586398706</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1583586398706</updated>
+    </task>
+    <task id="LOCAL-00004" summary="jwt token login and register">
+      <created>1583597877918</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1583597877919</updated>
+    </task>
+    <task id="LOCAL-00005" summary="forgot password via mail and reset password">
+      <created>1583677469873</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1583677469873</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="1" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State>
+              <option name="COLUMN_ORDER" />
+            </State>
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="first commit backend Ready!" />
+    <MESSAGE value="react template" />
+    <MESSAGE value="user login logout register version 0.1" />
+    <MESSAGE value="jwt token login and register" />
+    <MESSAGE value="forgot password via mail and reset password" />
+    <option name="LAST_COMMIT_MESSAGE" value="forgot password via mail and reset password" />
+  </component>
+</project>

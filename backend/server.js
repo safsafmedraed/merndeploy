@@ -38,8 +38,6 @@ connection.once('open', () => {
   console.log('***database works!!***');
 })
 
-
-
 app.use(express.json({ extended: false }));
 //express session
 app.use(session({
@@ -53,19 +51,26 @@ app.use(passport.initialize());
 app.use(passport.session());
 //connect flash
 app.use(flash());
-//global vars
+//global vars 
 app.use((req, res, next) => {
   res.locals.success_msg = req.flash('succes_msg');
   res.locals.error_msg = req.flash('error_msg');
   next();
 })
 
+
 app.use('/chat', chat)
 app.use('/post', postRouter)
+
+
+
+app.use('/subjects', subjectRouter);
+
 app.use('/users', usersRouter);
 app.use('/forgot', forgotpassword);
 app.use('/', googleauth);
 app.use('/api/auth', require('./routes/auth'));
+app.use('/claims', require('./routes/claims'));
 app.use('/profile', require('./routes/profile'));
 app.use('/class', cl);
 app.use('/presence', presence);

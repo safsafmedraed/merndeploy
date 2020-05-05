@@ -1,3 +1,9 @@
+const uri = ()=>{
+if(localStorage.getItem("role")==="Admin" && localStorage.getItem("token"))
+  return '/Claims';
+else
+  return '/UserClaims';
+}
 export default {
 
   items: [
@@ -275,6 +281,13 @@ export default {
         }
       ]
     },
+    {
+      name: 'Claims',
+      url: uri,
+      icon: 'cui-envelope-open',
+      attributes: { disabled: false }
+    }
+
 
   ],
 

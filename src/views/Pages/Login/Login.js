@@ -1,3 +1,4 @@
+
 import React, { useState, Fragment } from 'react';
 import { Link, Redirect, NavLink } from 'react-router-dom';
 import { Button, Card, CardBody, CardGroup, Col, Container, Form, Input, InputGroup, InputGroupAddon, InputGroupText, Row } from 'reactstrap';
@@ -67,7 +68,6 @@ const Login = ({ login, isAuthenticated }) => {
                         <Col xs="6" className="text-right">
                           <NavLink to="/ForgotPassword" color="link" className="px-0">Forgot password?</NavLink>
                         </Col>
-
                       </Row>
                     </Form>
                   </CardBody>

@@ -1,5 +1,6 @@
 import React, { Fragment, useEffect } from 'react';
 
+
 import { connect } from 'react-redux'
 import { getPosts } from '../../actions/post'
 import Spinner from '../Theme/Spinner';
@@ -14,7 +15,6 @@ const Forum = ({ getPosts, post: { posts, loading } }) => {
   }, [getPosts])
 
 
-
   return loading ? <Spinner /> : (
     <Fragment>
       <Alert />
@@ -25,10 +25,7 @@ const Forum = ({ getPosts, post: { posts, loading } }) => {
 
         }
       </div>
-
-    </Fragment>
-  )
-
+    </Fragment>)
 }
 
 Forum.propTypes = {

@@ -1,3 +1,4 @@
+
 import React, { useEffect, Fragment } from 'react';
 import { HashRouter, Route, Switch } from 'react-router-dom';
 // import { renderRoutes } from 'react-router-config';
@@ -8,9 +9,13 @@ import store from './store';
 
 import { loadUser } from './actions/auth';
 import setAuthToken from './utlis/setAuthToken';
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 import PrivateRoute from "./routing/PrivateRoute";
+
 import { connect } from 'react-redux';
+
 
 
 const loading = () => <div className="animated fadeIn pt-3 text-center">Loading...</div>;
@@ -32,6 +37,7 @@ if (localStorage.token) {
 }
 
 const App = () => {
+  toast.configure();
 
   useEffect(() => {
     store.dispatch(loadUser());
@@ -61,6 +67,5 @@ const App = () => {
     </Provider>
   </Fragment>
 }
-
 
 export default App;

@@ -54,6 +54,7 @@ const userSchema = new Schema({
 
 
 
+
 });
 
 userSchema.methods.hashPassword = function (password) {

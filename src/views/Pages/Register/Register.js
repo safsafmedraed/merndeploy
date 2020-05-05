@@ -46,7 +46,6 @@ class Register extends Component {
       isSignedUp: false
     };
   }
-
   onChangeEmail(e) {
     this.setState({
       email: e.target.value
@@ -128,8 +127,6 @@ class Register extends Component {
       // redirect to dashbord if signed up
       return <Redirect to={{ pathname: "/dashboard" }} />;
     }
-
-
 
     return (
       <div className="app flex-row align-items-center">
