@@ -81,6 +81,11 @@ const userSchema = new Schema({
         type: Schema.Types.ObjectId,
         ref: 'classes',
         default: null
+      },
+      Questionbank:
+      {
+        type:  mongoose.Schema.Types.ObjectId,
+        ref: 'Question'
       }
   
 

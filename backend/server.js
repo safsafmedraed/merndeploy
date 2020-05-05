@@ -12,7 +12,6 @@ const QuestionRouter = require('./routes/Questions');
 const QuizzRouter = require('./routes/Quizzs');
 const cl = require('./routes/Classes');
 const app = express();
-
 //passport config
 require('./passport')(passport);
 
@@ -24,7 +23,6 @@ app.use(
     credentials: true
   })
 );
-
 const port = process.env.port || 5000;
 const uri = process.env.ATLAS_URI;
 mongoose.connect(uri, { useNewUrlParser: true, useCreateIndex: true, useUnifiedTopology: true, useFindAndModify: false });
@@ -32,7 +30,6 @@ const connection = mongoose.connection;
 connection.once('open', () => {
   console.log('***database works!!***');
 })
-
 
 
 app.use(express.json({ extended: false }));
@@ -43,6 +40,7 @@ app.use(session({
   saveUninitialized: true,
   cookie: { secure: true }
 }));
+
 //passport middleware
 app.use(passport.initialize());
 app.use(passport.session());

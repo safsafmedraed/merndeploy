@@ -30,6 +30,8 @@
     "passport-auth-token": "^1.0.1",
     "passport-http-bearer": "^1.0.1",
     "passport-jwt": "^4.0.0",
-    "passport-local": "^1.0.0"
+    "passport-local": "^1.0.0",
+    "socket.io": "^2.3.0",
+    "twilio": "^3.42.2"
   }
 }

@@ -13,7 +13,7 @@ import { logout } from '../../actions/auth';
 
 const DefaultHeader = ({ auth: { isAuthenticated, loading, user }, logout }) => {
 
-
+ 
   const authLinks = (
 
     <NavItem className="d-md-down-none">

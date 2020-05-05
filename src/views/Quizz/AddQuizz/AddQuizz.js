@@ -3,8 +3,8 @@ import {Card,CardHeader,CardBody,Form,FormGroup,Col,Label,Input,FormText,CardFoo
 import axios from 'axios';
 import SuccessAlert from '../Question/successAlert';
 import ErrorAlert from '../Question/ErrorAlert';
-
-
+import ReactNotification from 'react-notifications-component'
+import 'react-notifications-component/dist/theme.css';
 class AddQuizz extends Component {
   constructor(props){
         super(props);
@@ -12,6 +12,7 @@ class AddQuizz extends Component {
         this.handleChange1 = this.handleChange1.bind(this);
         this.onchangeclass= this.onchangeclass.bind(this);
         this.onchangetimer=this.onchangetimer.bind(this);
+        this.onchangename=this.onchangename.bind(this);
         this.onsubmit=this.onsubmit.bind(this);
         this.state = {
             alert_msg : "",
@@ -27,7 +28,8 @@ class AddQuizz extends Component {
             value1 : [],
             take1 : [],
             idd: '',
-            cl : []
+            cl : [],
+            name : []
            
         }
     }
@@ -50,6 +52,7 @@ class AddQuizz extends Component {
         this.setState({
           Classes: res.data.Classes
         })
+        console.log(this.state.Classes)
         this.state.Classes.forEach(element => {
           console.log(element)
           axios.get(`http://localhost:5000/class/classeid/${element}`)
@@ -78,20 +81,25 @@ class AddQuizz extends Component {
             })
             console.log(this.state.ss)
             this.state.ss.forEach(element => {
-              //console.log(element._id)
+              //console.log(element.user)
               let x = element._id
               axios.get(`http://localhost:5000/users/userid/${x}`)
               .then( res=> {
-                console.log(res.data)
+                console.log("id :"+res.data._id)
                 this.setState({Users: [...this.state.Users,res.data]})
                 console.log(this.state.Users)
-              })
+              })  
             })
             
     }
     onchangetimer(e){
       this.setState({
         Timer: e.target.value
+      })
+    }
+    onchangename(e){
+      this.setState({
+        name: e.target.value
       })
     }
   
@@ -138,42 +146,56 @@ class AddQuizz extends Component {
               this.setState({take: [...this.state.take,res.data]})
             })
         });
-        const Quizz = {classe: this.state.classe,
+        const Quizz = {name : this.state.name,
+          classe: this.state.classe,
           Question: this.state.take,
-          Timer: this.state.Timer
+          Timer: this.state.Timer,
+       
         }
        
           
         
         if(this.state.take.length!==0){
-       let exec= axios.post('http://localhost:5000/Quizz/Quizz', Quizz)
+      axios.post('http://localhost:5000/Quizz/Quizz', Quizz)
             .then(res => {
               this.setState({alert_msg : 'success',
                   value: [],
                   code : res.data.code,
                   idd : res.data._id
                 })
-                console.log("///////////////////////////"+res)
+               
                 this.state.value1.forEach(element => {
+                 
                    axios.put(`http://localhost:5000/users/Userquizz/${element}/${this.state.idd}`)
                     .then(res=> {
-                      console.log(res);
+                     
                       this.setState({take1: [...this.state.take1,res.data]})
                     })
                 });
                   console.log(this.state.idd)  
             }).catch(error => {
               this.setState({alert_msg:'error'});
-            })        
+            })
+                  
         }
     }
     render() {
        
         return(
+         
             <Card>
+               <div className="container"><ReactNotification/></div>
                 <CardHeader>{this.state.alert_msg==="success"?<SuccessAlert text={'successfully created, this is the code for this quizz : '+ this.state.code}/>:null}
                 {this.state.alert_msg==="error"?<ErrorAlert/>:null}</CardHeader>
-
+                <FormGroup row>
+                  <Col md="3">
+                      <Label htmlFor="Timer">Quizz name : </Label>
+                    </Col>
+                    <Col xs="12" md="9">
+                      <Input type="text" min="0" id="name" name="name" placeholder="Enter name..." autoComplete="name" value={this.state.name} onChange={this.onchangename}/>
+                      <FormText className="help-block">Please enter a name for this quizz</FormText>
+                    </Col>
+                  </FormGroup>
                     <Form className="form-horizontal" onSubmit={this.onsubmit}>
                     <CardBody>
                     <FormGroup row>
@@ -222,7 +244,7 @@ class AddQuizz extends Component {
                   this.state.Users.map(optione => {
                     return <option 
                       key={optione._id}
-                      value={optione._id}>{optione.Firstname}  {optione.Lastname}
+                    value={optione._id}>{optione.Firstname}  {optione.Lastname}
                       </option>;
                   })
                 }

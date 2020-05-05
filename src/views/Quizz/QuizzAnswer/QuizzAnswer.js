@@ -3,11 +3,12 @@ import { Card, CardHeader, Form ,Col,Label, FormGroup,Input,FormText,Button} fro
 import Axios from "axios";
 
 import QuestionBox from "./QuestionBox";
+import QuestionBox1 from "./Questionbox1";
 import ResultQuizz from "./ResultQuizz";
 import "./style.css";
 import Timerr from "./Timer";
 import ErrorAlert from "../Question/ErrorAlert";
-import { element } from "prop-types";
+
 class QuizzAnswer extends Component{
     constructor(props){
         super(props);
@@ -42,6 +43,7 @@ getClasses()
     console.log(res.data)
   })
 }
+
 endquizz=() =>
     {
         const id = localStorage.getItem('user1');
@@ -121,21 +123,20 @@ render(){
                      this.state.questionbank.length>0 &&
                     this.state.number<this.state.questionbank.length 
                      && this.state.Timer>0 &&
-                     this.state.questionbank.map(Question=>(
-                            /*this.setState({
-                                total: this.state.total+Question.points
-                            }),*/
+                     this.state.questionbank.map(Question=>{
                            
-                           
+                            return Question.alternatives.length>0?
                             <QuestionBox question={Question.description} 
                             options={Question.alternatives} 
                             key={Question._id}
                             selected={answer => this.computeAnswer(answer,Question.Correct,Question.points)}
                             />
-                               
-                                                        )
-                        
-                                                 )
+                             :  <QuestionBox1 question={Question.description} 
+                             options={Question.alternatives} 
+                             key={Question._id}
+                             selected={greeting => this.computeAnswer(greeting,Question.Correct,Question.points)}
+                             />
+                     })
                    
                 }
                 {

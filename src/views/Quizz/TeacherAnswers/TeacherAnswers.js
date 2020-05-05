@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import {Table,Row,Input} from 'reactstrap'
+import {Table,Row,Input} from 'reactstrap';
+import { Link } from 'react-router-dom';
 import Axios from "axios";
 class TeacherAnswers extends Component {  
     constructor(props){
@@ -11,7 +12,8 @@ class TeacherAnswers extends Component {
         studentsnames: [],
         classe : '',
         classes : [],
-        classnames : []
+        classnames : [],
+        questionLink :'/DetailsTeacherAnswers/',
       }
     }
     getTeacher()
@@ -23,6 +25,7 @@ class TeacherAnswers extends Component {
         this.setState({
           Classes: res.data.Classes
         })
+        console.log(res.data)
         this.state.Classes.forEach(element => {
           console.log(element)
           Axios.get(`http://localhost:5000/class/classeid/${element}`)
@@ -101,9 +104,9 @@ componentDidMount(){
         </div>
       </td>
       <td>
-        <div>{student.Firstname} {student.Lastname}</div>
+        <div><Link to={this.state.questionLink+student._id}> {student.Firstname} {student.Lastname}</Link></div>
         <div className="small text-muted">
-          born : {student.borndate.toString()}
+          born : {student.borndate}
         </div>
       </td>
       <td className="text-center">

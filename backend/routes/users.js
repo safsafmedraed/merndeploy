@@ -10,6 +10,7 @@ const bcrypt = require('bcryptjs');
 const gravatar = require('gravatar');
 let Quizzz = require('../models/Quizz');
 const { check, validationResult } = require('express-validator');
+let Question = require('../models/Questions');
 /**************GET USERS*************/
 router.route('/').get(auth, (req, res) => {
 
@@ -58,6 +59,7 @@ router.route('/register').post([
     const Quizzs = [];
     const quizzexist = false
     const note = 0;
+    const Questionbank = [];
     try {
         // See if user exists
         let user = await User.findOne({ email })
@@ -134,7 +136,19 @@ router.put('/usernoquizz/:id/:quizzid/:note',(req,res)=> {
     })
     .catch(err => res.status(400).json('Error: ' + err));
 })
-router.put('/Userquizz/:id/:quizzid', (req, res) => {
+router.put('/userquestion/:id/:questionid',(req,res)=> {
+    console.log(req.params.questionid)
+    User.findById(req.params.id)
+    .then(user => {
+       Question.findById(req.params.questionid)
+       .then(kk=> {
+           /*user.Questionbank.push(kk._id)
+           user.save()*/
+           console.log(user.Questionbank)
+       }) .catch(err => res.status(400).json('Error: ' + err));
+    }) .catch(err => res.status(400).json('Error: ' + err));
+})
+/*router.put('/Userquizz/:id/:quizzid', (req, res) => {
     
     User.findById(req.params.id)
     .then(user => {
@@ -143,12 +157,25 @@ router.put('/Userquizz/:id/:quizzid', (req, res) => {
         Quizzz.findById(req.params.quizzid)
         .then(kk => {
         user.Quizzs.push(kk._id)
-        user.save()})
+        user.save()
+        
+    })
         .then(() => res.json('quizz updated!'+user))
         .catch(err => res.status(400).json('Error: ' + err));
     })
     .catch(err => res.status(400).json('Error: ' + err));
-    })
+    })*/
+    router.route('/Userquizz/:id/:quizzid').put(async (req, res) => {
+        console.log(req.params.id+' //////// '+req.params.quizzid)
+        const x= await User.findById(req.params.id)
+        x.quizzexist = true;
+        x.Quizzs.push(req.params.quizzid)
+      
+        x.save();
+       
+        res.json(x)
+      
+      })
 //Login handle  /*********Token expire in 1 hour******** */
 router.route('/login').post([
     check('email', 'Please enter a valid email').isEmail(),
