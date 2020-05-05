@@ -1,8 +1,8 @@
-const uri = ()=>{
-if(localStorage.getItem("role")==="Admin" && localStorage.getItem("token"))
-  return '/Claims';
-else
-  return '/UserClaims';
+const uri = () => {
+  if (localStorage.getItem("role") === "Admin" && localStorage.getItem("token"))
+    return '/Claims';
+  else
+    return '/UserClaims';
 }
 export default {
 
@@ -282,13 +282,23 @@ export default {
       ]
     },
     {
+
       name: 'Claims',
       url: uri,
       icon: 'cui-envelope-open',
       attributes: { disabled: false }
+    }, {
+
+
+
+      name: 'Anser a quizz',
+      icon: 'cui-people',
+      url: 'QuizzAnswer',
+      attributes: { disabled: false },
+
     }
 
-
   ],
+
 
 };

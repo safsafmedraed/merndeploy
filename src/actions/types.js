@@ -18,6 +18,7 @@ export const CLEAR_PROFILE = 'CLEAR_PROFILE';
 export const RESET_ERROR = 'RESET_ERROR';
 export const RESET_OK = 'RESET_OK';
 export const DELETE_ACCOUNT = 'DELETE_ACCOUNT';
+
 export const POST_ERROR = 'POST_ERROR';
 export const GET_POSTS = 'GET_POSTS';
 export const GET_POST = 'GET_POST';
@@ -27,4 +28,7 @@ export const ADD_POST = 'ADD_POST';
 export const ADD_COMMENT = 'ADD_COMMENT';
 export const REMOVE_COMMENT = 'REMOVE_COMMENT';
 export const RATE = 'RATE';
+
+
+export const ADD_QUESTION = 'ADD_QUESTION';
 

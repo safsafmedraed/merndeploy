@@ -44,13 +44,70 @@ const userSchema = new Schema({
         default: null
     },
 
+
     google: {
         id: String,
         token: String,
         email: String,
         name: String
+    },
+
+    quizzexist: {
+        type: Boolean,
+        default: false
+    },
+    Quizzs: [
+        {
+            quiz: {
+                type: mongoose.Schema.Types.ObjectId,
+                ref: "Quizz"
+            },
+            score: {
+                type: Number,
+                default: 0
+            }
+        }
+    ],
+    note: {
+        type: Number,
+        default: 0
+    },
+    answered: {
+        type: Number,
+        default: 0
 
     }
+    ,
+    Classes: [
+        {
+            classe: {
+                type: Schema.Types.ObjectId,
+                ref: 'classes',
+            },
+
+            classename: {
+                type: String
+            },
+
+        }
+    ],
+    ClassU:
+    {
+        cl: {
+            type: Schema.Types.ObjectId,
+            ref: 'classes',
+        },
+        classname: {
+            type: String
+        }
+    }
+    ,
+    Questionbank:
+    {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Question'
+    }
+
 
 
 

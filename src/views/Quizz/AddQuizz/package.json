@@ -1,0 +1,7 @@
+{
+    "name": "AddQuizz",
+    "version": "0.0.0",
+    "private": true,
+    "main": "./AddQuizz.js"
+  }
+  

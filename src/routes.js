@@ -54,6 +54,7 @@ const Profiles = React.lazy(() => import('./views/Users/Profiles'));
 const SingleProfile = React.lazy(() => import('./views/Users/SingleProfile'));
 
 
+
 const EditAccount = React.lazy(() => import('./views/Users/EditAccount'));
 const SinglePost = React.lazy(() => import('./views/Forum/SinglePost'));
 
@@ -62,6 +63,15 @@ const SinglePost = React.lazy(() => import('./views/Forum/SinglePost'));
 const EditAvatar = React.lazy(() => import('./views/Users/EditAvatar'));
 const Join = React.lazy(() => import('./views/Forum/components/Join/Join'));
 const Chat = React.lazy(() => import('./views/Forum/components/Chat/Chat'));
+
+
+const Question = React.lazy(() => import('./views/Quizz/Question'));
+const ManageQuestions = React.lazy(() => import('./views/Quizz/ManageQuestions'));
+const DetailsQuestion = React.lazy(() => import('./views/Quizz/DetailsQuestion'));
+const AddQuizz = React.lazy(() => import('./views/Quizz/AddQuizz'));
+const QuizzAnswer = React.lazy(() => import('./views/Quizz/QuizzAnswer'));
+const TeacherAnswers = React.lazy(() => import('./views/Quizz/TeacherAnswers'));
+const DetailsTeacherAnswers = React.lazy(() => import('./views/Quizz/DetailsTeacherAnswers'));
 
 
 const routes = [
@@ -126,12 +136,22 @@ const routes = [
 
 
 
+
   { path: '/EditAccount', exact: true, name: 'Single Profile', component: EditAccount },
   { path: '/EditAvatar', exact: true, name: 'Edit avatar', component: EditAvatar },
   { path: '/SinglePost/:id', exact: true, name: 'Single Post', component: SinglePost },
   { path: '/Join', exact: true, name: 'Join Chat', component: Join },
   { path: '/Chat', exact: true, name: 'Chat Room', component: Chat },
 
+
+
+  { path: '/Question', exact: true, name: 'Question', component: Question },
+  { path: '/ManageQuestions', exact: true, name: 'ManageQuestions', component: ManageQuestions },
+  { path: '/DetailsQuestion/:id', exact: true, name: 'DetailsQuestion', component: DetailsQuestion },
+  { path: '/AddQuizz', exact: true, name: 'AddQuizz', component: AddQuizz },
+  { path: '/QuizzAnswer', exact: true, name: 'QuizzAnswer', component: QuizzAnswer },
+  { path: '/TeacherAnswers', exact: true, name: 'TeacherAnswers', component: TeacherAnswers },
+  { path: '/DetailsTeacherAnswers/:id', exact: true, name: 'DetailsTeacherAnswers', component: DetailsTeacherAnswers }
 
 ];
 

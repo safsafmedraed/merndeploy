@@ -39,6 +39,34 @@ export default {
         }
       ]
     },
+    {
+      name: 'Quizz Management',
+      icon: 'cui-people',
+      attributes: { disabled: false },
+      children: [
+        {
+          name: 'Add a question',
+          url: '/Question',
+          icon: 'icon-cursor',
+
+        },
+        {
+          name: 'All Questions',
+          url: '/ManageQuestions',
+          icon: 'icon-star'
+        },
+        {
+          name: 'Add a quizz',
+          url: '/AddQuizz',
+          icon: 'icon-star'
+        },
+        {
+          name : 'view Quizz scores',
+          url : 'TeacherAnswers',
+          icon : 'icon-star'
+        }
+      ]
+    }
 
   ],
 

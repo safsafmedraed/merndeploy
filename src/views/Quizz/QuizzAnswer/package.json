@@ -1,0 +1,7 @@
+{
+    "name": "QuizzAnswer",
+    "version": "0.0.0",
+    "private": true,
+    "main": "./QuizzAnswer.js"
+  }
+  

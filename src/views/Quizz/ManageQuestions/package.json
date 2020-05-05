@@ -1,0 +1,7 @@
+{
+    "name": "ManageQuestions",
+    "version": "0.0.0",
+    "private": true,
+    "main": "./ManageQuestions.js"
+  }
+  

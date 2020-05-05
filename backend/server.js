@@ -8,16 +8,10 @@ const passport = require('passport');
 const usersRouter = require('./routes/users');
 const postRouter = require('./routes/Post')
 const forgotpassword = require('./configuration/forgotpassword');
-
-
-
-
-
-const googleauth = require('./routes/googleauth');
-const chat = require('./routes/chat')
-
+const QuestionRouter = require('./routes/Questions');
+const QuizzRouter = require('./routes/Quizzs');
+const cl = require('./routes/Classes');
 const app = express();
-
 //passport config
 require('./passport')(passport);
 
@@ -29,7 +23,6 @@ app.use(
     credentials: true
   })
 );
-
 const port = process.env.port || 5000;
 const uri = process.env.ATLAS_URI;
 mongoose.connect(uri, { useNewUrlParser: true, useCreateIndex: true, useUnifiedTopology: true, useFindAndModify: false });
@@ -46,6 +39,7 @@ app.use(session({
   saveUninitialized: true,
   cookie: { secure: true }
 }));
+
 //passport middleware
 app.use(passport.initialize());
 app.use(passport.session());
@@ -72,8 +66,9 @@ app.use('/', googleauth);
 app.use('/api/auth', require('./routes/auth'));
 app.use('/claims', require('./routes/claims'));
 app.use('/profile', require('./routes/profile'));
-
-
+app.use('/questions', QuestionRouter);
+app.use('/quizz', QuizzRouter);
+app.use('/class', cl);
 app.listen(port, () => {
   console.log(`Server is running at port : ${port}`);
 })
