@@ -1,6 +1,6 @@
-import React, { useEffect, Fragment } from 'react';
+import React, { useEffect, Fragment, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Col, Button, CardGroup } from 'reactstrap';
+import { Col, Button, CardGroup, Form } from 'reactstrap';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { getCurrentProfile, deleteAccount } from '../../actions/profile';
@@ -16,16 +16,24 @@ const Users = ({ getCurrentProfile,
     getCurrentProfile();
   }, [getCurrentProfile])
 
+
+
+
   return loading && profile === null ? <Spinner /> : <Fragment>
 
     <CardGroup className="mb-4">
+
       <Col sm="15" md="5">
-        <Widget04 icon="icon-people" color="danger" header="Welcome" value="25">{user && user.username}</Widget04>
+        <Widget04 icon="icon-people" color="danger" header="Welcome" value="25"> {user && user.username}
+        </Widget04>
+
       </Col>
+
 
     </CardGroup>
     {profile !== null ? <Fragment><HasProfile />
       <Education education={profile.education} />
+
       <div>
         <Button block color="danger" className="btn-pill" onClick={() => deleteAccount()}>Delete My Account</Button>
       </div>

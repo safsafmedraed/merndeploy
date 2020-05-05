@@ -27,6 +27,8 @@ import { Login, Page404, Page500, Register, Register1, ForgotPassword } from './
 import { Colors, Typography } from './Theme';
 import Widgets from './Widgets';
 import AddPost from './Forum/ForumContainer';
+import SinglePost from './Forum';
+
 import CreateProfile from './CreateProfile/CreateProfile'
 import Reset from './pages/ForgotPassword/reset'
 import EditProfile from "./Users/EditProfile";
@@ -34,7 +36,15 @@ import AddEducation from "./Users/AddEducation";
 import Education from "./Users/Education";
 import Profiles from "./Users/Profiles";
 import SingleProfile from "./Users/SingleProfile";
+import EditAccount from "./Users/EditAccount";
+import Join from './Forum/components/Join/Join'
+import Chat from './Forum/components/Chat/Chat'
 export {
+  Chat,
+  Join,
+  EditAvatar,
+  SinglePost,
+  EditAccount,
   Profiles,
   SingleProfile,
   Education,

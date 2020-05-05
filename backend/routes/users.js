@@ -9,6 +9,27 @@ const auth = require('../middleware/auth');
 const bcrypt = require('bcryptjs');
 const gravatar = require('gravatar');
 const { check, validationResult } = require('express-validator');
+const cloudinary = require('cloudinary').v2;
+
+cloudinary.config({
+    cloud_name: 'dkep6n2mk',
+    api_key: '822133848497339',
+    api_secret: '-ej2WW3P7rWZtSYBZ3npmvQ9fKw'
+})
+const multer = require('multer')
+const storage = multer.diskStorage({
+    destination: function (req, file, cb) {
+        cb(null, 'uploads/')
+    },
+    filename: function (req, file, cb) {
+        console.log(file)
+        cb(null, file.originalname)
+    }
+})
+
+
+
+
 /**************GET USERS*************/
 router.route('/').get(auth, (req, res) => {
 
@@ -150,8 +171,82 @@ router.route('/login').post([
     }
 
 );
+//edit account 
+router.route('/update').post([
+    check('Firstname', 'First name is required')
+        .not()
+        .isEmpty(),
+    check('Lastname', 'Last name is required')
+        .not()
+        .isEmpty(),
+    check('username', 'username is required')
+        .not()
+        .isEmpty(),
+    check('phonenumber', 'phone number is required')
+        .isLength({
+            min: 8
+        }),
+    check('email', 'Please enter a valid email')
+        .isEmail(),
+], async (req, res) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+        return res.status(400).json({ errors: errors.array() });
+    }
+
+    const { username,
+        email,
+        //   password,
+        Firstname,
+        Lastname,
+        borndate,
+        bornplace,
+        phonenumber } = req.body;
+    //build profile object
+    const profileFields = {};
+    // profileFields = req._id
+    if (username) profileFields.username = username;
+    if (email) profileFields.email = email;
+    // if (password) profileFields.password = password;
+    if (Firstname) profileFields.Firstname = Firstname;
+    if (Lastname) profileFields.Lastname = Lastname;
+    //if (borndate) profileFields.borndate = borndate;
+    if (bornplace) profileFields.bornplace = bornplace;
+    if (phonenumber) profileFields.phonenumber = phonenumber;
+
+    try {
+
+        // See if user exists
+        let user = await User.findOne({ user: req.email });
+        if (user) {
+            user = await User.findOneAndUpdate({ user: req.email }, {
+                $set:
+                    profileFields,
+            },
+                { new: true });
+            return res.json(user);
+        }
 
 
+    } catch (err) {
+        console.error(err.message + "ddddddd");
+        res.status(500).send('Server error')
+    }
+}
+);
+//get current user account 
+router.route('/me').get(auth, async (req, res) => {
+    try {
+        const user = await User.findOne({ user: req.email })
+        if (!user) {
+            return res.status(400).json({ msg: 'there is no profile for this user ' });
+        }
+        res.json(user);
+    } catch (error) {
+        console.error(error.message);
+        res.status(500).send('server error')
+    }
+});
 
 //Logout 
 router.route('/logout').get((req, res) => {
@@ -161,6 +256,74 @@ router.route('/logout').get((req, res) => {
     console.log('Logged out');
 
 })
+//edit avatar
+router.route('/upload/:id').post(async (req, res) => {
+
+    const upload = multer({ storage }).single('avatar')
 
 
+    let avatar = req.body
+
+    try {
+        upload(req, res, async function (err) {
+            if (err) {
+                return res.send(err)
+            }
+
+            const path = req.file.path
+            console.log(path)
+            cloudinary.uploader.upload(
+                path,
+                async function (err, image) {
+
+                    if (err) return res.send(err)
+                    console.log('file uploaded to Cloudinary')
+                    // remove file from server
+                    const fs = require('fs')
+                    fs.unlinkSync(path)
+                    // return image details
+                    avatar = image.url
+                    console.log(avatar)
+                    const profileFields = {};
+
+                    if (avatar) profileFields.avatar = avatar;
+
+
+
+                    // See if user exists
+                    let user = await User.findOne({ _id: req.params.id });
+                    console.log(user)
+                    if (user) {
+
+                        user = await User.findOneAndUpdate({ _id: req.params.id }, {
+                            $set:
+                                profileFields,
+
+                        },
+                            { new: true });
+                        return res.json(user);
+
+
+                    }
+                })
+
+        }
+        )
+
+
+    } catch (err) {
+        console.error(err.message + "ddddddd");
+        res.status(500).send('Server error')
+    }
+
+})
+router.route('/getavatar/:id').get(async (req, res) => {
+    let user = await User.findOne({ _id: req.params.id });
+    res.json(user.avatar)
+})
+router.get('/userid/:id', (req, res) => {
+    User.findById(req.params.id)
+        .then(user => res.json(user))
+        .catch(err => res.status(400).json('Error: ' + err));
+})
 module.exports = router;

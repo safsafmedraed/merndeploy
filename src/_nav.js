@@ -11,7 +11,7 @@ export default {
         text: 'NEW',
       },
     },
-    {
+    /*{
       title: true,
       name: 'Features',
       wrapper: {
@@ -253,17 +253,20 @@ export default {
           icon: 'icon-star',
         },
       ],
-    },
+    },*/
     {
       name: 'Forum',
       icon: 'cui-people',
       attributes: { disabled: false },
       children: [
         {
-          name: 'Add New Post',
-          url: '/AddPost',
+          name: 'Join Qwizard community chat',
+          url: '/Join',
           icon: 'icon-cursor',
-
+          badge: {
+            variant: 'info',
+            text: 'Real time Messages',
+          },
         },
         {
           name: 'All Q & A',

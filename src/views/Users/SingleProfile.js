@@ -3,10 +3,10 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import Spinner from '../Theme/Spinner';
 import { getProfilebyID } from '../../actions/profile'
-import { Button } from 'reactstrap';
+import ProfileTop from './ProfileTop'
 import { Link } from 'react-router-dom';
-
-
+import { Button } from 'reactstrap';
+import ProfileAbout from './ProfileAbout'
 const SingleProfile = ({ match, getProfilebyID, profile: { profile, loading }, auth }) => {
     useEffect(() => {
         getProfilebyID(match.params.id);
@@ -15,16 +15,21 @@ const SingleProfile = ({ match, getProfilebyID, profile: { profile, loading }, a
         <Fragment>
             {profile === null || loading ? <Spinner /> : <Fragment>
 
-                <Link to='/Profiles'>
-                    <Button block color="dark" className="btn-pill">Back To all Profiles</Button>
-                </Link>
+
                 {auth.isAuthenticated && auth.loading === false
                     && auth.user._id === profile.user._id
                     && (<Link to='/EditProfile'>
                         <Button block color="dark" className="btn-pill">Edit My profile</Button>
                     </Link>)}
-            </Fragment>}
 
+                <div>
+                    <ProfileTop profile={profile} />
+                    <ProfileAbout profile={profile} />
+                </div>
+            </Fragment>}
+            <Link to='/Profiles'>
+                <Button block color="dark" className="btn-pill">Back To all Profiles</Button>
+            </Link>
         </Fragment >
     )
 }

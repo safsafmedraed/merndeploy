@@ -416,7 +416,7 @@ const mainChartOpts = {
     mode: 'index',
     position: 'nearest',
     callbacks: {
-      labelColor: function(tooltipItem, chart) {
+      labelColor: function (tooltipItem, chart) {
         return { backgroundColor: chart.data.datasets[tooltipItem.datasetIndex].borderColor }
       }
     }
@@ -482,7 +482,7 @@ class Dashboard extends Component {
   render() {
 
     return (
-      <div className="animated fadeIn">
+      /*<div className="animated fadeIn">
         <Row>
           <Col xs="12" sm="6" lg="3">
             <Card className="text-white bg-info">
@@ -1121,8 +1121,13 @@ class Dashboard extends Component {
             </Card>
           </Col>
         </Row>
-      </div>
-    );
+      </div> 
+   */ <div>
+        <h1 >
+          Surf in Qwizard Platform
+</h1>
+
+      </div>);
   }
 }
 

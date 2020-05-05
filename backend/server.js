@@ -6,10 +6,15 @@ const flash = require('connect-flash');
 const session = require('express-session');
 const passport = require('passport');
 const usersRouter = require('./routes/users');
-const subjectRouter = require('./routes/Subjects');
+const postRouter = require('./routes/Post')
 const forgotpassword = require('./configuration/forgotpassword');
+
 const cl = require('./routes/Classes');
 const presence = require('./routes/Presences');
+
+
+const googleauth = require('./routes/googleauth');
+const chat = require('./routes/chat')
 
 const app = express();
 
@@ -55,10 +60,11 @@ app.use((req, res, next) => {
   next();
 })
 
-
-app.use('/subjects', subjectRouter);
+app.use('/chat', chat)
+app.use('/post', postRouter)
 app.use('/users', usersRouter);
 app.use('/forgot', forgotpassword);
+app.use('/', googleauth);
 app.use('/api/auth', require('./routes/auth'));
 app.use('/profile', require('./routes/profile'));
 app.use('/class', cl);

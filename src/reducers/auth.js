@@ -17,13 +17,14 @@ export default function (state = initialState, action) {
                 loading: false,
                 user: payload,
                 isStudent: localStorage.getItem('user') === "Student",
-                isTeacher: localStorage.getItem('user') === "Teacher"
+                isTeacher: localStorage.getItem('user') === "Teacher",
 
             }
         case REGISTER_SUCCESS:
         case LOGIN_SUCCESS:
             localStorage.setItem('token', payload.token);
             localStorage.setItem('user', JSON.stringify(payload.user.role).slice(1, -1))
+            localStorage.setItem('user1', payload.user._id)
             return {
                 ...state,
                 ...payload,
