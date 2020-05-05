@@ -1,5 +1,5 @@
 
-import React, { Component, lazy, Suspense } from 'react';
+import React, { Component, lazy, Suspense, Fragment } from 'react';
 import { Bar, Line } from 'react-chartjs-2';
 import {
   Badge,
@@ -23,7 +23,8 @@ import {
 } from 'reactstrap';
 import { CustomTooltips } from '@coreui/coreui-plugin-chartjs-custom-tooltips';
 import { getStyle, hexToRgba } from '@coreui/coreui/dist/js/coreui-utilities'
-
+import { connect } from 'react-redux';
+import Axios from 'axios';
 const Widget03 = lazy(() => import('../../views/Widgets/Widget03'));
 
 const brandPrimary = getStyle('--primary')
@@ -453,9 +454,8 @@ const mainChartOpts = {
   },
 };
 
-import React, { Component, Fragment } from 'react';
-import { connect } from 'react-redux';
-import Axios from 'axios';
+
+
 
 
 class Dashboard extends Component {

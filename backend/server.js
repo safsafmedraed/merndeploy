@@ -9,8 +9,8 @@ const usersRouter = require('./routes/users');
 const postRouter = require('./routes/Post')
 const forgotpassword = require('./configuration/forgotpassword');
 
-const cl = require('./routes/Classes');
-const presence = require('./routes/Presences');
+
+
 
 
 const googleauth = require('./routes/googleauth');
@@ -64,7 +64,7 @@ app.use('/post', postRouter)
 
 
 
-app.use('/subjects', subjectRouter);
+
 
 app.use('/users', usersRouter);
 app.use('/forgot', forgotpassword);
@@ -72,8 +72,8 @@ app.use('/', googleauth);
 app.use('/api/auth', require('./routes/auth'));
 app.use('/claims', require('./routes/claims'));
 app.use('/profile', require('./routes/profile'));
-app.use('/class', cl);
-app.use('/presence', presence);
+
+
 app.listen(port, () => {
   console.log(`Server is running at port : ${port}`);
 })
