@@ -32,6 +32,9 @@ const userSchema = new Schema({
     role: {
         type: String
     },
+    avatar: {
+        type: String
+    },
     resetPasswordToken: {
         type: String,
         default: null
@@ -39,8 +42,13 @@ const userSchema = new Schema({
     resetPasswordExpires: {
         type: Date,
         default: null
+    },
+  Classes: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'classes'
     }
-
+  ]
 
 
 

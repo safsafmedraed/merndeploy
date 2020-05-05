@@ -20,7 +20,7 @@ router.route('/forgotPassword').post(function (req, res, next) {
             User.findOne({ email: req.body.email }, function (err, user) {
                 if (!user) {
                     console.log('No account with that email address exists.');
-                    return res.redirect('/forgot');
+                    return res.status(400).json('no account found');
                 }
 
                 user.resetPasswordToken = token;
@@ -48,8 +48,7 @@ router.route('/forgotPassword').post(function (req, res, next) {
                 text:
                     'You are receiving this because you (or someone else) have requested the reset of the password for your account.\n\n'
                     + 'Please click on the following link, or paste this into your browser to complete the process within one hour of receiving it:\n\n'
-
-                    + `http://localhost:5000/forgot/reset/${token}\n\n`
+                    + `http://localhost:3000/#/reset/${token}\n\n`
                     + 'If you did not request this, please ignore this email and your password will remain unchanged.. \n',
             };
 

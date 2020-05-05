@@ -1,9 +1,11 @@
-import { REGISTER_SUCCESS, REGISTER_FAIL, USER_LOADED, AUTH_ERROR, LOGIN_SUCCESS, LOGIN_FAIL, LOGOUT } from '../actions/types';
+import { REGISTER_SUCCESS, REGISTER_FAIL, USER_LOADED, AUTH_ERROR, LOGIN_SUCCESS, LOGIN_FAIL, LOGOUT, DELETE_ACCOUNT } from '../actions/types';
 const initialState = {
     token: localStorage.getItem('token'),
     isAuthenticated: null,
     loading: true,
-    user: null
+    user: null,
+    isStudent: null,
+    isTeacher: null
 }
 export default function (state = initialState, action) {
     const { type, payload } = action
@@ -13,12 +15,16 @@ export default function (state = initialState, action) {
                 ...state,
                 isAuthenticated: true,
                 loading: false,
-                user: payload
+                user: payload,
+                isStudent: localStorage.getItem('user') === "Student",
+                isTeacher: localStorage.getItem('user') === "Teacher"
+
             }
         case REGISTER_SUCCESS:
         case LOGIN_SUCCESS:
             localStorage.setItem('token', payload.token);
             localStorage.setItem('role', payload.user.role);
+            localStorage.setItem('user', JSON.stringify(payload.user.role).slice(1, -1))
             return {
                 ...state,
                 ...payload,
@@ -29,8 +35,11 @@ export default function (state = initialState, action) {
         case LOGIN_FAIL:
         case AUTH_ERROR:
         case LOGOUT:
+        case DELETE_ACCOUNT:
             localStorage.removeItem('token');
+
             localStorage.removeItem('role');
+            localStorage.removeItem('user')
             return {
                 ...state,
                 token: null,

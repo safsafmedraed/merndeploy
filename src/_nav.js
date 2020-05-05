@@ -5,9 +5,11 @@ else
   return '/UserClaims';
 }
 export default {
+
   items: [
     {
-      name: 'Dashboard',
+
+      name: 'Students Space',
       url: '/dashboard',
       icon: 'icon-speedometer',
       badge: {
@@ -245,6 +247,17 @@ export default {
           url: '/Register1',
           icon: 'icon-star',
         },
+
+        {
+          name: 'Forgot Password',
+          url: '/ForgotPassword',
+          icon: 'icon-star',
+        },
+        {
+          name: 'reset password',
+          url: '/Reset',
+          icon: 'icon-star',
+        },
       ],
     },
     {
@@ -256,6 +269,7 @@ export default {
           name: 'Add New Post',
           url: '/AddPost',
           icon: 'icon-cursor',
+
         },
         {
           name: 'All Q & A',
@@ -273,4 +287,5 @@ export default {
 
 
   ],
+
 };

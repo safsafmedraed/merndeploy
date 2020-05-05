@@ -8,6 +8,10 @@ const ProfileSchema = new Schema({
     location: {
         type: String
     },
+    institution: {
+        type: String,
+        required: true
+    },
     status: {
         type: String,
         required: true
@@ -16,19 +20,23 @@ const ProfileSchema = new Schema({
         {
             school: {
                 type: String,
-                required: true
+
+
             },
             degree: {
                 type: String,
-                required: true
+
+
             },
             fieldofstudy: {
                 type: String,
-                required: true
+
+
             },
             from: {
                 type: Date,
-                required: true
+
+
             },
             to: {
                 type: Date

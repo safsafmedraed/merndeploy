@@ -23,11 +23,26 @@ import Charts from './Charts';
 import Dashboard from './Dashboard';
 import { CoreUIIcons, Flags, FontAwesome, SimpleLineIcons } from './Icons';
 import { Alerts, Badges, Modals } from './Notifications';
-import { Login, Page404, Page500, Register, Register1 } from './Pages';
+import { Login, Page404, Page500, Register, Register1, ForgotPassword } from './Pages';
 import { Colors, Typography } from './Theme';
 import Widgets from './Widgets';
 import AddPost from './Forum/ForumContainer';
+import CreateProfile from './CreateProfile/CreateProfile'
+import Reset from './pages/ForgotPassword/reset'
+import EditProfile from "./Users/EditProfile";
+import AddEducation from "./Users/AddEducation";
+import Education from "./Users/Education";
+import Profiles from "./Users/Profiles";
+import SingleProfile from "./Users/SingleProfile";
 export {
+  Profiles,
+  SingleProfile,
+  Education,
+  AddEducation,
+  EditProfile,
+  Reset,
+  CreateProfile,
+  ForgotPassword,
   AddPost,
   Badges,
   Typography,
