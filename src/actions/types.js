@@ -19,6 +19,7 @@ export const RESET_ERROR = 'RESET_ERROR';
 export const RESET_OK = 'RESET_OK';
 export const DELETE_ACCOUNT = 'DELETE_ACCOUNT';
 
+
 export const POST_ERROR = 'POST_ERROR';
 export const GET_POSTS = 'GET_POSTS';
 export const GET_POST = 'GET_POST';
@@ -31,4 +32,18 @@ export const RATE = 'RATE';
 
 
 export const ADD_QUESTION = 'ADD_QUESTION';
+
+export const ADDCLASS_SUCCESS = 'ADDCLASS_SUCCESS';
+export const ADDCLASS_FAIL = 'ADDCLASS_FAIL';
+export const AFFECTSTUDENT_SUCCESS = 'AFFECTSTUDENT_SUCCESS';
+export const AFFECTSTUDENT_FAIL = 'AFFECTSTUDENT_FAIL';
+export const GETSTUDENTSNOTAFF = 'GETSTUDENTSNOTAFF';
+export const GET_CLASSES = 'GET_CLASSES';
+export const GETSC = 'GETSC';
+export const AFFECTTEACHER_SUCCESS = 'AFFECTTEACHER_SUCCESS'
+export const GETTEACHERS = 'GETTEACHERS'
+export const UPDATE_CLASS = 'UPDATE_CLASS'
+export const GETTC = 'GETTC'
+export const MP = 'MP'
+
 

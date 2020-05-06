@@ -1,13 +1,6 @@
-
 import React, { Fragment, useState, useEffect, Component } from 'react';
 import { NavLink, Link } from 'react-router-dom';
 import { Badge, UncontrolledDropdown, DropdownItem, DropdownMenu, DropdownToggle, Nav, NavItem } from 'reactstrap';
-
-
-
-
-
-
 import PropTypes from 'prop-types';
 
 import { AppAsideToggler, AppNavbarBrand, AppSidebarToggler } from '@coreui/react';
@@ -85,12 +78,10 @@ const DefaultHeader = ({ auth: { isAuthenticated, loading, user }, logout }) => 
 
         <Nav className="ml-auto" navbar>
 
-
           <NavItem className="d-md-down-none">
-            <NavLink to="#" className="nav-link"><h3><strong>Welcome <i>{user && user.username}</i></strong></h3></NavLink>
 
+            <NavLink to="#" className="nav-link"><h3><strong>Welcome <i>{user.username} </i></strong></h3></NavLink>
           </NavItem>
-          <UncontrolledDropdown nav direction="down" />
           {!loading && (<Fragment>{isAuthenticated ? authLinks : GuestLinks}</Fragment>)}
 
 

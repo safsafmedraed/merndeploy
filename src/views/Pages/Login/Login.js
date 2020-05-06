@@ -24,6 +24,8 @@ const Login = ({ login, isAuthenticated }) => {
   const onSubmit = async e => {
     e.preventDefault();
     login(email, password);
+
+
   }
 
 
@@ -31,6 +33,7 @@ const Login = ({ login, isAuthenticated }) => {
   if (isAuthenticated) {
     return <Redirect to="/dashboard" />
   }
+
 
   return (
     <Fragment>
@@ -68,6 +71,7 @@ const Login = ({ login, isAuthenticated }) => {
                         <Col xs="6" className="text-right">
                           <NavLink to="/ForgotPassword" color="link" className="px-0">Forgot password?</NavLink>
                         </Col>
+
                       </Row>
                     </Form>
                   </CardBody>

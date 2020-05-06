@@ -32,6 +32,7 @@ export default {
           name: 'Manage classes',
           url: '/Classes',
           icon: 'icon-star',
+
         },
         {
           name: 'Claims',

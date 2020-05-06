@@ -6,6 +6,7 @@ const flash = require('connect-flash');
 const session = require('express-session');
 const passport = require('passport');
 const usersRouter = require('./routes/users');
+
 const postRouter = require('./routes/Post')
 const forgotpassword = require('./configuration/forgotpassword');
 const QuestionRouter = require('./routes/Questions');
@@ -14,6 +15,14 @@ const cl = require('./routes/Classes');
 const app = express();
 const googleauth = require('./routes/googleauth');
 const chat = require('./routes/chat')
+
+const subjectRouter = require('./routes/Subjects');
+
+
+const presence = require('./routes/Presences');
+
+
+
 
 //passport config
 require('./passport')(passport);
@@ -34,6 +43,7 @@ connection.once('open', () => {
   console.log('***database works!!***');
 })
 
+
 app.use(express.json({ extended: false }));
 //express session
 app.use(session({
@@ -48,12 +58,13 @@ app.use(passport.initialize());
 app.use(passport.session());
 //connect flash
 app.use(flash());
-//global vars 
+//global vars
 app.use((req, res, next) => {
   res.locals.success_msg = req.flash('succes_msg');
   res.locals.error_msg = req.flash('error_msg');
   next();
 })
+
 
 
 app.use('/chat', chat)
@@ -72,6 +83,15 @@ app.use('/profile', require('./routes/profile'));
 app.use('/questions', QuestionRouter);
 app.use('/quizz', QuizzRouter);
 app.use('/class', cl);
+
+app.use('/subjects', subjectRouter);
+app.use('/users', usersRouter);
+app.use('/forgot', forgotpassword);
+app.use('/api/auth', require('./routes/auth'));
+app.use('/profile', require('./routes/profile'));
+app.use('/class', cl);
+app.use('/presence', presence);
+
 app.listen(port, () => {
   console.log(`Server is running at port : ${port}`);
 })

@@ -9,14 +9,17 @@ import store from './store';
 
 import { loadUser } from './actions/auth';
 import setAuthToken from './utlis/setAuthToken';
+
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
-import PrivateRoute from "./routing/PrivateRoute";
+
 
 import { connect } from 'react-redux';
 
 
+
+import PrivateRoute from "./routing/PrivateRoute";
 
 const loading = () => <div className="animated fadeIn pt-3 text-center">Loading...</div>;
 
@@ -43,7 +46,6 @@ const App = () => {
     store.dispatch(loadUser());
   }, []);
 
-
   return <Fragment>
     <Provider store={store}>
       <HashRouter>
@@ -67,5 +69,6 @@ const App = () => {
     </Provider>
   </Fragment>
 }
+
 
 export default App;

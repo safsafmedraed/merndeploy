@@ -46,6 +46,7 @@ class Register extends Component {
       isSignedUp: false
     };
   }
+
   onChangeEmail(e) {
     this.setState({
       email: e.target.value

@@ -38,7 +38,6 @@ export default function (state = initialState, action) {
         case LOGOUT:
         case DELETE_ACCOUNT:
             localStorage.removeItem('token');
-
             localStorage.removeItem('role');
             localStorage.removeItem('user')
             return {

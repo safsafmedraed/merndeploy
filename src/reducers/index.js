@@ -6,9 +6,12 @@ import forgot from './forgot';
 import claims from './claims'
 import profile from "./profile";
 import post from './post'
-
+import classe from './classe'
 export default combineReducers({
 
-    alert, auth, forgot, profile, post, claims
+    alert, auth, forgot, profile, post, claims, classe
 
 });
+
+
+

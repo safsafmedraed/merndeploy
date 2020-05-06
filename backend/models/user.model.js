@@ -4,15 +4,15 @@ const bcrypt = require('bcryptjs')
 const userSchema = new Schema({
     username: {
         type: String,
-
+        required: true,
     },
     email: {
         type: String,
-
+        required: true,
     },
     password: {
         type: String,
-
+        required: true,
     },
     phonenumber: {
         type: String,
@@ -29,6 +29,7 @@ const userSchema = new Schema({
     Lastname: {
         type: String,
     },
+
     role: {
         type: String
     },
@@ -43,6 +44,7 @@ const userSchema = new Schema({
         type: Date,
         default: null
     },
+
 
 
     google: {
@@ -106,13 +108,9 @@ const userSchema = new Schema({
     {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Question'
-    }
+    },
 
-
-
-
-
-});
+})
 
 userSchema.methods.hashPassword = function (password) {
     return bcrypt.hashSync(password, bcrypt.genSaltSync(10))

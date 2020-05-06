@@ -39,18 +39,29 @@ export default {
         }
       ]
     },
+
     {
+
       name: 'Quizz Management',
+
+      name: 'Classes',
+
       icon: 'cui-people',
       attributes: { disabled: false },
       children: [
         {
+
           name: 'Add a question',
           url: '/Question',
+
+          name: 'My Classes',
+          url: '/TeachC',
+
           icon: 'icon-cursor',
 
         },
         {
+
           name: 'All Questions',
           url: '/ManageQuestions',
           icon: 'icon-star'
@@ -61,9 +72,9 @@ export default {
           icon: 'icon-star'
         },
         {
-          name : 'view Quizz scores',
-          url : 'TeacherAnswers',
-          icon : 'icon-star'
+          name: 'view Quizz scores',
+          url: 'TeacherAnswers',
+          icon: 'icon-star'
         }
       ]
     },
@@ -72,7 +83,10 @@ export default {
       url: '/Userclaims',
       icon: 'cui-envelope-open',
     }
+  ]
 
-  ],
+
+
+
 
 };
