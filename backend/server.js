@@ -12,6 +12,9 @@ const QuestionRouter = require('./routes/Questions');
 const QuizzRouter = require('./routes/Quizzs');
 const cl = require('./routes/Classes');
 const app = express();
+const googleauth = require('./routes/googleauth');
+const chat = require('./routes/chat')
+
 //passport config
 require('./passport')(passport);
 
