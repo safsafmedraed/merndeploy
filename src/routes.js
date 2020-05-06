@@ -1,6 +1,10 @@
 import React from 'react';
+
 import { List } from "@material-ui/core";
 import PostUI from './views/Forum/PostUI';
+
+
+import { List } from "@material-ui/core";
 
 
 const Breadcrumbs = React.lazy(() => import('./views/Base/Breadcrumbs'));
@@ -39,6 +43,7 @@ const Widgets = React.lazy(() => import('./views/Widgets/Widgets'));
 const Users = React.lazy(() => import('./views/Users/Users'));
 const User = React.lazy(() => import('./views/Users/User'));
 const Forum = React.lazy(() => import('./views/Forum/Forum'));
+
 const Claims = React.lazy(() => import('./views/Claims/Claims'));
 const Claim = React.lazy(() => import('./views/Claims/Claim'));
 const AddPost = React.lazy(() => import('./views/Forum/ForumContainer/AddPost'));
@@ -46,12 +51,16 @@ const UserClaims = React.lazy(() => import('./views/Claims/UserClaims'));
 const UserClaim = React.lazy(() => import('./views/Claims/UserClaim'));
 const AddClaim = React.lazy(() => import('./views/Claims/AddClaim'));
 const Stat = React.lazy(() => import('./views/Claims/Stat'));
+
+const AddPost = React.lazy(() => import('./views/Forum/ForumContainer/AddPost'));
+
 const CreateProfile = React.lazy(() => import('./views/CreateProfile/CreateProfile'));
 const EditProfile = React.lazy(() => import('./views/Users/EditProfile'));
 const AddEducation = React.lazy(() => import('./views/Users/AddEducation'));
 const Education = React.lazy(() => import('./views/Users/Education'));
 const Profiles = React.lazy(() => import('./views/Users/Profiles'));
 const SingleProfile = React.lazy(() => import('./views/Users/SingleProfile'));
+
 
 
 
@@ -72,6 +81,15 @@ const AddQuizz = React.lazy(() => import('./views/Quizz/AddQuizz'));
 const QuizzAnswer = React.lazy(() => import('./views/Quizz/QuizzAnswer'));
 const TeacherAnswers = React.lazy(() => import('./views/Quizz/TeacherAnswers'));
 const DetailsTeacherAnswers = React.lazy(() => import('./views/Quizz/DetailsTeacherAnswers'));
+
+
+const Classes = React.lazy(() => import('./views/Classes/Classes'));
+const Addcl = React.lazy(() => import('./views/Classes/Ajout'));
+const affcl = React.lazy(() => import('./views/Classes/Affiche'));
+const affSC = React.lazy(() => import('./views/Classes/AffectSC'));
+const affST = React.lazy(() => import('./views/Classes/AffectTC'));
+const teachercl = React.lazy(() => import('./views/Classes/Teacherclasses'));
+const mark = React.lazy(() => import('./views/Classes/MarquerP'));
 
 
 const routes = [
@@ -119,12 +137,14 @@ const routes = [
   { path: '/users/:id', exact: true, name: 'User Details', component: User },
   { path: '/Forum', exact: true, name: 'Forum', component: Forum },
   { path: '/Addpost', exact: true, name: 'Add new Post', component: AddPost },
+
   { path: '/Claims', exact: true, name: 'Claims', component: Claims },
   { path: '/Claims/Claim/:id', exact: true, name: 'Claim', component: Claim },
   { path: '/UserClaims', exact: true, name: 'Claims', component: UserClaims },
   { path: '/UserClaims/Claim/:id', exact: true, name: 'Claim', component: UserClaim },
   { path: '/UserClaims/AddClaim', exact: true, name: 'Add Claim', component: AddClaim },
   { path: '/Claims/stats', exact: true, name: 'Stats', component: Stat },
+
   { path: '/CreateProfile', exact: true, name: 'Create Profile', component: CreateProfile },
   { path: '/EditProfile', exact: true, name: 'Edit Profile', component: EditProfile },
   { path: '/Education', exact: true, name: 'Add Education', component: Education },
@@ -151,7 +171,16 @@ const routes = [
   { path: '/AddQuizz', exact: true, name: 'AddQuizz', component: AddQuizz },
   { path: '/QuizzAnswer', exact: true, name: 'QuizzAnswer', component: QuizzAnswer },
   { path: '/TeacherAnswers', exact: true, name: 'TeacherAnswers', component: TeacherAnswers },
-  { path: '/DetailsTeacherAnswers/:id', exact: true, name: 'DetailsTeacherAnswers', component: DetailsTeacherAnswers }
+  { path: '/DetailsTeacherAnswers/:id', exact: true, name: 'DetailsTeacherAnswers', component: DetailsTeacherAnswers },
+
+  { path: '/Addclass', exact: true, name: 'Add Class', component: Addcl },
+  { path: '/Listclasses', exact: true, name: 'List Classes', component: affcl },
+  { path: '/Classes', exact: true, name: 'Manage Classes', component: Classes },
+  { path: '/AffectSC', exact: true, name: 'Affectsc', component: affSC },
+  { path: '/AffectST', exact: true, name: 'Affecttc', component: affST },
+  { path: '/TeachC', exact: true, name: 'Aff', component: teachercl },
+  { path: '/Markp', exact: true, name: 'Marquer', component: mark }
+
 
 ];
 

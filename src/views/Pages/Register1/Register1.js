@@ -1,4 +1,3 @@
-
 import React, { useState, Fragment } from "react";
 import { Button, Card, CardBody, CardFooter, Col, Container, Form, Input, InputGroup, InputGroupAddon, InputGroupText, Row, Label } from 'reactstrap';
 import { register } from '../../../actions/auth';

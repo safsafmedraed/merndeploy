@@ -266,6 +266,7 @@ export default {
       attributes: { disabled: false },
       children: [
         {
+
           name: 'Join Qwizard community chat',
           url: '/Join',
           icon: 'icon-cursor',
@@ -273,6 +274,7 @@ export default {
             variant: 'info',
             text: 'Real time Messages',
           },
+
         },
         {
           name: 'All Q & A',

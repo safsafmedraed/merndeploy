@@ -93,6 +93,7 @@ export const createProfile = (formData, history, edit = false) => async dispatch
         });
     }
 }
+
 //edit account
 export const editaccount = (formData, history, edit = false) => async dispatch => {
 
@@ -145,6 +146,7 @@ export const getCurrentAccount = () => async dispatch => {
 
     }
 }
+
 //ADD Education 
 export const addEducation = (formData, history) => async dispatch => {
     try {
@@ -179,6 +181,7 @@ export const addEducation = (formData, history) => async dispatch => {
 }
 //Delete Education
 export const deleteEducation = id => async dispatch => {
+
     if (window.confirm('Are you sure? this can not be undone')) {
         try {
             const res = await axios.delete(`http://localhost:5000/profile/education/${id}`);
@@ -194,27 +197,42 @@ export const deleteEducation = id => async dispatch => {
 
             });
         }
-    }
-}
-//Delete Account & profile
-export const deleteAccount = () => async dispatch => {
-    if (window.confirm('Are you sure? this can not be undone')) {
+
         try {
-            await axios.delete(`http://localhost:5000/profile/`);
+            const res = await axios.delete(`http://localhost:5000/profile/education/${id}`);
             dispatch({
-                type: CLEAR_PROFILE,
+                type: UPDATE_PROFILE,
+                payload: res.data
             })
-            dispatch({
-                type: DELETE_ACCOUNT,
-            })
-            dispatch(setAlert('Your Acccount has been permanantly deleted Removed'));
+            dispatch(setAlert('Education Removed', 'warning'));
         } catch (error) {
             dispatch({
                 type: PROFILE_ERROR,
                 payload: { msg: error.response.statusText, status: error.response.status }
 
             });
+
         }
     }
+    //Delete Account & profile
+    export const deleteAccount = () => async dispatch => {
+        if (window.confirm('Are you sure? this can not be undone')) {
+            try {
+                await axios.delete(`http://localhost:5000/profile/`);
+                dispatch({
+                    type: CLEAR_PROFILE,
+                })
+                dispatch({
+                    type: DELETE_ACCOUNT,
+                })
+                dispatch(setAlert('Your Acccount has been permanantly deleted Removed'));
+            } catch (error) {
+                dispatch({
+                    type: PROFILE_ERROR,
+                    payload: { msg: error.response.statusText, status: error.response.status }
 
+                });
+            }
+        }
+    }
 }

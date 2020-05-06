@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="ed1fe0c3-c8cb-44bd-a64b-e3ff19c3a860" name="Default Changelist" comment="" />
+    <list default="true" id="ed1fe0c3-c8cb-44bd-a64b-e3ff19c3a860" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+    </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -9,6 +11,52 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="Git.Settings">
+    <excluded-from-favorite>
+      <branch-storage>
+        <map>
+          <entry type="LOCAL">
+            <value>
+              <list>
+                <branch-info repo="$PROJECT_DIR$" source="master" />
+              </list>
+            </value>
+          </entry>
+          <entry type="REMOTE">
+            <value>
+              <list>
+                <branch-info repo="$PROJECT_DIR$" source="origin/master" />
+              </list>
+            </value>
+          </entry>
+        </map>
+      </branch-storage>
+    </excluded-from-favorite>
+    <favorite-branches>
+      <branch-storage>
+        <map>
+          <entry type="LOCAL">
+            <value>
+              <list>
+                <branch-info repo="$PROJECT_DIR$" source="medd" />
+              </list>
+            </value>
+          </entry>
+          <entry type="REMOTE">
+            <value>
+              <list>
+                <branch-info repo="$PROJECT_DIR$" source="origin/med" />
+              </list>
+            </value>
+          </entry>
+        </map>
+      </branch-storage>
+    </favorite-branches>
+    <option name="PUSH_TAGS">
+      <GitPushTagMode>
+        <option name="argument" value="--follow-tags" />
+        <option name="title" value="Current Branch" />
+      </GitPushTagMode>
+    </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="ProjectId" id="1Yiq6w0yvWXFyWQZFi0ZTCswRKJ" />
@@ -16,6 +64,7 @@
   <component name="PropertiesComponent">
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.path.for.package.eslint" value="project" />
     <property name="node.js.selected.package.eslint" value="(autodetect)" />
@@ -48,6 +97,15 @@
       <workItem from="1583586298461" duration="145000" />
       <workItem from="1583597805292" duration="132000" />
       <workItem from="1583677390072" duration="242000" />
+      <workItem from="1586821481930" duration="315000" />
+      <workItem from="1586821914785" duration="1149000" />
+      <workItem from="1586861876330" duration="2560000" />
+      <workItem from="1586864642364" duration="1721000" />
+      <workItem from="1586866868698" duration="167000" />
+      <workItem from="1586867213695" duration="1127000" />
+      <workItem from="1586903064296" duration="708000" />
+      <workItem from="1588713933051" duration="1007000" />
+      <workItem from="1588714970561" duration="75000" />
     </task>
     <task id="LOCAL-00001" summary="first commit backend Ready!">
       <created>1583435846979</created>
@@ -84,7 +142,56 @@
       <option name="project" value="LOCAL" />
       <updated>1583677469873</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="aaaaaa">
+      <created>1586821667427</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1586821667427</updated>
+    </task>
+    <task id="LOCAL-00007" summary="aaaaaa">
+      <created>1586821754127</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1586821754127</updated>
+    </task>
+    <task id="LOCAL-00008" summary="backend classes ,presence">
+      <created>1586821992353</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1586821992353</updated>
+    </task>
+    <task id="LOCAL-00009" summary="backend classes ,presence">
+      <created>1586823018670</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1586823018670</updated>
+    </task>
+    <task id="LOCAL-00010" summary="backend classes ,presence">
+      <created>1586823049077</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1586823049077</updated>
+    </task>
+    <task id="LOCAL-00011" summary="backend classes ,presence">
+      <created>1586903643093</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1586903643093</updated>
+    </task>
+    <task id="LOCAL-00012" summary="v.final -1">
+      <created>1588714330411</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1588714330412</updated>
+    </task>
+    <option name="localTasksCounter" value="13" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -109,6 +216,9 @@
     <MESSAGE value="user login logout register version 0.1" />
     <MESSAGE value="jwt token login and register" />
     <MESSAGE value="forgot password via mail and reset password" />
-    <option name="LAST_COMMIT_MESSAGE" value="forgot password via mail and reset password" />
+    <MESSAGE value="aaaaaa" />
+    <MESSAGE value="backend classes ,presence" />
+    <MESSAGE value="v.final -1" />
+    <option name="LAST_COMMIT_MESSAGE" value="v.final -1" />
   </component>
 </project>

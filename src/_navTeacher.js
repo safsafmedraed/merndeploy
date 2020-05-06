@@ -24,6 +24,7 @@ export default {
       attributes: { disabled: false },
       children: [
         {
+
           name: 'Join Qwizard community chat',
           url: '/Join',
           icon: 'icon-cursor',
@@ -31,6 +32,12 @@ export default {
             variant: 'info',
             text: 'Real time Messages',
           },
+
+          name: 'Add New Post',
+          url: '/AddPost',
+          icon: 'icon-cursor',
+
+
         },
         {
           name: 'All Q & A',
@@ -40,17 +47,27 @@ export default {
       ]
     },
     {
+
       name: 'Quizz Management',
+
+      name: 'Classes',
+
       icon: 'cui-people',
       attributes: { disabled: false },
       children: [
         {
+
           name: 'Add a question',
           url: '/Question',
+
+          name: 'My Classes',
+          url: '/TeachC',
+
           icon: 'icon-cursor',
 
         },
         {
+
           name: 'All Questions',
           url: '/ManageQuestions',
           icon: 'icon-star'
@@ -61,13 +78,21 @@ export default {
           icon: 'icon-star'
         },
         {
-          name : 'view Quizz scores',
-          url : 'TeacherAnswers',
-          icon : 'icon-star'
+          name: 'view Quizz scores',
+          url: 'TeacherAnswers',
+          icon: 'icon-star'
         }
       ]
-    }
+    }, {
 
-  ],
+      name: 'Mark presence',
+      url: '/Markp',
+      icon: 'icon-star'
+    }
+  ]
+
+
+
+
 
 };
