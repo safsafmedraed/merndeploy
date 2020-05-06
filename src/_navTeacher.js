@@ -66,6 +66,11 @@ export default {
           icon : 'icon-star'
         }
       ]
+    },
+    {
+      name: 'Claims',
+      url: '/Userclaims',
+      icon: 'cui-envelope-open',
     }
 
   ],

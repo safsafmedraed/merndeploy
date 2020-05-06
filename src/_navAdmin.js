@@ -36,7 +36,7 @@ export default {
         {
           name: 'Claims',
           url: '/claims',
-          icon: 'icon-star',
+          icon: 'cui-envelope-open',
         }
       ]
     },
