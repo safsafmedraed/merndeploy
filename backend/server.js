@@ -17,11 +17,11 @@ const googleauth = require('./routes/googleauth');
 const chat = require('./routes/chat')
 
 const subjectRouter = require('./routes/Subjects');
-const forgotpassword = require('./configuration/forgotpassword');
-const cl = require('./routes/Classes');
+
+
 const presence = require('./routes/Presences');
 
-const app = express();
+
 
 
 //passport config

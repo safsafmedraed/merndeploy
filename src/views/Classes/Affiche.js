@@ -1,35 +1,35 @@
-import {connect} from "react-redux";
-import React, {Fragment, useEffect, useState} from 'react';
-import {Button, Card, CardBody, CardHeader, Col, Form, FormGroup, Input, Label, Table} from "reactstrap";
+import { connect } from "react-redux";
+import React, { Fragment, useEffect, useState } from 'react';
+import { Button, Card, CardBody, CardHeader, Col, Form, FormGroup, Input, Label, Table } from "reactstrap";
 import RadioGroup from "@material-ui/core/RadioGroup";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Radio from "@material-ui/core/Radio";
-import { GETALLCLASSES ,deletestudent ,getSC} from '../../actions/classe'
-import PropTypes, {} from "prop-types";
+import { GETALLCLASSES, deletestudent, getSC } from '../../actions/classe'
+import PropTypes from "prop-types";
 import { MDBDataTable } from 'mdbreact';
 
 
 
 
-const Affiche =({getSC,GETALLCLASSES ,deletestudent ,history  ,classe:{ classes,loading, spc }})=>{
+const Affiche = ({ getSC, GETALLCLASSES, deletestudent, history, classe: { classes, loading, spc } }) => {
   useEffect(() => {
-    GETALLCLASSES();getSC();
+    GETALLCLASSES(); getSC();
 
-  }, [GETALLCLASSES,getSC])
+  }, [GETALLCLASSES, getSC])
 
   const [formData, setFormData] = useState({
     classid: '',
   })
 
-  const  {classid}  = formData;
+  const { classid } = formData;
   const onchange = e => setFormData({ ...formData, [e.target.name]: e.target.value });
 
 
 
-  const onsubmit=e =>{
+  const onsubmit = e => {
     e.preventDefault();
-    console.log(classid+"////")
-     getSC(classid)
+    console.log(classid + "////")
+    getSC(classid)
 
 
   }
@@ -68,64 +68,64 @@ const Affiche =({getSC,GETALLCLASSES ,deletestudent ,history  ,classe:{ classes,
 
     ],
 
-    rows: spc.Users  && spc.Users.map(detail=>{
+    rows: spc.Users && spc.Users.map(detail => {
 
-      return{
-        FirstName:detail.name,
-        LastName:detail.lastname,
-        Email:detail.email,
-        PhoneNumber:detail.phonenumber,
-        Action:<Button size="sm" color="danger"   onClick={() =>{if(window.confirm('Are you sure you want to delete this Student?')) deletestudent(detail.cl,detail._id,history)}}><i className="fa fa-dot-circle-o"></i> Delete</Button>
+      return {
+        FirstName: detail.name,
+        LastName: detail.lastname,
+        Email: detail.email,
+        PhoneNumber: detail.phonenumber,
+        Action: <Button size="sm" color="danger" onClick={() => { if (window.confirm('Are you sure you want to delete this Student?')) deletestudent(detail.cl, detail._id, history) }}><i className="fa fa-dot-circle-o"></i> Delete</Button>
 
 
       }
 
 
-  })
+    })
 
-}
-
-
-    return(
-      <Fragment>
-
-        <Col xs="20" lg="30">
-          <Card>
-
-            <Form  className="form-horizontal"  >
-              <FormGroup row>
-                <Col md="3">
-                  <Label htmlFor="multiple-select">Select Class</Label>
-                </Col>
-                <Col md="9" xs="12">
-                  <RadioGroup  name="customized-radios" onClick={ onsubmit } onChange={e=>onchange(e)  }   >
-                    {classes.length >0 ?(
-                      classes.map(classe =>{
-
-                        return( <FormControlLabel
-                            key={classe._id}
-                            value={classe._id}
-                            control={<Radio />}
-                            label={classe.name}
-
-                            name="classid"
-                          />
+  }
 
 
-                        )
-                      })): <h4>No classes Found</h4>
-                    }
+  return (
+    <Fragment>
 
-                  </RadioGroup>
-                </Col>
-              </FormGroup>
-            </Form>
-            <CardHeader>
-              <i className="fa fa-align-justify"></i> List Of Students
+      <Col xs="20" lg="30">
+        <Card>
+
+          <Form className="form-horizontal"  >
+            <FormGroup row>
+              <Col md="3">
+                <Label htmlFor="multiple-select">Select Class</Label>
+              </Col>
+              <Col md="9" xs="12">
+                <RadioGroup name="customized-radios" onClick={onsubmit} onChange={e => onchange(e)}   >
+                  {classes.length > 0 ? (
+                    classes.map(classe => {
+
+                      return (<FormControlLabel
+                        key={classe._id}
+                        value={classe._id}
+                        control={<Radio />}
+                        label={classe.name}
+
+                        name="classid"
+                      />
+
+
+                      )
+                    })) : <h4>No classes Found</h4>
+                  }
+
+                </RadioGroup>
+              </Col>
+            </FormGroup>
+          </Form>
+          <CardHeader>
+            <i className="fa fa-align-justify"></i> List Of Students
             </CardHeader>
-            <CardBody>
+          <CardBody>
 
-             {/* <Table responsive striped >
+            {/* <Table responsive striped >
                 <thead>
                 <tr>
                   <th>FirstName</th>
@@ -160,34 +160,34 @@ const Affiche =({getSC,GETALLCLASSES ,deletestudent ,history  ,classe:{ classes,
                 </tbody>
               </Table>*/}
 
-              <MDBDataTable
-                striped
-                bordered
-                small
-                data={data}
-              />
+            <MDBDataTable
+              striped
+              bordered
+              small
+              data={data}
+            />
 
 
-            </CardBody>
+          </CardBody>
 
-          </Card>
-        </Col>
-      </Fragment>
-    )
-  }
+        </Card>
+      </Col>
+    </Fragment>
+  )
+}
 
 Affiche.propTypes = {
   GETALLCLASSES: PropTypes.func.isRequired,
   getSC: PropTypes.func.isRequired,
-  deletestudent:PropTypes.func.isRequired,
+  deletestudent: PropTypes.func.isRequired,
   classe: PropTypes.object.isRequired,
 }
-  const  mapStateToProps = state => ({
-    classe: state.classe,
+const mapStateToProps = state => ({
+  classe: state.classe,
 
-  })
+})
 
-export default connect(mapStateToProps, {getSC,GETALLCLASSES,deletestudent })(Affiche);
+export default connect(mapStateToProps, { getSC, GETALLCLASSES, deletestudent })(Affiche);
 
 
 

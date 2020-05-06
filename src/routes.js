@@ -4,8 +4,6 @@ import { List } from "@material-ui/core";
 import PostUI from './views/Forum/PostUI';
 
 
-import { List } from "@material-ui/core";
-
 
 const Breadcrumbs = React.lazy(() => import('./views/Base/Breadcrumbs'));
 const Cards = React.lazy(() => import('./views/Base/Cards'));
@@ -52,7 +50,7 @@ const UserClaim = React.lazy(() => import('./views/Claims/UserClaim'));
 const AddClaim = React.lazy(() => import('./views/Claims/AddClaim'));
 const Stat = React.lazy(() => import('./views/Claims/Stat'));
 
-const AddPost = React.lazy(() => import('./views/Forum/ForumContainer/AddPost'));
+
 
 const CreateProfile = React.lazy(() => import('./views/CreateProfile/CreateProfile'));
 const EditProfile = React.lazy(() => import('./views/Users/EditProfile'));

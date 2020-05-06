@@ -214,25 +214,25 @@ export const deleteEducation = id => async dispatch => {
 
         }
     }
-    //Delete Account & profile
-    export const deleteAccount = () => async dispatch => {
-        if (window.confirm('Are you sure? this can not be undone')) {
-            try {
-                await axios.delete(`http://localhost:5000/profile/`);
-                dispatch({
-                    type: CLEAR_PROFILE,
-                })
-                dispatch({
-                    type: DELETE_ACCOUNT,
-                })
-                dispatch(setAlert('Your Acccount has been permanantly deleted Removed'));
-            } catch (error) {
-                dispatch({
-                    type: PROFILE_ERROR,
-                    payload: { msg: error.response.statusText, status: error.response.status }
+}  //Delete Account & profile
+export const deleteAccount = () => async dispatch => {
+    if (window.confirm('Are you sure? this can not be undone')) {
+        try {
+            await axios.delete(`http://localhost:5000/profile/`);
+            dispatch({
+                type: CLEAR_PROFILE,
+            })
+            dispatch({
+                type: DELETE_ACCOUNT,
+            })
+            dispatch(setAlert('Your Acccount has been permanantly deleted Removed'));
+        } catch (error) {
+            dispatch({
+                type: PROFILE_ERROR,
+                payload: { msg: error.response.statusText, status: error.response.status }
 
-                });
-            }
+            });
         }
     }
 }
+

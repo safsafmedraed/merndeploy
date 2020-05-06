@@ -24,7 +24,6 @@ export default {
       attributes: { disabled: false },
       children: [
         {
-
           name: 'Join Qwizard community chat',
           url: '/Join',
           icon: 'icon-cursor',
@@ -32,12 +31,6 @@ export default {
             variant: 'info',
             text: 'Real time Messages',
           },
-
-          name: 'Add New Post',
-          url: '/AddPost',
-          icon: 'icon-cursor',
-
-
         },
         {
           name: 'All Q & A',
@@ -46,6 +39,7 @@ export default {
         }
       ]
     },
+
     {
 
       name: 'Quizz Management',

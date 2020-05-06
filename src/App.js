@@ -13,7 +13,7 @@ import setAuthToken from './utlis/setAuthToken';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
-import PrivateRoute from "./routing/PrivateRoute";
+
 
 import { connect } from 'react-redux';
 

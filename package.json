@@ -39,6 +39,7 @@
     "font-awesome": "^4.7.0",
     "history": "^4.10.1",
     "material-ui-dropzone": "^2.5.0",
+    "mdbreact": "^4.26.0",
     "nivo": "^0.31.0",
     "node-sass": "^4.13.1",
     "passport": "^0.4.1",
