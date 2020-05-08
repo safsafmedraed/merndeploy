@@ -2,6 +2,7 @@ const express = require('express')
 const router = express.Router()
 let Question = require('../models/Questions');
 let User = require('../models/user.model');
+let Lesson = require('../models/Lesson');
 // get all quiz questions
 router.get('/questions', (req, res) => {
     Question.find()
@@ -61,6 +62,5 @@ router.delete('/questions/:id', (req, res) => {
 router.get('/', (req, res) => {
     res.send('H3ll0 W0RlD')
 })
-
 
 module.exports = router

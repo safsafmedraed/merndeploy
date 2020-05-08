@@ -15,12 +15,9 @@ const cl = require('./routes/Classes');
 const app = express();
 const googleauth = require('./routes/googleauth');
 const chat = require('./routes/chat')
-
 const subjectRouter = require('./routes/Subjects');
-
-
 const presence = require('./routes/Presences');
-
+const Lesson = require('./routes/Lesson');
 
 
 
@@ -83,7 +80,7 @@ app.use('/profile', require('./routes/profile'));
 app.use('/questions', QuestionRouter);
 app.use('/quizz', QuizzRouter);
 app.use('/class', cl);
-
+app.use('/Lesson', Lesson);
 app.use('/subjects', subjectRouter);
 app.use('/users', usersRouter);
 app.use('/forgot', forgotpassword);
