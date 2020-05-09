@@ -16,6 +16,8 @@ class Question extends Component {
         this.handlechange= this.handlechange.bind(this);
         this.onchangelesson= this.onchangelesson.bind(this);
         this.onchangelesson1= this.onchangelesson1.bind(this);
+        this.onchangemodule= this.onchangemodule.bind(this);
+        this.onchangemodule1= this.onchangemodule1.bind(this);
         this.Onsubmit = this.Onsubmit.bind(this);
         this.onsubmit1 = this.onsubmit1.bind(this);
         this.state = {
@@ -32,9 +34,15 @@ class Question extends Component {
          choicetype : 'multiple',
          Module : [],
          Lesson : [],
+         Lessons: [],
          cl : [],
          l1 : '',
-         l2 : ''
+         l2 : '',
+         sl : [],
+         m1 : '',
+         m2: '',
+         Le : [],
+         La : []
         };
       }
       onchangelesson(e){
@@ -51,6 +59,59 @@ class Question extends Component {
           this.setState({
             description : e.target.value
           });
+      }
+      onchangemodule(e){
+        this.setState({
+          m1 : e.target.value
+        })
+        const mm = this.state.m1
+      this.setState({
+        Lesson : []
+      })
+      
+          axios.get(`http://localhost:5000/Module/Module/${mm}`)
+          .then(res=> {
+           
+            this.setState({Le: res.data.Lessons })
+            if(this.state.Le!==undefined){
+            this.state.Le.forEach(element => {
+              console.log(element)
+              
+              axios.get(`http://localhost:5000/Lesson/Lesson/${element}`)
+              .then( res=> {
+                this.setState({Lesson: [...this.state.Lessons,res.data]})
+               console.log(this.state.Lesson)
+              })  
+            })
+          }
+          })
+      }
+      onchangemodule1(e)
+      {
+        this.setState({
+          m2: e.target.value
+        })
+        const mm = this.state.m2
+      this.setState({
+        Lessons : []
+      })
+      
+          axios.get(`http://localhost:5000/Module/Module/${mm}`)
+          .then(res=> {
+           
+            this.setState({La: res.data.Lessons })
+            if(this.state.La!==undefined){
+            this.state.La.forEach(element => {
+              console.log(element)
+              
+              axios.get(`http://localhost:5000/Lesson/Lesson/${element}`)
+              .then( res=> {
+                this.setState({Lessons: [...this.state.Lessons,res.data]})
+               console.log(this.state.Lessons)
+              })  
+            })
+          }
+          })
       }
       Onchangedesc1(e){
         this.setState({
@@ -94,55 +155,31 @@ class Question extends Component {
               points1 : e.target.value
           });
       }
-      getLesson()
-      {
-        const id = localStorage.getItem('user1');
-        //console.log(id)
-        axios.get(`http://localhost:5000/users/userid/${id}`)
-        .then(res=>{
-           
-          this.setState({
-            Module: res.data.Modules
-          })
+      getModule()
+    {
+      const id = localStorage.getItem('user1');
+      console.log(id)
+      axios.get(`http://localhost:5000/users/userid/${id}`)
+      .then(res=>{
+        this.setState({
+          Module: res.data.Modules
+        })
+        
+        this.state.Module.forEach(element => {
          
-          if(this.state.Module.length===1 )
-          axios.get(`http://localhost:5000/Module/Module/${this.state.Module}`)
-          .then(res=> {
-         
-            this.setState({cl:res.data.Lessons})
-           
-            this.state.cl.forEach(el=> {
-              axios.get(`http://localhost:5000/Lesson/Lesson/${el}`)
-              .then(res=> {
-                this.setState({Lesson: [...this.state.Lesson,res.data]})
-                console.log("my lessons :"+this.state.Lesson)
-              })
-            })
-          })
-          else if(this.state.Module.length>1)
-          this.state.Modules.forEach(element => {
-           
-            axios.get(`http://localhost:5000/Module/Module/${element}`)
-              .then(res=> {
-                this.setState({cl:[...this.state.cl,res.data.Lessons]})
-                this.state.cl.forEach(el=> {
-                  axios.get(`http://localhost:5000/Lesson/Lesson/${el}`)
-                  .then(res=> {
-                    this.setState({Lesson: [...this.state.Lesson,res.data]})
-                    console.log("my lessons :"+this.state.Lesson)
-                  })
-                })  
-              })
-              //console.log("my lessons  :"+ this.state.Lesson)
-          });
-          
+          axios.get(`http://localhost:5000/Module/Module/${element.modid}`)
+            .then(res=> {
               
+              this.setState({sl: [...this.state.sl,res.data]})
+              console.log(this.state.sl)
+            })
         });
-     
-  
-      }
+      });
+      
+
+    }
      componentDidMount(){
-        this.getLesson();
+        this.getModule();
       }  
             Onsubmit(e)
                 {
@@ -218,10 +255,29 @@ class Question extends Component {
                   </FormGroup>
                   <FormGroup row>
                     <Col md="3">
+                      <Label htmlFor="description">Module : </Label>
+                    </Col>
+                    <Col xs="12" md="9">
+                    <Input type="select" name="select-select" id="select-select"   onChange={this.onchangemodule}>
+                  {
+                  this.state.sl.map((optione,index) => {
+                    return <option 
+                      key={index}
+                      value={optione._id}>{optione.name}
+                      </option>;
+                  })
+                }
+                      </Input>
+                      
+                      <FormText className="help-block">Please enter your Module</FormText>
+                    </Col>
+                    </FormGroup>
+                    <FormGroup row>
+                    <Col md="3">
                       <Label htmlFor="description">Lesson : </Label>
                     </Col>
                     <Col xs="12" md="9">
-                    <Input type="select" name="select-select" id="select-select"   onChange={this.onchangelesson}>
+                    <Input type="select" name="select-select3" id="select-select3"   onChange={this.onchangelesson1}>
                   {
                   this.state.Lesson.map((optione,index) => {
                     return <option 
@@ -291,12 +347,31 @@ class Question extends Component {
               <Form onSubmit={this.onsubmit1} className="form-horizontal">
               <FormGroup row>
                     <Col md="3">
+                      <Label htmlFor="description">Module : </Label>
+                    </Col>
+                    <Col xs="12" md="9">
+                    <Input type="select" name="select-select" id="select-select"   onChange={this.onchangemodule1}>
+                  {
+                  this.state.sl.map((optione,index) => {
+                    return <option 
+                      key={index}
+                      value={optione._id}>{optione.name}
+                      </option>;
+                  })
+                }
+                      </Input>
+                      
+                      <FormText className="help-block">Please enter your Module</FormText>
+                    </Col>
+                    </FormGroup>
+              <FormGroup row>
+                    <Col md="3">
                       <Label htmlFor="description">Lesson : </Label>
                     </Col>
                     <Col xs="12" md="9">
                     <Input type="select" name="select-select" id="select-select"   onChange={this.onchangelesson1}>
                   {
-                  this.state.Lesson.map((optione,index) => {
+                  this.state.Lessons.map((optione,index) => {
                     return <option 
                       key={index}
                       value={optione._id}>{optione.name}

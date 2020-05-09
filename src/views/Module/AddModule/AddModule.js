@@ -46,10 +46,10 @@ class Module extends Component {
                 <Form onSubmit={this.onsubmit1} className="form-horizontal">
                   <FormGroup row>
                     <Col md="3">
-                      <Label htmlFor="description">Text of the Question : </Label>
+                      <Label htmlFor="Name">Name  : </Label>
                     </Col>
                     <Col xs="12" md="9">
-                      <Input type="text" id="description" name="description" placeholder="Enter description..." autoComplete="description" value={this.state.na} onChange={this.onchangename}/>
+                      <Input type="text" id="Name" name="Name" placeholder="Enter Name..." autoComplete="Name" value={this.state.name} onChange={this.onchangename}/>
                       <FormText className="help-block">Please enter your Question</FormText>
                     </Col>
                   </FormGroup>

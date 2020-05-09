@@ -92,15 +92,17 @@ const userSchema = new Schema({
             },
 
         }
-    ],
-    Modules: [
+    ],Modules: [
         {
-                type: Schema.Types.ObjectId,
-                ref: 'Module',
-                default: null     
-
+          modid: {
+            type: Schema.Types.ObjectId,
+            ref: 'Module',
+          },
+          name:{
+            type:String
+          }
         }
-    ],
+      ],
     ClassU:
     {
         cl: {

@@ -32,21 +32,15 @@ class Lesson extends Component {
           Module: res.data.Modules
         })
         console.log(this.state.Module)
-        if(this.state.Module.length===1 )
-        axios.get(`http://localhost:5000/Module/Module/${this.state.Module}`)
-        .then(res=> {
-          
-          this.setState({cl: [...this.state.cl,res.data]})
-        })
-        else if(this.state.Module.length>1)
-        this.state.Modules.forEach(element => {
+      
+        this.state.Module.forEach(element => {
          
-          axios.get(`http://localhost:5000/Module/Module/${element}`)
+          axios.get(`http://localhost:5000/Module/Module/${element.modid}`)
             .then(res=> {
               
               this.setState({cl: [...this.state.cl,res.data]})
             })
-        });
+        })
       });
       
 
@@ -95,7 +89,7 @@ class Lesson extends Component {
                 <Form onSubmit={this.onsubmit1} className="form-horizontal">
                 <FormGroup row>
                     <Col md="3">
-                      <Label htmlFor="description">Class : </Label>
+                      <Label htmlFor="description">Module : </Label>
                     </Col>
                     <Col xs="12" md="9">
                     <Input type="select" name="select-select" id="select-select"   onChange={this.onchangemodule}>
@@ -109,7 +103,7 @@ class Lesson extends Component {
                 }
                       </Input>
                       
-                      <FormText className="help-block">Please enter your Class</FormText>
+                      <FormText className="help-block">Please enter your Module</FormText>
                     </Col>
                     </FormGroup>
                   <FormGroup row>
@@ -117,7 +111,7 @@ class Lesson extends Component {
                       <Label htmlFor="name">Name of the lesson : </Label>
                     </Col>
                     <Col xs="12" md="9">
-                      <Input type="text" id="name" name="name" placeholder="Enter name..." autoComplete="name" value={this.state.na} onChange={this.onchangename}/>
+                      <Input type="text" id="name" name="name" placeholder="Enter name..." autoComplete="name" value={this.state.name} onChange={this.onchangename}/>
                       <FormText className="help-block">Please enter the name</FormText>
                     </Col>
                   </FormGroup>
