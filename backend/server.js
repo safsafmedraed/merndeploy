@@ -18,6 +18,7 @@ const chat = require('./routes/chat')
 const subjectRouter = require('./routes/Subjects');
 const presence = require('./routes/Presences');
 const Lesson = require('./routes/Lesson');
+const Module = require('./routes/Modules');
 
 
 
@@ -81,6 +82,7 @@ app.use('/questions', QuestionRouter);
 app.use('/quizz', QuizzRouter);
 app.use('/class', cl);
 app.use('/Lesson', Lesson);
+app.use('/Module', Module);
 app.use('/subjects', subjectRouter);
 app.use('/users', usersRouter);
 app.use('/forgot', forgotpassword);

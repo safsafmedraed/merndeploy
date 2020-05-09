@@ -86,6 +86,7 @@ router.route('/register').post([
     const quizzexist = false
     const note = 0;
     const Questionbank = [];
+    const Module = [];
     try {
         // See if user exists
         let user = await User.findOne({ email })
@@ -112,7 +113,8 @@ router.route('/register').post([
             quizzexist,
             Quizzs,
             Classes,
-            note
+            note,
+            Module
         })
         bycrpt.genSalt(10, (err, salt) =>
             bycrpt.hash(user.password, salt, (err, hash) => {
@@ -196,6 +198,16 @@ router.route('/Userquizz/:id/:quizzid').put(async (req, res) => {
     const x = await User.findById(req.params.id)
     x.quizzexist = true;
     x.Quizzs.push(req.params.quizzid)
+
+    x.save();
+
+    res.json(x)
+
+})
+router.route('/UserModule/:id/:module').put(async (req, res) => {
+    console.log(req.params.id + ' //////// ' + req.params.module)
+    const x = await User.findById(req.params.id)
+    x.Modules.push(req.params.module)
 
     x.save();
 

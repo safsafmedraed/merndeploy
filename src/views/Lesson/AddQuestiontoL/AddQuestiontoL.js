@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import {Card,CardHeader,CardBody,Form,FormGroup,Col,Label,Input,FormText,CardFooter,Button, NavLink, Nav} from 'reactstrap';
 import axios from 'axios';
-import SuccessAlert from './successAlert';
-import ErrorAlert from './ErrorAlert';
+import SuccessAlert from '../../Quizz/Question/successAlert';
+import ErrorAlert from '../../Quizz/Question/ErrorAlert';
 
-class Question extends Component {  
+class AddQuestiontoL extends Component {  
     constructor(props){
         super(props);
         this.Onchangedesc = this.Onchangedesc.bind(this);
@@ -14,8 +14,6 @@ class Question extends Component {
         this.OnchangeCorrect = this.OnchangeCorrect.bind(this);
         this.OnchangeCorrect1 = this.OnchangeCorrect1.bind(this);
         this.handlechange= this.handlechange.bind(this);
-        this.onchangelesson= this.onchangelesson.bind(this);
-        this.onchangelesson1= this.onchangelesson1.bind(this);
         this.Onsubmit = this.Onsubmit.bind(this);
         this.onsubmit1 = this.onsubmit1.bind(this);
         this.state = {
@@ -29,24 +27,10 @@ class Question extends Component {
          points1 : '',
          alert_msg : '',
          idd : '',
-         choicetype : 'multiple',
-         Module : [],
-         Lesson : [],
-         cl : [],
-         l1 : '',
-         l2 : ''
+         choicetype : 'multiple'
         };
       }
-      onchangelesson(e){
-        this.setState({
-          l1 : e.target.value
-        })
-      }
-      onchangelesson1(e){
-        this.setState({
-          l2 : e.target.value
-        })
-      }
+      
       Onchangedesc(e){
           this.setState({
             description : e.target.value
@@ -94,58 +78,9 @@ class Question extends Component {
               points1 : e.target.value
           });
       }
-      getLesson()
-      {
-        const id = localStorage.getItem('user1');
-        //console.log(id)
-        axios.get(`http://localhost:5000/users/userid/${id}`)
-        .then(res=>{
-           
-          this.setState({
-            Module: res.data.Modules
-          })
-         
-          if(this.state.Module.length===1 )
-          axios.get(`http://localhost:5000/Module/Module/${this.state.Module}`)
-          .then(res=> {
-         
-            this.setState({cl:res.data.Lessons})
-           
-            this.state.cl.forEach(el=> {
-              axios.get(`http://localhost:5000/Lesson/Lesson/${el}`)
-              .then(res=> {
-                this.setState({Lesson: [...this.state.Lesson,res.data]})
-                console.log("my lessons :"+this.state.Lesson)
-              })
-            })
-          })
-          else if(this.state.Module.length>1)
-          this.state.Modules.forEach(element => {
-           
-            axios.get(`http://localhost:5000/Module/Module/${element}`)
-              .then(res=> {
-                this.setState({cl:[...this.state.cl,res.data.Lessons]})
-                this.state.cl.forEach(el=> {
-                  axios.get(`http://localhost:5000/Lesson/Lesson/${el}`)
-                  .then(res=> {
-                    this.setState({Lesson: [...this.state.Lesson,res.data]})
-                    console.log("my lessons :"+this.state.Lesson)
-                  })
-                })  
-              })
-              //console.log("my lessons  :"+ this.state.Lesson)
-          });
-          
-              
-        });
-     
-  
-      }
-     componentDidMount(){
-        this.getLesson();
-      }  
             Onsubmit(e)
                 {
+                    const id = this.props.match.params.id;
             e.preventDefault();
              const alternative = {
                 text : this.state.Correct,
@@ -158,18 +93,19 @@ class Question extends Component {
             points : this.state.points,
             Correct : this.state.Correct
             };
-            const x = localStorage.getItem('user1');
             axios.post(`http://localhost:5000/Questions/questions`, Question)
             .then(res => {
               this.setState({alert_msg : 'success',idd: res.data._id})
-              axios.put(`http://localhost:5000/Lesson/addQTo/${this.state.l1}/${res.data._id}`).then(res => {console.log(res.data)});
+              console.log(res)
+              axios.put(`http://localhost:5000/Lesson/addQTo/${id}/${res.data._id}`).then(res => {console.log(res.data)});
             }).catch(error => {
               this.setState({alert_msg:'error'});
             })
-            axios.put(`http://localhost:5000/users/userquestion/${x}/${this.state.idd}`).then(res => {console.log(res.data)});
+           
           }
           onsubmit1(e)
           {
+            const id = this.props.match.params.id;
             e.preventDefault();
             const alternative = {
               text : this.state.Correct1,
@@ -183,13 +119,14 @@ class Question extends Component {
               Correct : this.state.Correct1
             }
           console.log(Questionsingle)
-            axios.post(`http://localhost:5000/Questions/questions`, Questionsingle)
-            .then(res => {
-              this.setState({alert_msg : 'success',idd: res.data._id})
-              axios.put(`http://localhost:5000/Lesson/addQTo/${this.state.l2}/${res.data._id}`).then(res => {console.log(res.data)});
-            }).catch(error => {
-              this.setState({alert_msg:'error'});
-            })
+          axios.post(`http://localhost:5000/Questions/questions`, Questionsingle)
+          .then(res => {
+            this.setState({alert_msg : 'success',idd: res.data._id})
+            console.log(res)
+            axios.put(`http://localhost:5000/Lesson/addQTo/${id}/${res.data._id}`).then(res => {console.log(res.data)});
+          }).catch(error => {
+            this.setState({alert_msg:'error'});
+          })
           }
     render(){
         return(     
@@ -214,25 +151,6 @@ class Question extends Component {
                     <Col xs="12" md="9">
                       <Input type="text" id="description" name="description" placeholder="Enter description..." autoComplete="description" value={this.state.description} onChange={this.Onchangedesc}/>
                       <FormText className="help-block">Please enter your Question</FormText>
-                    </Col>
-                  </FormGroup>
-                  <FormGroup row>
-                    <Col md="3">
-                      <Label htmlFor="description">Lesson : </Label>
-                    </Col>
-                    <Col xs="12" md="9">
-                    <Input type="select" name="select-select" id="select-select"   onChange={this.onchangelesson}>
-                  {
-                  this.state.Lesson.map((optione,index) => {
-                    return <option 
-                      key={index}
-                      value={optione._id}>{optione.name}
-                      </option>;
-                  })
-                }
-                      </Input>
-                      
-                      <FormText className="help-block">Please enter your Lesson</FormText>
                     </Col>
                   </FormGroup>
                   {
@@ -289,25 +207,6 @@ class Question extends Component {
               {this.state.choicetype==='multiple'?
               <CardBody>
               <Form onSubmit={this.onsubmit1} className="form-horizontal">
-              <FormGroup row>
-                    <Col md="3">
-                      <Label htmlFor="description">Lesson : </Label>
-                    </Col>
-                    <Col xs="12" md="9">
-                    <Input type="select" name="select-select" id="select-select"   onChange={this.onchangelesson1}>
-                  {
-                  this.state.Lesson.map((optione,index) => {
-                    return <option 
-                      key={index}
-                      value={optione._id}>{optione.name}
-                      </option>;
-                  })
-                }
-                      </Input>
-                      
-                      <FormText className="help-block">Please enter your Lesson</FormText>
-                    </Col>
-                  </FormGroup>
                 <FormGroup row>
                   <Col md="3">
                     <Label htmlFor="description">Text of the Question : </Label>
@@ -348,4 +247,4 @@ class Question extends Component {
             </Card>
         )}
 }
-export default Question;
+export default AddQuestiontoL;

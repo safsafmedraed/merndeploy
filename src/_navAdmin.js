@@ -38,6 +38,16 @@ export default {
           name: 'Claims',
           url: '/claims',
           icon: 'cui-envelope-open',
+        },
+         {
+          name : 'Module',
+          icon : 'cui-people',
+          children : [
+            {
+              name: 'Add a Module',
+              url : '/Module'
+            }
+          ]
         }
       ]
     },

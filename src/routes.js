@@ -48,6 +48,7 @@ const AddPost = React.lazy(() => import('./views/Forum/ForumContainer/AddPost'))
 const UserClaims = React.lazy(() => import('./views/Claims/UserClaims'));
 const UserClaim = React.lazy(() => import('./views/Claims/UserClaim'));
 const AddClaim = React.lazy(() => import('./views/Claims/AddClaim'));
+const Module = React.lazy(() => import('./views/Module/AddModule'));
 const Stat = React.lazy(() => import('./views/Claims/Stat'));
 
 
@@ -88,7 +89,8 @@ const affSC = React.lazy(() => import('./views/Classes/AffectSC'));
 const affST = React.lazy(() => import('./views/Classes/AffectTC'));
 const teachercl = React.lazy(() => import('./views/Classes/Teacherclasses'));
 const mark = React.lazy(() => import('./views/Classes/MarquerP'));
-
+const Lesson = React.lazy(() => import('./views/Lesson/AddLesson'));
+const AddQuestiontoL = React.lazy(() => import('./views/Lesson/AddQuestiontoL'));
 
 const routes = [
 
@@ -177,7 +179,10 @@ const routes = [
   { path: '/AffectSC', exact: true, name: 'Affectsc', component: affSC },
   { path: '/AffectST', exact: true, name: 'Affecttc', component: affST },
   { path: '/TeachC', exact: true, name: 'Aff', component: teachercl },
-  { path: '/Markp', exact: true, name: 'Marquer', component: mark }
+  { path: '/Markp', exact: true, name: 'Marquer', component: mark },
+  { path: '/Module', exact: true, name: 'Module', component: Module },
+  { path: '/Lesson', exact: true, name: 'Module', component: Lesson },
+  { path: '/addQuestiontoL/:id', exact: true, name: 'Module', component: AddQuestiontoL }
 
 
 ];

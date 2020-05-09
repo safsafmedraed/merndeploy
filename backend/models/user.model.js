@@ -96,7 +96,8 @@ const userSchema = new Schema({
     Modules: [
         {
                 type: Schema.Types.ObjectId,
-                ref: 'Module',     
+                ref: 'Module',
+                default: null     
 
         }
     ],

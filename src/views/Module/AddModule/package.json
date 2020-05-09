@@ -1,0 +1,7 @@
+{
+    "name": "AddModule",
+    "version": "0.0.0",
+    "private": true,
+    "main": "./AddModule.js"
+  }
+  
