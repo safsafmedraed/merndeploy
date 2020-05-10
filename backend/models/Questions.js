@@ -16,7 +16,17 @@ const QuestionSchema = new mongoose.Schema({
         }
     ],
     points : Number,
-    Correct : String
+    Correct : String,
+    module: {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'Module',
+          
+    },
+    lesson: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Lesson',
+      
+}
 })
 
 module.exports = mongoose.model('Question', QuestionSchema)

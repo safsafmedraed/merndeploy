@@ -68,7 +68,7 @@ class Question extends Component {
       this.setState({
         Lesson : []
       })
-      
+      console.log(this.state.Lesson)
           axios.get(`http://localhost:5000/Module/Module/${mm}`)
           .then(res=> {
            
@@ -193,17 +193,19 @@ class Question extends Component {
             description : this.state.description,
             alternatives : aa,
             points : this.state.points,
-            Correct : this.state.Correct
+            Correct : this.state.Correct,
+            module : this.state.m1,
+            lesson : this.state.l1
             };
             const x = localStorage.getItem('user1');
-            axios.post(`http://localhost:5000/Questions/questions`, Question)
+            axios.post(`http://localhost:5000/Questions/questions/${this.state.m1}`, Question)
             .then(res => {
               this.setState({alert_msg : 'success',idd: res.data._id})
               axios.put(`http://localhost:5000/Lesson/addQTo/${this.state.l1}/${res.data._id}`).then(res => {console.log(res.data)});
             }).catch(error => {
               this.setState({alert_msg:'error'});
             })
-            axios.put(`http://localhost:5000/users/userquestion/${x}/${this.state.idd}`).then(res => {console.log(res.data)});
+           
           }
           onsubmit1(e)
           {
@@ -217,10 +219,12 @@ class Question extends Component {
               description : this.state.d1,
               alternative : alternative,
               points: this.state.points1,
-              Correct : this.state.Correct1
+              Correct : this.state.Correct1,
+              module : this.state.m2,
+              lesson : this.state.l2
             }
           console.log(Questionsingle)
-            axios.post(`http://localhost:5000/Questions/questions`, Questionsingle)
+            axios.post(`http://localhost:5000/Questions/questions/${this.state.m2}`, Questionsingle)
             .then(res => {
               this.setState({alert_msg : 'success',idd: res.data._id})
               axios.put(`http://localhost:5000/Lesson/addQTo/${this.state.l2}/${res.data._id}`).then(res => {console.log(res.data)});
@@ -243,7 +247,7 @@ class Question extends Component {
               </CardHeader>
               {this.state.choicetype!=='multiple'?
               <CardBody>
-                <Form onSubmit={this.onSubmit} className="form-horizontal">
+                <Form onSubmit={this.Onsubmit} className="form-horizontal">
                   <FormGroup row>
                     <Col md="3">
                       <Label htmlFor="description">Text of the Question : </Label>
@@ -277,7 +281,7 @@ class Question extends Component {
                       <Label htmlFor="description">Lesson : </Label>
                     </Col>
                     <Col xs="12" md="9">
-                    <Input type="select" name="select-select3" id="select-select3"   onChange={this.onchangelesson1}>
+                    <Input type="select" name="select-select3" id="select-select3"   onChange={this.onchangelesson}>
                   {
                   this.state.Lesson.map((optione,index) => {
                     return <option 

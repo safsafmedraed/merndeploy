@@ -65,7 +65,7 @@ class Lesson extends Component {
             axios.post(`http://localhost:5000/Lesson/Lesson`, Module)
             .then(res => {
               this.setState({alert_msg : 'success', id : res.data._id})
-              axios.put(`http://localhost:5000/Module/addLTo/${this.state.Module}/${res.data._id}`)
+              axios.put(`http://localhost:5000/Module/addLTo/${this.state.mm}/${res.data._id}`)
                 .then(res=> {
                     this.setState({exist:true})
                 console.log("yesss")

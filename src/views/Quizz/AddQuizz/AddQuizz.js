@@ -142,7 +142,7 @@ this.setState({
 })
     }
     componentDidMount() {
-        this.getQuestion();
+        //this.getQuestion();
         this.getClasses();
         this.getModule();
        //this.getclassnames();
@@ -179,27 +179,36 @@ this.setState({
       this.setState({
         mm: e.target.value
       })
-     // console.log(this.state.classe)
+    
       const mm = this.state.mm
       this.setState({
-        Lessons : []
+        Lessons : [],
+        Options : []
       })
       
           axios.get(`http://localhost:5000/Module/Module/${mm}`)
           .then(res=> {
            
             this.setState({Le: res.data.Lessons })
+           
             if(this.state.Le!==undefined){
             this.state.Le.forEach(element => {
-              console.log(element)
-              
+             
               axios.get(`http://localhost:5000/Lesson/Lesson/${element}`)
               .then( res=> {
+               
                 this.setState({Lessons: [...this.state.Lessons,res.data]})
-               console.log(this.state.Lessons)
+                console.log(this.state.Lessons)
               })  
             })
           }
+          axios.get(`http://localhost:5000/Questions/questionbym/${mm}`)
+          .then(res => {
+        
+            this.setState({Options :res.data
+              });
+            
+          })
           })
           
             
@@ -302,13 +311,13 @@ this.setState({
                     <Col xs="12" md="9">
                     <Input type="select" name="select-select1" id="select-select1"   onChange={this.onchangelesson}>
                   {
-                  this.state.Lessons.map((optione,index) => {
+                    this.state.Lessons.map((optione,index) => {
                     return <option 
                       key={index}
                       value={optione._id}>{optione.name}
                       </option>;
                   })
-                }
+               }
                       </Input>
                       
                       <FormText className="help-block">Please enter your Module</FormText>
@@ -340,9 +349,9 @@ this.setState({
                     <Col md="9" xs="12">
                   <Input type="select" name="multiple-select" id="multiple-select" multiple={true}  onChange={this.handleChange}>
                   {
-                  this.state.Options.map(optione => {
+                  this.state.Options.map((optione,index) => {
                     return <option 
-                      key={optione.description}
+                      key={index}
                       value={optione._id}>{optione.description}
                       </option>;
                   })
