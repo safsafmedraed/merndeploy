@@ -3,16 +3,10 @@ import { setAlert } from './alert';
 
 
 import {
-  ADDCLASS_SUCCESS,
-  ADDCLASS_FAIL,
-  AFFECTSTUDENT_FAIL,
-  GETTEACHERS,
-  AFFECTSTUDENT_SUCCESS,
-  GETSTUDENTSNOTAFF,
-  GET_CLASSES,
-  AFFECTTEACHER_SUCCESS,
-  GETSC,
-  UPDATE_CLASS,GETTC,MP
+  ADDCLASS_SUCCESS,  ADDCLASS_FAIL,  AFFECTSTUDENT_FAIL,
+  GETTEACHERS,  AFFECTSTUDENT_SUCCESS,  GETSTUDENTSNOTAFF,
+  GET_CLASSES,  AFFECTTEACHER_SUCCESS,  GETSC,  UPDATE_CLASS,GETTC,MP,AffectModu,GETMOD,GETTM
+
 } from './types';
 
 //add class
@@ -31,7 +25,7 @@ export const addclass = (formData, history) => async dispatch => {
     });
     dispatch(setAlert('class added', 'success'));
 
-    history.push('/Classes');
+    history.push('/Addclass');
 
   } catch (err) {
     const errors = err.response.data.errors;
@@ -145,7 +139,7 @@ export const affectteacher =(formdata,history )=> async dispatch => {
     });
     dispatch(setAlert('Teacher affected ', 'success'));
 
-    history.push('/Classes');
+    history.push('/AffectST');
 
 
   } catch (err) {
@@ -223,7 +217,7 @@ export const marquerpr =(formdata,ids )=> async dispatch => {
         'Content-Type': 'application/json'
       }
     }
-    const res = await axios.post(`http://localhost:5000/class/marquerp/${ids}`,formdata,config)
+    const res = await axios.put(`http://localhost:5000/class/marquerp/${ids}`,formdata,config)
 
     dispatch({
       type: MP,
@@ -240,4 +234,71 @@ export const marquerpr =(formdata,ids )=> async dispatch => {
 
   }
 
+}
+
+//affect Modules
+export const affectmodules =(formdata,idm,history )=> async dispatch => {
+  try {
+    const config = {
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    }
+    const res = await axios.post(`http://localhost:5000/class/affectTModule/${idm}`,formdata,config)
+    dispatch({
+      type: AffectModu,
+      payload:   res.data
+    });
+    dispatch(setAlert('Teacher affected ', 'success'));
+
+    history.push('/AffectTM');
+
+
+  } catch (err) {
+
+    dispatch({
+      type: AFFECTSTUDENT_FAIL,
+      payload: { msg: err.response.statusText, status: err.response.status }
+
+    });
+    dispatch(setAlert('Already affected ', 'danger'));
+  }
+
+}
+//GET All modules
+export const GETMODULES = () => async dispatch => {
+  try {
+    const res = await axios.get('http://localhost:5000/class/getmodules');
+    dispatch({
+      type: GETMOD,
+      payload: res.data
+    });
+
+  } catch (error) {
+    dispatch({
+      type: ADDCLASS_FAIL,
+      payload: { msg: error.response.statusText, status: error.response.status }
+
+    });
+
+  }
+}
+///get teacher modules
+export const getTM = teacherid => async dispatch => {
+  try {
+
+    const res = await axios.get(`http://localhost:5000/class/teachermd/${teacherid}`);
+    dispatch({
+      type: GETTM,
+      payload: res.data
+    });
+
+  } catch (error) {
+    dispatch({
+      type: ADDCLASS_FAIL,
+      payload: { msg: error.response.statusText, status: error.response.status }
+
+    });
+
+  }
 }

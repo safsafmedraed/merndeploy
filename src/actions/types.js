@@ -25,9 +25,11 @@ export const AFFECTSTUDENT_FAIL = 'AFFECTSTUDENT_FAIL';
 export const GETSTUDENTSNOTAFF = 'GETSTUDENTSNOTAFF';
 export const GET_CLASSES = 'GET_CLASSES';
 export const GETSC='GETSC';
-export const AFFECTTEACHER_SUCCESS='AFFECTTEACHER_SUCCESS'
-export const GETTEACHERS='GETTEACHERS'
-export const UPDATE_CLASS='UPDATE_CLASS'
-export const GETTC='GETTC'
-export const MP='MP'
-
+export const AFFECTTEACHER_SUCCESS='AFFECTTEACHER_SUCCESS';
+export const GETTEACHERS='GETTEACHERS';
+export const UPDATE_CLASS='UPDATE_CLASS';
+export const GETTC='GETTC';
+export const MP='MP';
+export  const AffectModu='AffectModu';
+export const GETMOD='GETMOD';
+export const GETTM='GETTM'

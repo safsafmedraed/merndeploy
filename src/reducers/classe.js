@@ -4,11 +4,12 @@ import {
   GET_CLASSES,
   AFFECTSTUDENT_SUCCESS,
   GETSC,
-  GETSTUDENTSNOTAFF, GETTEACHERS, AFFECTTEACHER_SUCCESS,UPDATE_CLASS,GETTC,MP
+  GETSTUDENTSNOTAFF, GETTEACHERS, AFFECTTEACHER_SUCCESS,UPDATE_CLASS,GETTC,MP,AffectModu,GETMOD,GETTM
 } from "../actions/types";
 
 const initialState = {
   students:[],
+  modules:[],
   student:null,
   classe : null,
   classes:[],
@@ -16,6 +17,7 @@ const initialState = {
   teachers:[],
   loading: true,
   TC:[],
+  TM:[],
   error: {}
 
 }
@@ -54,10 +56,23 @@ export default function (state = initialState, action) {
         classes: [payload, ...state.classes],
         loading: false
       }
+    case AffectModu:
+      return {
+        ...state,
+        classes: [payload, ...state.classes],
+        loading: false
+      }
+
     case GETSC:
       return {
         ...state,
         spc: payload,
+        loading: false
+      }
+    case GETMOD:
+      return {
+        ...state,
+        modules: payload,
         loading: false
       }
     case GETTC:
@@ -66,7 +81,12 @@ export default function (state = initialState, action) {
         TC: payload,
         loading: false
       }
-
+    case GETTM:
+      return {
+        ...state,
+        TM: payload,
+        loading: false
+      }
     case GET_CLASSES:
       return {
         ...state,

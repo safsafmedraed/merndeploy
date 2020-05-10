@@ -51,6 +51,7 @@ const affSC = React.lazy(() => import('./views/Classes/AffectSC'));
 const affST = React.lazy(() => import('./views/Classes/AffectTC'));
 const teachercl= React.lazy(() => import('./views/Classes/Teacherclasses'));
 const mark= React.lazy(() => import('./views/Classes/MarquerP'));
+const affTM= React.lazy(() => import('./views/Classes/AffectTM'));
 
 
 
@@ -111,7 +112,8 @@ const routes = [
   { path: '/AffectSC', exact: true, name: 'Affectsc', component: affSC },
   { path: '/AffectST', exact: true, name: 'Affecttc', component: affST },
   { path: '/TeachC', exact: true, name: 'Aff', component: teachercl },
-  { path: '/Markp', exact: true, name: 'Marquer', component: mark }
+  { path: '/Markp', exact: true, name: 'Marquer', component: mark },
+  { path: '/AffectTM', exact: true, name: 'affectation', component: affTM }
 
 ];
 

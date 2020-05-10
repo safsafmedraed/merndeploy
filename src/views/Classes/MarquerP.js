@@ -55,7 +55,7 @@ const MarquerP =({getSC ,    marquerpr   ,     classe:{  spc },     auth:{user}}
     e.preventDefault();
     selected.forEach(e=>{
         console.log("aaa"+e)
-        marquerpr(formData,e, )
+        marquerpr(formData,e )
 
       }
 

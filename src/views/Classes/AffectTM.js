@@ -6,43 +6,66 @@ import RadioGroup from '@material-ui/core/RadioGroup';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Radio from '@material-ui/core/Radio';
 import Spinner from "../Theme/Spinner";
-import { GETALLCLASSES ,affectteacher,getteachers,getTC} from '../../actions/classe'
+import { GETMODULES,getTM ,affectmodules,getteachers} from '../../actions/classe'
 import PropTypes from "prop-types";
 
 
 
-const   AffectTC =({ getTC,GETALLCLASSES ,affectteacher,getteachers,history, classe:{ classes,loading,teachers,TC } }) => {
+const   AffectTM =({ GETMODULES,getTM ,affectmodules,getteachers,history, classe:{ modules,loading,teachers ,TM} }) => {
 
   useEffect(() => {
-    GETALLCLASSES();
+    GETMODULES();
     getteachers();
-    getTC();
-  }, [GETALLCLASSES,getteachers,getTC()])
+    getTM();
+  }, [GETMODULES,getteachers,getTM])
   const [formData, setFormData] = useState({
-    classid: '',
-    teacherid:''
+    moduleid: '',
+
   })
-  const  {classid,teacherid}  = formData;
+  const  {teacherid}  = formData;
   const onchange = e => setFormData({ ...formData, [e.target.name]: e.target.value });
 
+  let selected=[];
+
+  const onChange = function(event) {
+    let options = event.target.options;
+    let formdata1 = [];
+
+    if (options) {
+      for (let x = 0; x < options.length; x++) {
+        if (options[x].selected) {
+          formdata1.push(options[x].value);
+          // console.log(formdata1)
+
+        }
 
 
-
-  const onsubmit=e =>{
-    e.preventDefault();
-    console.log(classid+ "techedir "+teacherid)
-
-    affectteacher({classid,teacherid},history)
-
+      }
+      selected=formdata1;
+      return selected;
+    }
   }
 
-  const onsubmit1=e =>{
-    e.preventDefault();
-console.log(teacherid)
-    getTC(teacherid)
 
+  const onsubmit=async e =>{
+    e.preventDefault();
+    selected.forEach(e=>{
+        console.log("aaa"+e)
+        affectmodules(formData,e,history )
+
+      }
+
+    )
   }
 
+
+
+   const onsubmit1=e =>{
+     e.preventDefault();
+     console.log(teacherid)
+     getTM(teacherid)
+
+   }
 
 
 
@@ -62,18 +85,18 @@ console.log(teacherid)
                 <Label htmlFor="multiple-select">Teachers :</Label>
               </Col>
               <Col md="9" xs="12">
-                <RadioGroup  name="customized-radios" onClick={ onsubmit1 }   onChange={e=>onchange(e)} >
+                <RadioGroup  name="customized-radios"    onChange={e=>onchange(e)}  onClick={ onsubmit1 } >
 
                   { teachers.map(t =>{
-                      return( <FormControlLabel
-                          key={t._id}
-                          value={t._id}
-                          control={<Radio />}
-                          label={t.username}
-                          name="teacherid"
-                        />
-                      )
-                    })
+                    return( <FormControlLabel
+                        key={t._id}
+                        value={t._id}
+                        control={<Radio />}
+                        label={t.username}
+                        name="teacherid"
+                      />
+                    )
+                  })
                   }
                 </RadioGroup>
               </Col>
@@ -89,25 +112,25 @@ console.log(teacherid)
             </CardHeader>
             <CardBody>
 
-               <Table responsive striped >
+              <Table responsive striped >
                 <thead>
                 <tr>
-                  <th>Class Name</th>
+                  <th>Module  Name</th>
 
                 </tr>
                 </thead>
                 <tbody>
-                {TC.length >0 ?(
-                TC  && TC.map(detail=>{
+                {TM.length >0 ?(
+                  TM  && TM.map(detail=>{
 
-                            return (
+                    return (
 
-                               <tr key={detail._id}>
-                              <th>{detail.classename}</th>
+                      <tr key={detail._id}>
+                        <th>{detail.name}</th>
 
 
-                            </tr>
-                )})): <h4>No classes Found</h4>
+                      </tr>
+                    )})): <h4>No Modules  Found</h4>
 
                 }
 
@@ -125,20 +148,20 @@ console.log(teacherid)
 
             <FormGroup row>
               <Col md="3">
-                <Label htmlFor="multiple-select">Select Class(es) :</Label>
+                <Label htmlFor="multiple-select">Select Modul(es) :</Label>
               </Col>
 
 
               <Col md="9" xs="12">
-                <Input type="select" name="multiple-select" id="multiple-select" multiple={true}  name="classid"  onChange={e=>onchange(e)} >
-                      {classes.length>0?(
-                    classes.map(optione =>{
+                <Input type="select" name="multiple-select" id="multiple-select" multiple={true}  name="moduleid"   onChange={e=>onChange(e)} >
+                  {
+                    modules.map(optione =>{
                       return (<option
                           key={optione._id}
                           value={optione._id}>{optione.name}
                         </option>
                       )}
-                    )): <h4>No Students Found</h4>
+                    )
                   }
                 </Input>
               </Col>
@@ -161,11 +184,11 @@ console.log(teacherid)
   </Fragment>
 
 }
-AffectTC.propTypes = {
-  GETALLCLASSES: PropTypes.func.isRequired,
-  affectteacher: PropTypes.func.isRequired,
+AffectTM.propTypes = {
+  GETMODULES: PropTypes.func.isRequired,
+  affectmodules: PropTypes.func.isRequired,
   getteachers: PropTypes.func.isRequired,
-  getTC: PropTypes.func.isRequired,
+  getTM:PropTypes.func.isRequired,
   classe: PropTypes.object.isRequired,
 
 
@@ -175,4 +198,4 @@ const mapStateToProps = state => ({
 
 })
 
-export default connect(mapStateToProps ,{GETALLCLASSES,affectteacher,getteachers,getTC})(AffectTC);
+export default connect(mapStateToProps ,{GETMODULES,getTM,affectmodules,getteachers})(AffectTM);

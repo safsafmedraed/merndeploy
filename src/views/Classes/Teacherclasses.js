@@ -81,7 +81,6 @@ const Teacherclasses =({getSC ,classe:{ classes,loading, spc },auth:{user}})=>{
                   <th>LastName</th>
                   <th>Email</th>
                   <th>Phone Number</th>
-                  <th>Action</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -95,16 +94,7 @@ const Teacherclasses =({getSC ,classe:{ classes,loading, spc },auth:{user}})=>{
                               <th>{detail.lastname}</th>
                               <th>{detail.email}</th>
                               <th>{detail.phonenumber}</th>
-                              <th>
 
-                                <FormControlLabel
-                                  control={<Checkbox  name="gilad"  />}
-                                  label="Gilad Gray"
-                                  key={detail.user}
-                                  value={detail.user}
-                                />
-
-                                </th>
 
                             </tr>
                 )})
