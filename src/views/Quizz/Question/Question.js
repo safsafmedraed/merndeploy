@@ -198,7 +198,7 @@ class Question extends Component {
             lesson : this.state.l1
             };
             const x = localStorage.getItem('user1');
-            axios.post(`http://localhost:5000/Questions/questions/${this.state.m1}`, Question)
+            axios.post(`http://localhost:5000/Questions/questions`, Question)
             .then(res => {
               this.setState({alert_msg : 'success',idd: res.data._id})
               axios.put(`http://localhost:5000/Lesson/addQTo/${this.state.l1}/${res.data._id}`).then(res => {console.log(res.data)});
@@ -224,7 +224,7 @@ class Question extends Component {
               lesson : this.state.l2
             }
           console.log(Questionsingle)
-            axios.post(`http://localhost:5000/Questions/questions/${this.state.m2}`, Questionsingle)
+            axios.post(`http://localhost:5000/Questions/questions`, Questionsingle)
             .then(res => {
               this.setState({alert_msg : 'success',idd: res.data._id})
               axios.put(`http://localhost:5000/Lesson/addQTo/${this.state.l2}/${res.data._id}`).then(res => {console.log(res.data)});

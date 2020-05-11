@@ -27,7 +27,8 @@ class AddQuestiontoL extends Component {
       points1: '',
       alert_msg: '',
       idd: '',
-      choicetype: 'multiple'
+      choicetype: 'multiple',
+      module : []
     };
   }
 
@@ -81,18 +82,21 @@ class AddQuestiontoL extends Component {
       text: this.state.Correct,
       isCorrect: true,
     }
+    axios.get(`http://localhost:5000/Module/ModuleLesson/${this.props.match.params.id}`)
+    .then(res => {this.setState({module : res.data})})
     let aa = [...this.state.alternatives, alternative];
     const Question = {
+      description : this.state.description,
+      alternatives : aa,
+      points : this.state.points,
+      Correct : this.state.Correct,
+      module : this.state.module._id,
+      lesson : this.props.match.params.id
+      };
 
-      description: this.state.description,
-      alternatives: aa,
-      points: this.state.points,
-      Correct: this.state.Correct,
-      lesson: this.props.match.params.id
-    };
     axios.post(`http://localhost:5000/Questions/questions`, Question)
       .then(res => {
-        this.setState({ alert_msg: 'success', idd: res.data._id })
+        this.setState({ alert_msg: 'success', idd: res.data })
         console.log(res)
         axios.put(`http://localhost:5000/Lesson/addQTo/${id}/${res.data._id}`).then(res => { console.log(res.data) });
       }).catch(error => {
@@ -107,14 +111,18 @@ class AddQuestiontoL extends Component {
       text: this.state.Correct1,
       isCorrect: true,
     }
-
-    const Questionsingle = {
-      description: this.state.d1,
-      alternative: alternative,
-      points: this.state.points1,
-      Correct: this.state.Correct1,
-      lesson: this.props.match.params.id
-    }
+    console.log(this.props.match.params.id)
+    axios.get(`http://localhost:5000/Module/ModuleLesson/${this.props.match.params.id}`)
+    .then(res => {this.setState({module : res.data})
+  console.log(this.state.module)})
+  const Questionsingle ={
+    description : this.state.d1,
+    alternative : alternative,
+    points: this.state.points1,
+    Correct : this.state.Correct1,
+    module : this.state.module._id,
+    lesson : this.props.match.params.id
+  }
     console.log(Questionsingle)
     axios.post(`http://localhost:5000/Questions/questions`, Questionsingle)
       .then(res => {
@@ -140,7 +148,7 @@ class AddQuestiontoL extends Component {
         </CardHeader>
         {this.state.choicetype !== 'multiple' ?
           <CardBody>
-            <Form onSubmit={this.onSubmit} className="form-horizontal">
+            <Form onSubmit={this.Onsubmit} className="form-horizontal">
               <FormGroup row>
                 <Col md="3">
                   <Label htmlFor="description">Text of the Question : </Label>

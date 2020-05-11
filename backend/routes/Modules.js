@@ -14,6 +14,11 @@ router.get('/Module/:id', (req, res) => {
     .then(module => res.json(module))
     .catch(err => res.status(400).json('Error: ' + err));
 })
+router.get('/ModuleLesson/:id',(req,res)=> {
+    Module.find({Lessons : req.params.id})
+    .then(module => res.json(module))
+    .catch(err => res.status(400).json('Error: ' + err));
+})
 // create one quiz question
 router.post('/Module', (req, res) => {
         

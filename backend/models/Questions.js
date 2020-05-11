@@ -20,7 +20,7 @@ const QuestionSchema = new mongoose.Schema({
     module: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Module',
-        default: null
+        
 
     },
     lesson: {

@@ -24,19 +24,20 @@ router.get('/questionbym/:id', (req, res) => {
 // create one quiz question
 router.post('/questions', (req, res) => {
 
-
+    
     const description = req.body.description;
     const alternatives = req.body.alternatives;
     const points = Number(req.body.points);
     const Correct = req.body.Correct;
     const lesson = req.body.lesson
+    const module = req.body.module
     const Questionss = new Question({
         description,
         alternatives,
         points,
         Correct,
-        module,
-        lesson
+        lesson,
+        module
     })
 
     Questionss.save()
