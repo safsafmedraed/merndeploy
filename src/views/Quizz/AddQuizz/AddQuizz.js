@@ -163,7 +163,10 @@ class AddQuizz extends Component {
                   code : res.data.code,
                   idd : res.data._id
                 })
-               
+                axios.put(`http://localhost:5000/Lesson/addTo/5eb485c2a2c705aad972c4d5/${res.data._id}`)
+                .then(res=> {
+                console.log("yesss")
+                })  
                 this.state.value1.forEach(element => {
                  
                    axios.put(`http://localhost:5000/users/Userquizz/${element}/${this.state.idd}`)
@@ -176,7 +179,7 @@ class AddQuizz extends Component {
             }).catch(error => {
               this.setState({alert_msg:'error'});
             })
-                  
+            
         }
     }
     render() {

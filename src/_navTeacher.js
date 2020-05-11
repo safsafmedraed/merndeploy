@@ -77,11 +77,11 @@ export default {
           icon: 'icon-star'
         }
       ]
-    }, {
-
-      name: 'Mark presence',
-      url: '/Markp',
-      icon: 'icon-star'
+    },
+    {
+      name: 'Claims',
+      url: '/Userclaims',
+      icon: 'cui-envelope-open',
     }
   ]
 

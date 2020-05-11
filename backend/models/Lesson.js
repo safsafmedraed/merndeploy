@@ -3,14 +3,15 @@ const Schema = mongoose.Schema;
 
 const lessonModel = new Schema({
 
+
   name: {
     type: String,
-    required : true
+    required: true
   },
 
-  date : {
+  date: {
     type: Date,
-    required : true,
+    required: true,
     default: Date.now()
   },
 
@@ -28,3 +29,5 @@ const lessonModel = new Schema({
 
 })
 module.exports = mongoose.model('lesson', lessonModel)
+
+

@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 const ModuleModel = new Schema({
+
   name: {
     type: String,
     required: true
@@ -18,3 +19,4 @@ const ModuleModel = new Schema({
 
 })
 module.exports = mongoose.model('Module', ModuleModel)
+
