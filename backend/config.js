@@ -1,5 +1,6 @@
 module.exports = {
     JWT_SECRET: 'codeworkrauthentication',
+
     EMAIL_ADDRESS: 'thewitchertwin3@gmail.com',
     EMAIL_PASSWORD: 'azerty#123',
     'googleAuth': {

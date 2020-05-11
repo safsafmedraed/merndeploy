@@ -37,9 +37,8 @@ const   Ajout  =({addclass ,history}) => {
                   <Label htmlFor="name"> Class Name</Label>
                 </Col>
                 <Col xs="12" md="9">
-                  <Input type="text" id="name" name="name" placeholder="Entrer Name of class..." autoComplete="name"
+                  <Input type="text" id="name" name="name" placeholder="..." autoComplete="name"
                          value={name} onChange={e => onchange(e)}/>
-                  <FormText className="help-block">Svp Entrez le nom du classe</FormText>
                 </Col>
               </FormGroup>
               <FormGroup row>
@@ -47,9 +46,8 @@ const   Ajout  =({addclass ,history}) => {
                   <Label htmlFor="section">Section</Label>
                 </Col>
                 <Col xs="12" md="9">
-                  <Input type="text" id="section" name="section" placeholder="Entrer Section..." autoComplete="section"
+                  <Input type="text" id="section" name="section" placeholder="..." autoComplete="section"
                          value={section} onChange={e => onchange(e)} />
-                  <FormText className="help-block">Svp Entrez le nom du classe</FormText>
                 </Col>
               </FormGroup>
 

@@ -79,6 +79,7 @@ const userSchema = new Schema({
         default: 0
 
     }
+
     ,
     Classes: [
         {
@@ -93,7 +94,22 @@ const userSchema = new Schema({
 
         }
     ],
+
+
+    Modules: [
+        {
+            modid: {
+                type: Schema.Types.ObjectId,
+                ref: 'Module',
+            },
+            name: {
+                type: String
+            }
+        }
+    ],
+
     ClassU:
+
     {
         cl: {
             type: Schema.Types.ObjectId,

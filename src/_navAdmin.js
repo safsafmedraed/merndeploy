@@ -28,9 +28,37 @@ export default {
           url: '/Profiles',
           icon: 'icon-star'
         },
+
+      ]
+    },
+    {
+      name: 'Manage classes',
+      icon: 'cui-people',
+      attributes: { disabled: false },
+      children: [
         {
-          name: 'Manage classes',
-          url: '/Classes',
+          name: 'Add class',
+          url: '/Addclass',
+          icon: 'icon-star',
+        },
+        {
+          name: 'List Classes',
+          url: '/Listclasses',
+          icon: 'icon-star',
+        },
+        {
+          name: 'Affect Students',
+          url: '/AffectSC',
+          icon: 'icon-star',
+        },
+        {
+          name: 'Affect Teacher',
+          url: '/AffectST',
+          icon: 'icon-star',
+        },
+        {
+          name: 'Affect module',
+          url: '/AffectTM',
           icon: 'icon-star',
 
         },

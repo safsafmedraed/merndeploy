@@ -40,12 +40,10 @@ const   AffectSC  =({ affectstudent, getstudentsnotaff  , GETALLCLASSES ,history
          // console.log(formdata1)
 
         }
-
-
       }
       selected=formdata1;
       return selected;
-    }
+       }
     }
   const onsubmit=async e =>{
     e.preventDefault();

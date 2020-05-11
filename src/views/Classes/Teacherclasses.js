@@ -76,17 +76,19 @@ const Teacherclasses = ({ getSC, classe: { classes, loading, spc }, auth: { user
 
               <Table responsive striped >
                 <thead>
+
                   <tr>
                     <th>FirstName</th>
                     <th>LastName</th>
                     <th>Email</th>
                     <th>Phone Number</th>
-
                   </tr>
+
                 </thead>
                 <tbody>
 
                   {spc.Users && spc.Users.map(detail => {
+
 
                     return (
 
@@ -95,6 +97,7 @@ const Teacherclasses = ({ getSC, classe: { classes, loading, spc }, auth: { user
                         <th>{detail.lastname}</th>
                         <th>{detail.email}</th>
                         <th>{detail.phonenumber}</th>
+
 
 
                       </tr>

@@ -7,7 +7,7 @@ const Class = require('../models/class');
 const User = require('../models/user.model');
 const { check, validationResult } = require('express-validator');
 const auth = require('../middleware/auth');
-var mongoose = require('mongoose');
+const Module = require('../models/Module.model');
 
 
 
@@ -19,6 +19,25 @@ router.route('/teachercl/:teacherid').get(async (req, res) => {
   try {
     const user = await User.findById(teacherid)
     const cl = user.Classes
+
+    res.json(cl);
+
+  } catch (err) {
+    console.error(err)
+  }
+
+}
+
+)
+
+
+/****************Teacher modules pour Admin***************/
+router.route('/teachermd/:teacherid').get(async (req, res) => {
+  const teacherid = req.params.teacherid;
+  try {
+    const user = await User.findById(teacherid)
+    const cl = user.Modules
+
     res.json(cl);
 
   } catch (err) {
@@ -26,8 +45,6 @@ router.route('/teachercl/:teacherid').get(async (req, res) => {
   }
 }
 )
-
-
 
 /****************Teacher***************/
 router.route('/teacher').get(async (req, res) => {
@@ -149,7 +166,9 @@ router.route('/update/:id').put((req, res) => {
 
 
 /****************Marquer présence***************/
-router.route('/marquerp/:studentid').post(auth, async (req, res) => {
+
+router.route('/marquerp/:studentid').put(auth, async (req, res) => {
+
   try {
     const classid = req.body.classid;
     const studentid = req.params.studentid;
@@ -157,10 +176,12 @@ router.route('/marquerp/:studentid').post(auth, async (req, res) => {
     const t = await User.findById(req.user.id)
     const c = await Class.findById(classid)
 
+
     let a = c.Presents;
     a.teacherid = req.user.id;
     a.teachername = t.Firstname;
     a.teacherlastname = t.Lastname;
+
 
     let newusers = []
 
@@ -173,17 +194,31 @@ router.route('/marquerp/:studentid').post(auth, async (req, res) => {
     }
 
     newusers.push(newuser)
-    //console.log(newusers)
+    console.log(newusers)
 
-    /* let  qq = a.Usersp ;
-     console.log(a.Usersp)
-    qq.push.apply(qq,newusers);*/
-
-    a.Usersp = newusers;
-    console.log(a.Usersp)
-
-
+    let a = c.Presents.Usersp;
+    a = newusers
+    console.log(a)
     await c.save();
+
+    c.save(function (err, result) {
+      if (err) {
+        console.log(JSON.stringify(err));
+      }
+      else {
+        result.Presents.push({ teacherid: req.user.id, teachername: t.Firstname, teacherlastname: t.Lastname, Usersp: a });
+        result.save(function (error, data) {
+          if (error) {
+            console.log(JSON.stringify(error));
+          }
+          else {
+            console.log(JSON.stringify(data));
+          }
+        });
+      }
+    });
+
+
 
   }
   catch (err) {
@@ -336,7 +371,7 @@ router.route('/affectteacher').post(function (req, res) {
         const newclass = {
           classe: req.body.classid,
           classename: v.name,
-          Users: v.Users
+
         }
         x.Classes.unshift(newclass);
         await x.save();
@@ -382,6 +417,82 @@ router.route('/affectteacher').post(function (req, res) {
 })
 
 
+/************affect Teacher Modules************ */
+router.route('/affectTModule/:moduleid').post(function (req, res) {
+  async.waterfall([
+    async function () {
+      try {
+        const moduleid = req.params.moduleid;
+        const teacherid = req.body.teacherid;
+        console.log(moduleid + '' + teacherid)
 
+        const x = await User.findById(teacherid)
+        const m = await Module.findById(moduleid)
+        let z = await x.Modules.find(z => z.modid == moduleid)
+        if (z) {
+          return res.status(400).json({ errors: [{ msg: 'Module Already affected for this teacher ' }] })
+
+        }
+
+        let newmods = []
+        let newmodule = {
+          modid: moduleid,
+          name: m.name,
+
+        }
+        newmods.push(newmodule);
+        let ww = x.Modules;
+        ww.push.apply(ww, newmods);
+        await x.save();
+
+
+
+
+
+        const transporter = nodemailer.createTransport({
+          service: 'gmail',
+          auth: {
+            user: `${EMAIL_ADDRESS}`,
+            pass: `${EMAIL_PASSWORD}`,
+          },
+        });
+
+        const mailOptions = {
+          from: 'mohamed.chabbouh@esprit.tn',
+          to: `${x.email}`,
+          subject: 'Affectation',
+          text:
+            '\n' +
+            'Administration assigns you to lead the Module\n\n'
+            + `${m.name}\n\n`
+        };
+
+        console.log('sending mail ');
+
+        transporter.sendMail(mailOptions, (err, response) => {
+          if (err) {
+            console.error('there was an error: ', err);
+          } else {
+            console.log('here is the res: ', response);
+            res.status(200).json('recovery email sent');
+          }
+        });
+      } catch (error) {
+        console.error(error)
+        res.status(500).send('server Error')
+      }
+    }
+  ])
+})
+/**********GETall modules***********/
+router.route('/getmodules').get(async (req, res) => {
+  try {
+    const mod = await Module.find()
+    res.json(mod);
+  } catch (err) {
+    console.error(err)
+  }
+
+})
 
 module.exports = router;
