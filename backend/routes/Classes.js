@@ -165,68 +165,7 @@ router.route('/update/:id').put((req, res) => {
 })
 
 
-/****************Marquer présence***************/
 
-router.route('/marquerp/:studentid').put(auth, async (req, res) => {
-
-  try {
-    const classid = req.body.classid;
-    const studentid = req.params.studentid;
-    const y = await User.findById(studentid)
-    const t = await User.findById(req.user.id)
-    const c = await Class.findById(classid)
-
-
-    let a = c.Presents;
-    a.teacherid = req.user.id;
-    a.teachername = t.Firstname;
-    a.teacherlastname = t.Lastname;
-
-
-    let newusers = []
-
-    let newuser = {
-      user: studentid,
-      cl: classid,
-      name: y.Firstname,
-      email: y.email,
-      lastname: y.Lastname,
-    }
-
-    newusers.push(newuser)
-    console.log(newusers)
-
-    let a = c.Presents.Usersp;
-    a = newusers
-    console.log(a)
-    await c.save();
-
-    c.save(function (err, result) {
-      if (err) {
-        console.log(JSON.stringify(err));
-      }
-      else {
-        result.Presents.push({ teacherid: req.user.id, teachername: t.Firstname, teacherlastname: t.Lastname, Usersp: a });
-        result.save(function (error, data) {
-          if (error) {
-            console.log(JSON.stringify(error));
-          }
-          else {
-            console.log(JSON.stringify(data));
-          }
-        });
-      }
-    });
-
-
-
-  }
-  catch (err) {
-    console.error(err.message);
-    res.status(500).send('Server error')
-  }
-
-})
 
 /************affect student to class************ */
 router.route('/affect/:studentid').put(function (req, res) {
