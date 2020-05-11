@@ -17,7 +17,7 @@ router.get('/questions/:id', (req, res) => {
         .catch(err => res.status(400).json('Error: ' + err));
 })
 router.get('/questionbym/:id', (req, res) => {
-    Question.find({ module: req.params.id })
+    Question.find({ lesson: req.params.id })
         .then(questions => res.json(questions))
         .catch(err => res.status(400).json('Error: ' + err));
 })

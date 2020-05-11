@@ -138,8 +138,17 @@ class AddQuizz extends Component {
     onchangelesson(e)
     {
 this.setState({
-  ll: e.target.value
+  ll: e.target.value,
+  Options : []
 })
+axios.get(`http://localhost:5000/Questions/questionbym/${this.state.ll}`)
+          .then(res => {
+        
+            this.setState({Options :res.data
+              });
+              
+            
+          })
     }
     componentDidMount() {
         //this.getQuestion();
@@ -182,8 +191,8 @@ this.setState({
     
       const mm = this.state.mm
       this.setState({
-        Lessons : [],
-        Options : []
+        Lessons : []
+      
       })
       
           axios.get(`http://localhost:5000/Module/Module/${mm}`)
@@ -202,13 +211,7 @@ this.setState({
               })  
             })
           }
-          axios.get(`http://localhost:5000/Questions/questionbym/${mm}`)
-          .then(res => {
-        
-            this.setState({Options :res.data
-              });
-            
-          })
+          
           })
           
             
