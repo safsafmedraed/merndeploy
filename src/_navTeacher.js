@@ -39,6 +39,7 @@ export default {
         }
       ]
     },
+   
 
     {
 
@@ -50,10 +51,11 @@ export default {
       attributes: { disabled: false },
       children: [
         {
-
+          icon: 'icon-cursor',
           name: 'Add a question',
           url: '/Question',
-
+        },
+        {
           name: 'My Classes',
           url: '/TeachC',
 
@@ -74,6 +76,11 @@ export default {
         {
           name: 'view Quizz scores',
           url: 'TeacherAnswers',
+          icon: 'icon-star'
+        },
+        {
+          name: 'Add a Lesson',
+          url: 'Lesson',
           icon: 'icon-star'
         }
       ]

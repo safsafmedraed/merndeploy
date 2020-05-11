@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import {Card,CardHeader,CardBody,Form,FormGroup,Col,Label,Input,FormText,CardFooter,Button, NavLink, Nav} from 'reactstrap';
 import axios from 'axios';
-import SuccessAlert from './successAlert';
-import ErrorAlert from './ErrorAlert';
+import SuccessAlert from '../../Quizz/Question/successAlert';
+import ErrorAlert from '../../Quizz/Question/ErrorAlert';
 
-class Question extends Component {  
+class AddQuestiontoL extends Component {  
     constructor(props){
         super(props);
         this.Onchangedesc = this.Onchangedesc.bind(this);
@@ -14,10 +14,6 @@ class Question extends Component {
         this.OnchangeCorrect = this.OnchangeCorrect.bind(this);
         this.OnchangeCorrect1 = this.OnchangeCorrect1.bind(this);
         this.handlechange= this.handlechange.bind(this);
-        this.onchangelesson= this.onchangelesson.bind(this);
-        this.onchangelesson1= this.onchangelesson1.bind(this);
-        this.onchangemodule= this.onchangemodule.bind(this);
-        this.onchangemodule1= this.onchangemodule1.bind(this);
         this.Onsubmit = this.Onsubmit.bind(this);
         this.onsubmit1 = this.onsubmit1.bind(this);
         this.state = {
@@ -31,87 +27,14 @@ class Question extends Component {
          points1 : '',
          alert_msg : '',
          idd : '',
-         choicetype : 'multiple',
-         Module : [],
-         Lesson : [],
-         Lessons: [],
-         cl : [],
-         l1 : '',
-         l2 : '',
-         sl : [],
-         m1 : '',
-         m2: '',
-         Le : [],
-         La : []
+         choicetype : 'multiple'
         };
       }
-      onchangelesson(e){
-        this.setState({
-          l1 : e.target.value
-        })
-      }
-      onchangelesson1(e){
-        this.setState({
-          l2 : e.target.value
-        })
-      }
+      
       Onchangedesc(e){
           this.setState({
             description : e.target.value
           });
-      }
-      onchangemodule(e){
-        this.setState({
-          m1 : e.target.value
-        })
-        const mm = this.state.m1
-      this.setState({
-        Lesson : []
-      })
-      console.log(this.state.Lesson)
-          axios.get(`http://localhost:5000/Module/Module/${mm}`)
-          .then(res=> {
-           
-            this.setState({Le: res.data.Lessons })
-            if(this.state.Le!==undefined){
-            this.state.Le.forEach(element => {
-              console.log(element)
-              
-              axios.get(`http://localhost:5000/Lesson/Lesson/${element}`)
-              .then( res=> {
-                this.setState({Lesson: [...this.state.Lessons,res.data]})
-               console.log(this.state.Lesson)
-              })  
-            })
-          }
-          })
-      }
-      onchangemodule1(e)
-      {
-        this.setState({
-          m2: e.target.value
-        })
-        const mm = this.state.m2
-      this.setState({
-        Lessons : []
-      })
-      
-          axios.get(`http://localhost:5000/Module/Module/${mm}`)
-          .then(res=> {
-           
-            this.setState({La: res.data.Lessons })
-            if(this.state.La!==undefined){
-            this.state.La.forEach(element => {
-              console.log(element)
-              
-              axios.get(`http://localhost:5000/Lesson/Lesson/${element}`)
-              .then( res=> {
-                this.setState({Lessons: [...this.state.Lessons,res.data]})
-               console.log(this.state.Lessons)
-              })  
-            })
-          }
-          })
       }
       Onchangedesc1(e){
         this.setState({
@@ -155,34 +78,9 @@ class Question extends Component {
               points1 : e.target.value
           });
       }
-      getModule()
-    {
-      const id = localStorage.getItem('user1');
-      console.log(id)
-      axios.get(`http://localhost:5000/users/userid/${id}`)
-      .then(res=>{
-        this.setState({
-          Module: res.data.Modules
-        })
-        
-        this.state.Module.forEach(element => {
-         
-          axios.get(`http://localhost:5000/Module/Module/${element.modid}`)
-            .then(res=> {
-              
-              this.setState({sl: [...this.state.sl,res.data]})
-              console.log(this.state.sl)
-            })
-        });
-      });
-      
-
-    }
-     componentDidMount(){
-        this.getModule();
-      }  
             Onsubmit(e)
                 {
+                    const id = this.props.match.params.id;
             e.preventDefault();
              const alternative = {
                 text : this.state.Correct,
@@ -193,15 +91,13 @@ class Question extends Component {
             description : this.state.description,
             alternatives : aa,
             points : this.state.points,
-            Correct : this.state.Correct,
-            module : this.state.m1,
-            lesson : this.state.l1
+            Correct : this.state.Correct
             };
-            const x = localStorage.getItem('user1');
-            axios.post(`http://localhost:5000/Questions/questions/${this.state.m1}`, Question)
+            axios.post(`http://localhost:5000/Questions/questions`, Question)
             .then(res => {
               this.setState({alert_msg : 'success',idd: res.data._id})
-              axios.put(`http://localhost:5000/Lesson/addQTo/${this.state.l1}/${res.data._id}`).then(res => {console.log(res.data)});
+              console.log(res)
+              axios.put(`http://localhost:5000/Lesson/addQTo/${id}/${res.data._id}`).then(res => {console.log(res.data)});
             }).catch(error => {
               this.setState({alert_msg:'error'});
             })
@@ -209,6 +105,7 @@ class Question extends Component {
           }
           onsubmit1(e)
           {
+            const id = this.props.match.params.id;
             e.preventDefault();
             const alternative = {
               text : this.state.Correct1,
@@ -219,18 +116,17 @@ class Question extends Component {
               description : this.state.d1,
               alternative : alternative,
               points: this.state.points1,
-              Correct : this.state.Correct1,
-              module : this.state.m2,
-              lesson : this.state.l2
+              Correct : this.state.Correct1
             }
           console.log(Questionsingle)
-            axios.post(`http://localhost:5000/Questions/questions/${this.state.m2}`, Questionsingle)
-            .then(res => {
-              this.setState({alert_msg : 'success',idd: res.data._id})
-              axios.put(`http://localhost:5000/Lesson/addQTo/${this.state.l2}/${res.data._id}`).then(res => {console.log(res.data)});
-            }).catch(error => {
-              this.setState({alert_msg:'error'});
-            })
+          axios.post(`http://localhost:5000/Questions/questions`, Questionsingle)
+          .then(res => {
+            this.setState({alert_msg : 'success',idd: res.data._id})
+            console.log(res)
+            axios.put(`http://localhost:5000/Lesson/addQTo/${id}/${res.data._id}`).then(res => {console.log(res.data)});
+          }).catch(error => {
+            this.setState({alert_msg:'error'});
+          })
           }
     render(){
         return(     
@@ -247,7 +143,7 @@ class Question extends Component {
               </CardHeader>
               {this.state.choicetype!=='multiple'?
               <CardBody>
-                <Form onSubmit={this.Onsubmit} className="form-horizontal">
+                <Form onSubmit={this.onSubmit} className="form-horizontal">
                   <FormGroup row>
                     <Col md="3">
                       <Label htmlFor="description">Text of the Question : </Label>
@@ -255,44 +151,6 @@ class Question extends Component {
                     <Col xs="12" md="9">
                       <Input type="text" id="description" name="description" placeholder="Enter description..." autoComplete="description" value={this.state.description} onChange={this.Onchangedesc}/>
                       <FormText className="help-block">Please enter your Question</FormText>
-                    </Col>
-                  </FormGroup>
-                  <FormGroup row>
-                    <Col md="3">
-                      <Label htmlFor="description">Module : </Label>
-                    </Col>
-                    <Col xs="12" md="9">
-                    <Input type="select" name="select-select" id="select-select"   onChange={this.onchangemodule}>
-                  {
-                  this.state.sl.map((optione,index) => {
-                    return <option 
-                      key={index}
-                      value={optione._id}>{optione.name}
-                      </option>;
-                  })
-                }
-                      </Input>
-                      
-                      <FormText className="help-block">Please enter your Module</FormText>
-                    </Col>
-                    </FormGroup>
-                    <FormGroup row>
-                    <Col md="3">
-                      <Label htmlFor="description">Lesson : </Label>
-                    </Col>
-                    <Col xs="12" md="9">
-                    <Input type="select" name="select-select3" id="select-select3"   onChange={this.onchangelesson}>
-                  {
-                  this.state.Lesson.map((optione,index) => {
-                    return <option 
-                      key={index}
-                      value={optione._id}>{optione.name}
-                      </option>;
-                  })
-                }
-                      </Input>
-                      
-                      <FormText className="help-block">Please enter your Lesson</FormText>
                     </Col>
                   </FormGroup>
                   {
@@ -349,44 +207,6 @@ class Question extends Component {
               {this.state.choicetype==='multiple'?
               <CardBody>
               <Form onSubmit={this.onsubmit1} className="form-horizontal">
-              <FormGroup row>
-                    <Col md="3">
-                      <Label htmlFor="description">Module : </Label>
-                    </Col>
-                    <Col xs="12" md="9">
-                    <Input type="select" name="select-select" id="select-select"   onChange={this.onchangemodule1}>
-                  {
-                  this.state.sl.map((optione,index) => {
-                    return <option 
-                      key={index}
-                      value={optione._id}>{optione.name}
-                      </option>;
-                  })
-                }
-                      </Input>
-                      
-                      <FormText className="help-block">Please enter your Module</FormText>
-                    </Col>
-                    </FormGroup>
-              <FormGroup row>
-                    <Col md="3">
-                      <Label htmlFor="description">Lesson : </Label>
-                    </Col>
-                    <Col xs="12" md="9">
-                    <Input type="select" name="select-select" id="select-select"   onChange={this.onchangelesson1}>
-                  {
-                  this.state.Lessons.map((optione,index) => {
-                    return <option 
-                      key={index}
-                      value={optione._id}>{optione.name}
-                      </option>;
-                  })
-                }
-                      </Input>
-                      
-                      <FormText className="help-block">Please enter your Lesson</FormText>
-                    </Col>
-                  </FormGroup>
                 <FormGroup row>
                   <Col md="3">
                     <Label htmlFor="description">Text of the Question : </Label>
@@ -427,4 +247,4 @@ class Question extends Component {
             </Card>
         )}
 }
-export default Question;
+export default AddQuestiontoL;

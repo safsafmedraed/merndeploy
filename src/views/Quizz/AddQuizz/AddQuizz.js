@@ -13,6 +13,8 @@ class AddQuizz extends Component {
         this.onchangeclass= this.onchangeclass.bind(this);
         this.onchangetimer=this.onchangetimer.bind(this);
         this.onchangename=this.onchangename.bind(this);
+        this.onchangemodule = this.onchangemodule.bind(this);
+        this.onchangelesson= this.onchangelesson.bind(this)
         this.onsubmit=this.onsubmit.bind(this);
         this.state = {
             alert_msg : "",
@@ -29,9 +31,40 @@ class AddQuizz extends Component {
             take1 : [],
             idd: '',
             cl : [],
-            name : []
+            name : [],
+            sl : [],
+            Module : [],
+            mm : '',
+            Lessons: [],
+            Le : [],
+            ll : ''
+
            
         }
+    }
+    getModule()
+    {
+      const id = localStorage.getItem('user1');
+      console.log(id)
+      axios.get(`http://localhost:5000/users/userid/${id}`)
+      .then(res=>{
+        this.setState({
+          Module: res.data.Modules
+        })
+        console.log(this.state.Module)
+        
+        this.state.Module.forEach(element => {
+         console.log(element)
+          axios.get(`http://localhost:5000/Module/Module/${element.modid}`)
+            .then(res=> {
+              
+              this.setState({sl: [...this.state.sl,res.data]})
+              console.log(this.state.sl)
+            })
+        });
+      });
+      
+
     }
     getQuestion()
     {
@@ -102,10 +135,16 @@ class AddQuizz extends Component {
         name: e.target.value
       })
     }
-  
+    onchangelesson(e)
+    {
+this.setState({
+  ll: e.target.value
+})
+    }
     componentDidMount() {
-        this.getQuestion();
+        //this.getQuestion();
         this.getClasses();
+        this.getModule();
        //this.getclassnames();
       }
     handleChange (e) {
@@ -136,6 +175,44 @@ class AddQuizz extends Component {
              // console.log(this.state.value1);
               
     }
+    onchangemodule(e){
+      this.setState({
+        mm: e.target.value
+      })
+    
+      const mm = this.state.mm
+      this.setState({
+        Lessons : [],
+        Options : []
+      })
+      
+          axios.get(`http://localhost:5000/Module/Module/${mm}`)
+          .then(res=> {
+           
+            this.setState({Le: res.data.Lessons })
+           
+            if(this.state.Le!==undefined){
+            this.state.Le.forEach(element => {
+             
+              axios.get(`http://localhost:5000/Lesson/Lesson/${element}`)
+              .then( res=> {
+               
+                this.setState({Lessons: [...this.state.Lessons,res.data]})
+                console.log(this.state.Lessons)
+              })  
+            })
+          }
+          axios.get(`http://localhost:5000/Questions/questionbym/${mm}`)
+          .then(res => {
+        
+            this.setState({Options :res.data
+              });
+            
+          })
+          })
+          
+            
+    }
       onsubmit(e){
         e.preventDefault();
         
@@ -163,10 +240,16 @@ class AddQuizz extends Component {
                   code : res.data.code,
                   idd : res.data._id
                 })
-                axios.put(`http://localhost:5000/Lesson/addTo/5eb485c2a2c705aad972c4d5/${res.data._id}`)
+                if(this.state.Module.length===1)
+                {axios.put(`http://localhost:5000/Lesson/addTo/${this.state.Module}/${res.data._id}`)
                 .then(res=> {
                 console.log("yesss")
-                })  
+                })  }
+                else if( this.state.Module.length>1)
+                {axios.put(`http://localhost:5000/Lesson/addTo/${this.state.mm}/${res.data._id}`)
+                .then(res=> {
+                console.log("yesss")
+                })  }
                 this.state.value1.forEach(element => {
                  
                    axios.put(`http://localhost:5000/users/Userquizz/${element}/${this.state.idd}`)
@@ -190,7 +273,10 @@ class AddQuizz extends Component {
                <div className="container"><ReactNotification/></div>
                 <CardHeader>{this.state.alert_msg==="success"?<SuccessAlert text={'successfully created, this is the code for this quizz : '+ this.state.code}/>:null}
                 {this.state.alert_msg==="error"?<ErrorAlert/>:null}</CardHeader>
-                <FormGroup row>
+               
+                    <Form className="form-horizontal" onSubmit={this.onsubmit}>
+                    <CardBody>
+                    <FormGroup row>
                   <Col md="3">
                       <Label htmlFor="Timer">Quizz name : </Label>
                     </Col>
@@ -199,8 +285,44 @@ class AddQuizz extends Component {
                       <FormText className="help-block">Please enter a name for this quizz</FormText>
                     </Col>
                   </FormGroup>
-                    <Form className="form-horizontal" onSubmit={this.onsubmit}>
-                    <CardBody>
+                    <FormGroup row>
+                    <Col md="3">
+                      <Label htmlFor="description">Module : </Label>
+                    </Col>
+                    <Col xs="12" md="9">
+                    <Input type="select" name="select-select" id="select-select"   onChange={this.onchangemodule}>
+                  {
+                  this.state.sl.map((optione,index) => {
+                    return <option 
+                      key={index}
+                      value={optione._id}>{optione.name}
+                      </option>;
+                  })
+                }
+                      </Input>
+                      
+                      <FormText className="help-block">Please enter your Module</FormText>
+                    </Col>
+                    </FormGroup>
+                    <FormGroup row>
+                    <Col md="3">
+                      <Label htmlFor="description">Lesson : </Label>
+                    </Col>
+                    <Col xs="12" md="9">
+                    <Input type="select" name="select-select1" id="select-select1"   onChange={this.onchangelesson}>
+                  {
+                    this.state.Lessons.map((optione,index) => {
+                    return <option 
+                      key={index}
+                      value={optione._id}>{optione.name}
+                      </option>;
+                  })
+               }
+                      </Input>
+                      
+                      <FormText className="help-block">Please enter your Module</FormText>
+                    </Col>
+                    </FormGroup>
                     <FormGroup row>
                     <Col md="3">
                       <Label htmlFor="description">Class : </Label>
@@ -227,9 +349,9 @@ class AddQuizz extends Component {
                     <Col md="9" xs="12">
                   <Input type="select" name="multiple-select" id="multiple-select" multiple={true}  onChange={this.handleChange}>
                   {
-                  this.state.Options.map(optione => {
+                  this.state.Options.map((optione,index) => {
                     return <option 
-                      key={optione.description}
+                      key={index}
                       value={optione._id}>{optione.description}
                       </option>;
                   })

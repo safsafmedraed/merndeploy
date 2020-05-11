@@ -16,21 +16,29 @@ router.get('/questions/:id', (req, res) => {
     .then(questions => res.json(questions))
     .catch(err => res.status(400).json('Error: ' + err));
 })
-
+router.get('/questionbym/:id',(req, res)=> {
+    Question.find({module : req.params.id})
+    .then(questions=> res.json(questions))
+    .catch(err => res.status(400).json('Error: '+ err));
+})
 // create one quiz question
-router.post('/questions', (req, res) => {
-        
+router.post('/questions/:id', (req, res) => {
+
+        const module = req.params.id;
         const  description  = req.body.description;
         const  alternatives  = req.body.alternatives;
         const  points = Number(req.body.points);
         const  Correct = req.body.Correct;
+        const   lesson = req.body.lesson
         const Questionss = new Question({
             description,
             alternatives,
             points,
-            Correct
+            Correct,
+            module,
+            lesson
         })
-        
+        Questionss.module= module;
         Questionss.save()
         .then(() => res.json(Questionss))
         .catch(err => res.status(400).json('Error:' + err));
