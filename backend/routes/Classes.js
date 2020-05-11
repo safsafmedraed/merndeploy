@@ -397,7 +397,7 @@ router.route('/affectTModule/:moduleid').post(function (req, res) {
         });
 
         const mailOptions = {
-          from: 'mohamed.chabbouh@esprit.tn',
+          from: 'thewitchertwin3@gmail.com',
           to: `${x.email}`,
           subject: 'Affectation',
           text:
