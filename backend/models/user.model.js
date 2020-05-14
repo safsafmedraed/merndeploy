@@ -67,6 +67,10 @@ const userSchema = new Schema({
             score: {
                 type: Number,
                 default: 0
+            },
+            answered : {
+                type : Boolean,
+                default : false
             }
         }
     ],

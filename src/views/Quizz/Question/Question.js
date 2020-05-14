@@ -54,6 +54,7 @@ class Question extends Component {
         this.setState({
           l2 : e.target.value
         })
+        console.log(this.state.l2)
       }
       Onchangedesc(e){
           this.setState({
