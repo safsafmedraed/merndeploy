@@ -62,30 +62,29 @@ class Question extends Component {
           });
       }
       onchangemodule(e){
-        this.setState({
-          m1 : e.target.value
-        })
-        const mm = this.state.m1
-      this.setState({
-        Lesson : []
-      })
-      console.log(this.state.Lesson)
-          axios.get(`http://localhost:5000/Module/Module/${mm}`)
-          .then(res=> {
-           
-            this.setState({Le: res.data.Lessons })
-            if(this.state.Le!==undefined){
-            this.state.Le.forEach(element => {
-              console.log(element)
-              
-              axios.get(`http://localhost:5000/Lesson/Lesson/${element}`)
-              .then( res=> {
-                this.setState({Lesson: [...this.state.Lessons,res.data]})
-               console.log(this.state.Lesson)
-              })  
-            })
-          }
+          this.setState({
+            m1: e.target.value,
+            Lessons : []
           })
+          const mm = this.state.m1
+        
+        
+            axios.get(`http://localhost:5000/Module/Module/${mm}`)
+            .then(res=> {
+             
+              this.setState({Le: res.data.Lessons })
+              if(this.state.Le!==undefined){
+              this.state.Le.forEach(element => {
+                console.log(element)
+                
+                axios.get(`http://localhost:5000/Lesson/Lesson/${element}`)
+                .then( res=> {
+                  this.setState({Lesson: [...this.state.Lessons,res.data]})
+                 console.log(this.state.Lesson)
+                })  
+              })
+            }
+            })
       }
       onchangemodule1(e)
       {
@@ -355,16 +354,17 @@ class Question extends Component {
                       <Label htmlFor="description">Module : </Label>
                     </Col>
                     <Col xs="12" md="9">
-                    <Input type="select" name="select-select" id="select-select"   onChange={this.onchangemodule1}>
-                  {
-                  this.state.sl.map((optione,index) => {
-                    return <option 
-                      key={index}
-                      value={optione._id}>{optione.name}
-                      </option>;
+                 
+                  
+                 {
+                     this.state.sl.map((optione,index) => {
+                      return(
+                        <label><input className="form_control" key={index} type="radio" name="choicetype2" onClick={this.onchangemodule1} value={optione._id}/>{optione.name}</label>
+                  
+                      )
                   })
-                }
-                      </Input>
+               }
+                      
                       
                       <FormText className="help-block">Please enter your Module</FormText>
                     </Col>

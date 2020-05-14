@@ -293,18 +293,17 @@ axios.get(`http://localhost:5000/Questions/questionbym/${this.state.ll}`)
                       <Label htmlFor="description">Module : </Label>
                     </Col>
                     <Col xs="12" md="9">
-                    <Input type="select" name="select-select" id="select-select"   onChange={this.onchangemodule}>
+                    <div className="div-radio">
                   {
                   this.state.sl.map((optione,index) => {
-                    return <option 
-                      key={index}
-                      value={optione._id}>{optione.name}
-                      </option>;
+                  return(
+                    <label><input className="radio" key={index} type="radio" name="choicetype" onClick={this.onchangemodule} value={optione._id}/>{optione.name}</label>
+              
+                  )
                   })
                 }
-                      </Input>
-                      
-                      <FormText className="help-block">Please enter your Module</FormText>
+                </div>
+                <FormText className="help-block">Please check your Module</FormText>
                     </Col>
                     </FormGroup>
                     <FormGroup row>
@@ -312,18 +311,17 @@ axios.get(`http://localhost:5000/Questions/questionbym/${this.state.ll}`)
                       <Label htmlFor="description">Lesson : </Label>
                     </Col>
                     <Col xs="12" md="9">
-                    <Input type="select" name="select-select1" id="select-select1"   onChange={this.onchangelesson}>
+                  
                   {
                     this.state.Lessons.map((optione,index) => {
-                    return <option 
-                      key={index}
-                      value={optione._id}>{optione.name}
-                      </option>;
+                      return(
+                        <label><input className="form_control" key={index} type="radio" name="choicetype1" onClick={this.onchangelesson} value={optione._id}/>{optione.name}</label>
+                  
+                      )
                   })
                }
-                      </Input>
-                      
-                      <FormText className="help-block">Please enter your Module</FormText>
+                     
+                      <FormText className="help-block">Please check your Lesson</FormText>
                     </Col>
                     </FormGroup>
                     <FormGroup row>
@@ -331,18 +329,16 @@ axios.get(`http://localhost:5000/Questions/questionbym/${this.state.ll}`)
                       <Label htmlFor="description">Class : </Label>
                     </Col>
                     <Col xs="12" md="9">
-                    <Input type="select" name="select-select" id="select-select"   onChange={this.onchangeclass}>
-                  {
-                  this.state.cl.map((optione,index) => {
-                    return <option 
-                      key={index}
-                      value={optione._id}>{optione.name}
-                      </option>;
+                    {
+                    this.state.cl.map((optione,index) => {
+                      return(
+                        <label><input className="form_control" key={index} type="radio" name="choicetype2" onClick={this.onchangeclass} value={optione._id}/>{optione.name}</label>
+                  
+                      )
                   })
-                }
-                      </Input>
+               }
                       
-                      <FormText className="help-block">Please enter your Class</FormText>
+                      <FormText className="help-block">Please check your Class</FormText>
                     </Col>
                   </FormGroup>
                   <FormGroup row>
