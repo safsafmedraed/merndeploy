@@ -19,7 +19,7 @@ const subjectRouter = require('./routes/Subjects');
 const presence = require('./routes/Presences');
 const Lesson = require('./routes/Lesson');
 const Module = require('./routes/Modules');
-
+const path = require('path')
 
 
 //passport config
@@ -90,7 +90,13 @@ app.use('/api/auth', require('./routes/auth'));
 app.use('/profile', require('./routes/profile'));
 app.use('/class', cl);
 app.use('/presence', presence);
-
+//serve static assets in production
+if (process.env.NODE_ENV === 'production') {
+  app.use(express.static('../build'))
+  app.get('*', (req, res) => {
+    res.sendFile(__dirname, '../', 'build', 'index.html')
+  })
+}
 app.listen(port, () => {
   console.log(`Server is running at port : ${port}`);
 })
