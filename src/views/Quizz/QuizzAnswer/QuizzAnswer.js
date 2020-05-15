@@ -39,7 +39,7 @@ class QuizzAnswer extends Component {
                     yes: res.data.quizzexist,
                     quizz: res.data.Quizzs
                 })
-                console.log(res.data)
+                console.log(res.data.Quizzs.length)
             })
     }
 

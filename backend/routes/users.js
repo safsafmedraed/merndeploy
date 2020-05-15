@@ -151,13 +151,18 @@ router.get('/userclasse/:classe', (req, res) => {
 router.put('/usernoquizz/:id/:quizzid/:note', (req, res) => {
     User.findById(req.params.id)
         .then(user => {
-            user.quizzexist = false
+            
             user.note = user.note + Number(req.params.note)
             console.log(req.params.quizzid)
             let found = user.Quizzs.find(element => element = req.params.quizzid)
-            console.log("////////////////" + found)
-            found.score = req.params.note
+            
+            found.score = req.params.note;
+            found.answered = true;
             user.answered = user.answered + 1
+            if(user.Quizzs.length=== user.answered)
+            {
+                user.quizzexist = false
+            }
             user.save()
                 .then(() => res.json('User state updated!'))
                 .catch(err => res.status(400).json('Error: ' + err));
