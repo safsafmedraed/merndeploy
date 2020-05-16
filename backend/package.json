@@ -4,8 +4,9 @@
   "description": "",
   "main": "server.js",
   "scripts": {
-    "start": "node server",
+    "start": "node server.js",
     "server": "nodemon server",
+    "client": "cd ../ && npm start",
     "test": "echo \"Error: no test specified\" && exit 1",
     "heroku-postbuild": "npm install --prefix ../ && npm run build --prefix ../"
   },
