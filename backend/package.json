@@ -6,9 +6,12 @@
   "scripts": {
     "start": "node server.js",
     "server": "nodemon server",
+    "build": "cd ../ && npm run build",
+    "install-client": "cd ../ && npm install",
     "client": "cd ../ && npm start",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "heroku-postbuild": "npm install --prefix ../ && npm run build --prefix ../"
+    "heroku-postbuild": "npm run install-client && npm run build",
+    "dev": "concurrently  'red,green'  \"nodemon server.js\" \"npm run client\""
   },
   "keywords": [],
   "author": "",
@@ -43,5 +46,8 @@
     "passport-local": "^1.0.0",
     "socket.io": "^2.3.0",
     "twilio": "^3.42.2"
+  },
+  "devDependencies": {
+    "concurrently": "^5.2.0"
   }
 }
