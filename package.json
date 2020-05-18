@@ -88,7 +88,7 @@
     "test:cov": "npm test -- --coverage --watchAll=false",
     "test:debug": "react-scripts --inspect-brk test --runInBand",
     "eject": "react-scripts eject",
-    "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install && npm run build && node backend/server.js"
+    "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install && npm run build "
   },
   "bugs": {
     "url": "https://github.com/coreui/coreui-free-react-admin-template/issues"
