@@ -7,13 +7,10 @@
   },
   "main": "server.js",
   "scripts": {
-    "start": "node server",
+    "start": "node server.js",
     "server": "nodemon server",
-    "build": "cd ../ && npm run build",
-    "install-client": "cd ../ && npm install",
-    "client": "cd ../ && npm start",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "heroku-postbuild": "npm run install-client && npm run build",
+    "heroku-postbuild": "cd ../ && npm install && npm run build",
     "dev": "concurrently  'red,green'  \"nodemon server.js\" \"npm run client\""
   },
   "keywords": [],

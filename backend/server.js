@@ -33,7 +33,7 @@ app.use(
     credentials: true
   })
 );
-const port = process.env.PORT || 5000;
+const PORT = process.env.PORT || 5000;
 
 const uri = process.env.ATLAS_URI;
 mongoose.connect(uri, { useNewUrlParser: true, useCreateIndex: true, useUnifiedTopology: true, useFindAndModify: false });
@@ -94,8 +94,11 @@ app.use('/presence', presence);
 //serve static assets in production
 if (process.env.NODE_ENV === 'production') {
   app.use(express.static('../build'));
+  app.get('*', (req, res) => {
+    res.sendFile(path.join(__dirname, '../', 'build', 'index.html'))
+  })
 }
 
-app.listen(port, () => {
-  console.log(`Server is running at port : ${port}`);
+app.listen(PORT, () => {
+  console.log(`Server is running at port : ${PORT}`);
 })
