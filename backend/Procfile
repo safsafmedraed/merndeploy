@@ -1,1 +1,1 @@
-web: concurrently \"nodemon server.js\" \"cd ../ && npm start\
+web:node server.js
