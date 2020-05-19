@@ -11,7 +11,7 @@
     "server": "nodemon server",
     "test": "echo \"Error: no test specified\" && exit 1",
     "heroku-postbuild": "cd ../ && npm install && npm run build",
-    "dev": "concurrently  'red,green'  \"nodemon server.js\" \"npm run client\""
+    "dev": "concurrently \"nodemon server.js\" \"cd ../ && npm start\""
   },
   "keywords": [],
   "author": "",
@@ -45,7 +45,8 @@
     "passport-jwt": "^4.0.0",
     "passport-local": "^1.0.0",
     "socket.io": "^2.3.0",
-    "twilio": "^3.42.2"
+    "twilio": "^3.42.2",
+    "concurrently": "^5.2.0"
   },
   "devDependencies": {
     "concurrently": "^5.2.0"
