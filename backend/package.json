@@ -11,6 +11,7 @@
     "server": "nodemon server",
     "test": "echo \"Error: no test specified\" && exit 1",
     "heroku-postbuild": "cd ../ && npm install && npm run build",
+    "heroku-prebuild": "concurrently \"nodemon server.js\" \"cd ../ && npm start\"",
     "dev": "concurrently \"nodemon server.js\" \"cd ../ && npm start\""
   },
   "keywords": [],
