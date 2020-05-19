@@ -18,7 +18,7 @@ const subjectRouter = require('./routes/Subjects');
 const presence = require('./routes/Presences');
 const Lesson = require('./routes/Lesson');
 const Module = require('./routes/Modules');
-const path = require('path')
+const path = require('path');
 
 
 //passport config
