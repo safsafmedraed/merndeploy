@@ -1,0 +1,4 @@
+{
+    "ATLAS_URI": "mongodb+srv://safsafraed:sVW5Wa3JAj6rclLj@quizard-q5cbk.mongodb.net/Quizz",
+    "jwtSecret": "mysecrettocken"
+}
