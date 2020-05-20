@@ -154,7 +154,7 @@ router.put('/usernoquizz/:id/:quizzid/:note', (req, res) => {
             
             user.note = user.note + Number(req.params.note)
             console.log(req.params.quizzid)
-            let found = user.Quizzs.find(element => element = req.params.quizzid)
+            let found = user.Quizzs.id(req.params.quizzid)
             
             found.score = req.params.note;
             found.answered = true;
