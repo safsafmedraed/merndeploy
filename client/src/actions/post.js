@@ -5,7 +5,7 @@ import { GET_POSTS, POST_ERROR, UPDATE_LIKES, DELETE_POST, ADD_POST, GET_POST, A
 //get posts
 export const getPosts = () => async dispatch => {
     try {
-        const res = await axios.get('http://localhost:5000/post/')
+        const res = await axios.get('/post/')
         dispatch({
             type: GET_POSTS,
             payload: res.data
@@ -22,7 +22,7 @@ export const getPosts = () => async dispatch => {
 //Add like
 export const addLike = id => async dispatch => {
     try {
-        const res = await axios.put(`http://localhost:5000/post/like/${id}`)
+        const res = await axios.put(`/post/like/${id}`)
         dispatch({
             type: UPDATE_LIKES,
             payload: { id, likes: res.data }
@@ -39,7 +39,7 @@ export const addLike = id => async dispatch => {
 //Remove like
 export const removeLike = id => async dispatch => {
     try {
-        const res = await axios.put(`http://localhost:5000/post/unlike/${id}`)
+        const res = await axios.put(`/post/unlike/${id}`)
         dispatch({
             type: UPDATE_LIKES,
             payload: { id, likes: res.data }
@@ -57,7 +57,7 @@ export const removeLike = id => async dispatch => {
 export const deletePost = id => async dispatch => {
     if (window.confirm('Are you sure? this can not be undone')) {
         try {
-            await axios.delete(`http://localhost:5000/post/${id}`)
+            await axios.delete(`/post/${id}`)
             dispatch({
                 type: DELETE_POST,
                 payload: id
@@ -81,7 +81,7 @@ export const addPost = formData => async dispatch => {
         }
     }
     try {
-        const res = await axios.post('http://localhost:5000/post/', formData, config)
+        const res = await axios.post('/post/', formData, config)
         dispatch({
             type: ADD_POST,
             payload: res.data
@@ -99,7 +99,7 @@ export const addPost = formData => async dispatch => {
 //get post
 export const getPost = id => async dispatch => {
     try {
-        const res = await axios.get(`http://localhost:5000/post/${id}`)
+        const res = await axios.get(`/post/${id}`)
         dispatch({
             type: GET_POST,
             payload: res.data
@@ -121,7 +121,7 @@ export const addComment = (postId, formData) => async dispatch => {
         }
     }
     try {
-        const res = await axios.post(`http://localhost:5000/post/comment/${postId}`, formData, config)
+        const res = await axios.post(`/post/comment/${postId}`, formData, config)
         dispatch({
             type: ADD_COMMENT,
             payload: res.data
@@ -140,7 +140,7 @@ export const addComment = (postId, formData) => async dispatch => {
 export const deleteComment = (postId, commentId) => async dispatch => {
     if (window.confirm('Are you sure? this can not be undone')) {
         try {
-            await axios.delete(`http://localhost:5000/post/comment/${postId}/${commentId}`)
+            await axios.delete(`/post/comment/${postId}/${commentId}`)
             dispatch({
                 type: REMOVE_COMMENT,
                 payload: commentId
@@ -164,7 +164,7 @@ export const addrate = (postId, formData) => async dispatch => {
         }
     }
     try {
-        const res = await axios.post(`http://localhost:5000/post/rate/${postId}`, formData, config)
+        const res = await axios.post(`/post/rate/${postId}`, formData, config)
         dispatch({
             type: RATE,
             payload: res.data

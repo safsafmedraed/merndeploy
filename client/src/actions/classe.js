@@ -3,9 +3,9 @@ import { setAlert } from './alert';
 
 
 import {
-  ADDCLASS_SUCCESS,  ADDCLASS_FAIL,  AFFECTSTUDENT_FAIL,
-  GETTEACHERS,  AFFECTSTUDENT_SUCCESS,  GETSTUDENTSNOTAFF,
-  GET_CLASSES,  AFFECTTEACHER_SUCCESS,  GETSC,  UPDATE_CLASS,GETTC,MP,AffectModu,GETMOD,GETTM
+  ADDCLASS_SUCCESS, ADDCLASS_FAIL, AFFECTSTUDENT_FAIL,
+  GETTEACHERS, AFFECTSTUDENT_SUCCESS, GETSTUDENTSNOTAFF,
+  GET_CLASSES, AFFECTTEACHER_SUCCESS, GETSC, UPDATE_CLASS, GETTC, MP, AffectModu, GETMOD, GETTM
 
 } from './types';
 
@@ -18,7 +18,7 @@ export const addclass = (formData, history) => async dispatch => {
       }
     }
     console.log(formData)
-    const res = await axios.post('http://localhost:5000/class/Add', formData, config);
+    const res = await axios.post('/class/Add', formData, config);
     dispatch({
       type: ADDCLASS_SUCCESS,
       payload: res.data
@@ -43,18 +43,18 @@ export const addclass = (formData, history) => async dispatch => {
 
 }
 //affect student
-export const affectstudent =(formdata,ids ,history)=> async dispatch => {
+export const affectstudent = (formdata, ids, history) => async dispatch => {
   try {
     const config = {
       headers: {
         'Content-Type': 'application/json'
       }
     }
-    const res = await axios.put(`http://localhost:5000/class/affect/${ids}`,formdata,config)
+    const res = await axios.put(`/class/affect/${ids}`, formdata, config)
 
     dispatch({
       type: AFFECTSTUDENT_SUCCESS,
-      payload:   res.data
+      payload: res.data
     });
     dispatch(setAlert('student affected', 'success'));
     history.push('/AffectSC')
@@ -73,7 +73,7 @@ export const affectstudent =(formdata,ids ,history)=> async dispatch => {
 //GET   STudents not aff
 export const getstudentsnotaff = () => async dispatch => {
   try {
-    const res = await axios.get('http://localhost:5000/class/notaff');
+    const res = await axios.get('/class/notaff');
     dispatch({
       type: GETSTUDENTSNOTAFF,
       payload: res.data
@@ -91,7 +91,7 @@ export const getstudentsnotaff = () => async dispatch => {
 //GET All Classes
 export const GETALLCLASSES = () => async dispatch => {
   try {
-    const res = await axios.get('http://localhost:5000/class/Getall');
+    const res = await axios.get('/class/Getall');
     dispatch({
       type: GET_CLASSES,
       payload: res.data
@@ -110,7 +110,7 @@ export const GETALLCLASSES = () => async dispatch => {
 //getuser  par class
 export const getSC = classid => async dispatch => {
   try {
-    const res = await axios.get(`http://localhost:5000/class/users/${classid}`);
+    const res = await axios.get(`/class/users/${classid}`);
     dispatch({
       type: GETSC,
       payload: res.data
@@ -122,20 +122,20 @@ export const getSC = classid => async dispatch => {
       payload: { msg: error.response.statusText, status: error.response.status }
 
     });
-      }
+  }
 }
 //affect teacher
-export const affectteacher =(formdata,history )=> async dispatch => {
+export const affectteacher = (formdata, history) => async dispatch => {
   try {
     const config = {
       headers: {
         'Content-Type': 'application/json'
       }
     }
-    const res = await axios.post(`http://localhost:5000/class/affectteacher`,formdata,config)
+    const res = await axios.post(`/class/affectteacher`, formdata, config)
     dispatch({
       type: AFFECTTEACHER_SUCCESS,
-      payload:   res.data
+      payload: res.data
     });
     dispatch(setAlert('Teacher affected ', 'success'));
 
@@ -149,7 +149,7 @@ export const affectteacher =(formdata,history )=> async dispatch => {
       payload: { msg: err.response.statusText, status: err.response.status }
 
     });
-   dispatch(setAlert('Already affected ', 'danger'));
+    dispatch(setAlert('Already affected ', 'danger'));
   }
 
 }
@@ -157,7 +157,7 @@ export const affectteacher =(formdata,history )=> async dispatch => {
 export const getteachers = () => async dispatch => {
   try {
 
-    const res = await axios.get('http://localhost:5000/class/teacher');
+    const res = await axios.get('/class/teacher');
     dispatch({
       type: GETTEACHERS,
       payload: res.data
@@ -173,9 +173,9 @@ export const getteachers = () => async dispatch => {
   }
 }
 //delete student
-export const deletestudent = (classid, uid,history) => async dispatch => {
+export const deletestudent = (classid, uid, history) => async dispatch => {
   try {
-    const res = await axios.delete(`http://localhost:5000/class/deletu/${classid}/${uid}`);
+    const res = await axios.delete(`/class/deletu/${classid}/${uid}`);
     dispatch({
       type: UPDATE_CLASS,
       payload: res.data
@@ -195,7 +195,7 @@ export const deletestudent = (classid, uid,history) => async dispatch => {
 export const getTC = teacherid => async dispatch => {
   try {
 
-    const res = await axios.get(`http://localhost:5000/class/teachercl/${teacherid}`);
+    const res = await axios.get(`/class/teachercl/${teacherid}`);
     dispatch({
       type: GETTC,
       payload: res.data
@@ -210,18 +210,18 @@ export const getTC = teacherid => async dispatch => {
 
   }
 }
-export const marquerpr =(formdata,ids )=> async dispatch => {
+export const marquerpr = (formdata, ids) => async dispatch => {
   try {
     const config = {
       headers: {
         'Content-Type': 'application/json'
       }
     }
-    const res = await axios.put(`http://localhost:5000/class/marquerp/${ids}`,formdata,config)
+    const res = await axios.put(`/class/marquerp/${ids}`, formdata, config)
 
     dispatch({
       type: MP,
-      payload:   res.data
+      payload: res.data
     });
     dispatch(setAlert('Presence affected', 'success'));
 
@@ -237,17 +237,17 @@ export const marquerpr =(formdata,ids )=> async dispatch => {
 }
 
 //affect Modules
-export const affectmodules =(formdata,idm,history )=> async dispatch => {
+export const affectmodules = (formdata, idm, history) => async dispatch => {
   try {
     const config = {
       headers: {
         'Content-Type': 'application/json'
       }
     }
-    const res = await axios.post(`http://localhost:5000/class/affectTModule/${idm}`,formdata,config)
+    const res = await axios.post(`/class/affectTModule/${idm}`, formdata, config)
     dispatch({
       type: AffectModu,
-      payload:   res.data
+      payload: res.data
     });
     dispatch(setAlert('Teacher affected ', 'success'));
 
@@ -268,7 +268,7 @@ export const affectmodules =(formdata,idm,history )=> async dispatch => {
 //GET All modules
 export const GETMODULES = () => async dispatch => {
   try {
-    const res = await axios.get('http://localhost:5000/class/getmodules');
+    const res = await axios.get('/class/getmodules');
     dispatch({
       type: GETMOD,
       payload: res.data
@@ -287,7 +287,7 @@ export const GETMODULES = () => async dispatch => {
 export const getTM = teacherid => async dispatch => {
   try {
 
-    const res = await axios.get(`http://localhost:5000/class/teachermd/${teacherid}`);
+    const res = await axios.get(`/class/teachermd/${teacherid}`);
     dispatch({
       type: GETTM,
       payload: res.data

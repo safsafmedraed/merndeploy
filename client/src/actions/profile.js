@@ -8,7 +8,7 @@ import { GET_PROFILE, PROFILE_ERROR, UPDATE_PROFILE, CLEAR_PROFILE, DELETE_ACCOU
 //get current users profile
 export const getCurrentProfile = () => async dispatch => {
     try {
-        const res = await axios.get('http://localhost:5000/profile/me');
+        const res = await axios.get('/profile/me');
         dispatch({
             type: GET_PROFILE,
             payload: res.data
@@ -27,7 +27,7 @@ export const getCurrentProfile = () => async dispatch => {
 export const getAllProfile = () => async dispatch => {
     dispatch({ type: CLEAR_PROFILE });
     try {
-        const res = await axios.get('http://localhost:5000/profile/');
+        const res = await axios.get('/profile/');
         dispatch({
             type: GET_PROFILES,
             payload: res.data
@@ -46,7 +46,7 @@ export const getAllProfile = () => async dispatch => {
 export const getProfilebyID = userId => async dispatch => {
 
     try {
-        const res = await axios.get(`http://localhost:5000/profile/user/${userId}`);
+        const res = await axios.get(`/profile/user/${userId}`);
         dispatch({
             type: GET_PROFILE,
             payload: res.data
@@ -70,7 +70,7 @@ export const createProfile = (formData, history, edit = false) => async dispatch
                 'Content-Type': 'application/json'
             }
         }
-        const res = await axios.post('http://localhost:5000/profile/', formData, config);
+        const res = await axios.post('/profile/', formData, config);
         dispatch({
             type: GET_PROFILE,
             payload: res.data
@@ -103,7 +103,7 @@ export const editaccount = (formData, history, edit = false) => async dispatch =
                 'Content-Type': 'application/json'
             }
         }
-        const res = await axios.post('http://localhost:5000/users/update', formData, config);
+        const res = await axios.post('/users/update', formData, config);
         dispatch({
             type: GET_PROFILE,
             payload: res.data
@@ -131,7 +131,7 @@ export const editaccount = (formData, history, edit = false) => async dispatch =
 //get current users Account
 export const getCurrentAccount = () => async dispatch => {
     try {
-        const res = await axios.get('http://localhost:5000/users/me');
+        const res = await axios.get('/users/me');
         dispatch({
             type: GET_PROFILE,
             payload: res.data
@@ -155,7 +155,7 @@ export const addEducation = (formData, history) => async dispatch => {
                 'Content-Type': 'application/json'
             }
         }
-        const res = await axios.put('http://localhost:5000/profile/education', formData, config);
+        const res = await axios.put('/profile/education', formData, config);
         dispatch({
             type: UPDATE_PROFILE,
             payload: res.data
@@ -184,7 +184,7 @@ export const deleteEducation = id => async dispatch => {
 
     if (window.confirm('Are you sure? this can not be undone')) {
         try {
-            const res = await axios.delete(`http://localhost:5000/profile/education/${id}`);
+            const res = await axios.delete(`/profile/education/${id}`);
             dispatch({
                 type: UPDATE_PROFILE,
                 payload: res.data
@@ -199,7 +199,7 @@ export const deleteEducation = id => async dispatch => {
         }
 
         try {
-            const res = await axios.delete(`http://localhost:5000/profile/education/${id}`);
+            const res = await axios.delete(`/profile/education/${id}`);
             dispatch({
                 type: UPDATE_PROFILE,
                 payload: res.data
@@ -218,7 +218,7 @@ export const deleteEducation = id => async dispatch => {
 export const deleteAccount = () => async dispatch => {
     if (window.confirm('Are you sure? this can not be undone')) {
         try {
-            await axios.delete(`http://localhost:5000/profile/`);
+            await axios.delete(`/profile/`);
             dispatch({
                 type: CLEAR_PROFILE,
             })

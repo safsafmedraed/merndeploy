@@ -15,7 +15,7 @@ export const sendpass = (email) => async dispatch => {
     });
     console.log(body);
     try {
-        const res = await axios.post('http://localhost:5000/forgot/forgotPassword', body, config)
+        const res = await axios.post('/forgot/forgotPassword', body, config)
         dispatch({
             type: PASS_SEND,
             payload: res.data
@@ -45,7 +45,7 @@ export const resetpass = (password, token, history) => async dispatch => {
     const body = JSON.stringify({ password });
     try {
 
-        const res = await axios.post(`http://localhost:5000/forgot/reset/${token}`, body, config)
+        const res = await axios.post(`/forgot/reset/${token}`, body, config)
         dispatch({
             type: RESET_OK,
             payload: res.data

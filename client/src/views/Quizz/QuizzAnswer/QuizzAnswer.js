@@ -33,7 +33,7 @@ class QuizzAnswer extends Component {
     getClasses() {
         const id = localStorage.getItem('user1');
         console.log(id)
-        Axios.get(`http://localhost:5000/users/userid/${id}`)
+        Axios.get(`/users/userid/${id}`)
             .then(res => {
                 this.setState({
                     yes: res.data.quizzexist,
@@ -46,7 +46,7 @@ class QuizzAnswer extends Component {
     endquizz = () => {
         const id = localStorage.getItem('user1');
         console.log(id)
-        Axios.put(`http://localhost:5000/users/usernoquizz/${id}/${this.state.idquizz}/${this.state.score}`)
+        Axios.put(`/users/usernoquizz/${id}/${this.state.idquizz}/${this.state.score}`)
             .then(res => {
                 this.setState({
                     yes: false
@@ -58,7 +58,7 @@ class QuizzAnswer extends Component {
         e.preventDefault();
 
 
-        Axios.get(`http://localhost:5000/quizz/quizzcode/${this.state.code}`)
+        Axios.get(`/quizz/quizzcode/${this.state.code}`)
 
             .then(res => {
                 this.state.quizz.forEach(element => {
