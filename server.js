@@ -32,10 +32,10 @@ app.use(
     credentials: true
   })
 );
-const PORT = process.env.PORT || 5000;
+
 
 const uri = process.env.ATLAS_URI;
-mongoose.connect(uri, { useNewUrlParser: true, useCreateIndex: true, useUnifiedTopology: true, useFindAndModify: false });
+mongoose.connect(uri || "mongodb+srv://safsafraed:sVW5Wa3JAj6rclLj@quizard-q5cbk.mongodb.net/Quizz", { useNewUrlParser: true, useCreateIndex: true, useUnifiedTopology: true, useFindAndModify: false });
 const connection = mongoose.connection;
 connection.once('open', () => {
   console.log('***database works!!***');
@@ -94,10 +94,10 @@ app.use('/presence', presence);
 if (process.env.NODE_ENV === 'production') {
   app.use(express.static('client/build'));
   app.get('*', (req, res) => {
-    res.sendFile(path.join(__dirname, 'client', '../build', 'index.html'))
+    res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'))
   })
 }
-
+const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
   console.log(`Server is running at port : ${PORT} `);
 })
