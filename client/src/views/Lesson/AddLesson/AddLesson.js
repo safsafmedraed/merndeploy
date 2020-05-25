@@ -25,7 +25,7 @@ class Lesson extends Component {
     {
       const id = localStorage.getItem('user1');
       console.log(id)
-      axios.get(`http://localhost:5000/users/userid/${id}`)
+      axios.get(`/users/userid/${id}`)
       .then(res=>{
           console.log(res.data.Modules)
         this.setState({
@@ -35,7 +35,7 @@ class Lesson extends Component {
       
         this.state.Module.forEach(element => {
          
-          axios.get(`http://localhost:5000/Module/Module/${element.modid}`)
+          axios.get(`/Module/Module/${element.modid}`)
             .then(res=> {
               
               this.setState({cl: [...this.state.cl,res.data]})
@@ -62,10 +62,10 @@ class Lesson extends Component {
               
             }
           console.log(Module)
-            axios.post(`http://localhost:5000/Lesson/Lesson`, Module)
+            axios.post(`/Lesson/Lesson`, Module)
             .then(res => {
               this.setState({alert_msg : 'success', id : res.data._id})
-              axios.put(`http://localhost:5000/Module/addLTo/${this.state.mm}/${res.data._id}`)
+              axios.put(`/Module/addLTo/${this.state.mm}/${res.data._id}`)
                 .then(res=> {
                     this.setState({exist:true})
                 console.log("yesss")
