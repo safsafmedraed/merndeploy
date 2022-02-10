@@ -41,7 +41,7 @@
     "material-ui-dropzone": "^2.5.0",
     "mdbreact": "^4.26.0",
     "nivo": "^0.31.0",
-    "node-sass": "^4.13.1",
+    "node-sass": "^7.0.0",
     "passport": "^0.4.1",
     "passport-local": "^1.0.0",
     "prop-types": "^15.7.2",
